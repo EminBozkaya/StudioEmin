@@ -35,21 +35,26 @@
             pnlReceipt = new Panel();
             textBoxFileLocation = new TextBox();
             label12 = new Label();
+            lblReceiptName = new Label();
             label11 = new Label();
             label10 = new Label();
+            label15 = new Label();
+            label14 = new Label();
+            lblReceiptCaption = new Label();
             label13 = new Label();
-            label9 = new Label();
+            btnTrash = new Button();
             btnPrint = new Button();
             btnChooseFileLocation = new Button();
             btnSaveAndPrint = new Button();
             btnSave = new Button();
-            panel2 = new Panel();
+            btnGoTheFolder = new Button();
+            pnlReceiptInputs = new Panel();
+            numQty = new NumericUpDown();
             txtDeliveryDate = new TextBox();
             txtRemainingAmount = new TextBox();
             txtReceivedAmount = new TextBox();
             txtTotalAmount = new TextBox();
             txtDimensions = new TextBox();
-            txtQty = new TextBox();
             txtLastName = new TextBox();
             txtName = new TextBox();
             txtBoxNotes = new RichTextBox();
@@ -62,9 +67,13 @@
             label2 = new Label();
             label1 = new Label();
             lblName = new Label();
+            label9 = new Label();
             errorProvider1 = new ErrorProvider(components);
+            printDocument1 = new System.Drawing.Printing.PrintDocument();
+            printPreviewDialog1 = new PrintPreviewDialog();
             pnlReceipt.SuspendLayout();
-            panel2.SuspendLayout();
+            pnlReceiptInputs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numQty).BeginInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
@@ -75,7 +84,7 @@
             btnFindFolder.BackgroundImageLayout = ImageLayout.Stretch;
             btnFindFolder.FlatAppearance.BorderSize = 0;
             btnFindFolder.FlatStyle = FlatStyle.Flat;
-            btnFindFolder.Location = new Point(37, 150);
+            btnFindFolder.Location = new Point(37, 178);
             btnFindFolder.Name = "btnFindFolder";
             btnFindFolder.Size = new Size(100, 100);
             btnFindFolder.TabIndex = 0;
@@ -100,18 +109,23 @@
             pnlReceipt.BackColor = Color.Transparent;
             pnlReceipt.Controls.Add(textBoxFileLocation);
             pnlReceipt.Controls.Add(label12);
+            pnlReceipt.Controls.Add(lblReceiptName);
             pnlReceipt.Controls.Add(label11);
             pnlReceipt.Controls.Add(label10);
+            pnlReceipt.Controls.Add(label15);
+            pnlReceipt.Controls.Add(label14);
+            pnlReceipt.Controls.Add(lblReceiptCaption);
             pnlReceipt.Controls.Add(label13);
-            pnlReceipt.Controls.Add(label9);
+            pnlReceipt.Controls.Add(btnTrash);
             pnlReceipt.Controls.Add(btnPrint);
             pnlReceipt.Controls.Add(btnChooseFileLocation);
             pnlReceipt.Controls.Add(btnSaveAndPrint);
             pnlReceipt.Controls.Add(btnSave);
-            pnlReceipt.Controls.Add(panel2);
-            pnlReceipt.Location = new Point(213, 22);
+            pnlReceipt.Controls.Add(btnGoTheFolder);
+            pnlReceipt.Controls.Add(pnlReceiptInputs);
+            pnlReceipt.Location = new Point(230, 58);
             pnlReceipt.Name = "pnlReceipt";
-            pnlReceipt.Size = new Size(836, 686);
+            pnlReceipt.Size = new Size(1028, 672);
             pnlReceipt.TabIndex = 1;
             // 
             // textBoxFileLocation
@@ -119,6 +133,7 @@
             textBoxFileLocation.BackColor = SystemColors.ScrollBar;
             textBoxFileLocation.Location = new Point(604, 212);
             textBoxFileLocation.Name = "textBoxFileLocation";
+            textBoxFileLocation.ReadOnly = true;
             textBoxFileLocation.Size = new Size(200, 23);
             textBoxFileLocation.TabIndex = 14;
             // 
@@ -132,6 +147,16 @@
             label12.Size = new Size(58, 22);
             label12.TabIndex = 2;
             label12.Text = "Yazdır";
+            // 
+            // lblReceiptName
+            // 
+            lblReceiptName.AutoSize = true;
+            lblReceiptName.FlatStyle = FlatStyle.Flat;
+            lblReceiptName.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblReceiptName.Location = new Point(840, 444);
+            lblReceiptName.Name = "lblReceiptName";
+            lblReceiptName.Size = new Size(0, 22);
+            lblReceiptName.TabIndex = 2;
             // 
             // label11
             // 
@@ -155,6 +180,38 @@
             label10.TabIndex = 2;
             label10.Text = "Kaydet ve Yazdır";
             // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Palatino Linotype", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label15.ForeColor = Color.Red;
+            label15.Location = new Point(864, 616);
+            label15.Name = "label15";
+            label15.Size = new Size(101, 18);
+            label15.TabIndex = 2;
+            label15.Text = "Formu Temizle";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Palatino Linotype", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label14.ForeColor = SystemColors.ButtonFace;
+            label14.Location = new Point(877, 350);
+            label14.Name = "label14";
+            label14.Size = new Size(77, 18);
+            label14.TabIndex = 2;
+            label14.Text = "Klasöre Git";
+            // 
+            // lblReceiptCaption
+            // 
+            lblReceiptCaption.AutoSize = true;
+            lblReceiptCaption.Font = new Font("Palatino Linotype", 11.25F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            lblReceiptCaption.Location = new Point(840, 423);
+            lblReceiptCaption.Name = "lblReceiptCaption";
+            lblReceiptCaption.Size = new Size(167, 21);
+            lblReceiptCaption.TabIndex = 2;
+            lblReceiptCaption.Text = "Oluşturulan Makbuz:";
+            // 
             // label13
             // 
             label13.AutoSize = true;
@@ -165,15 +222,18 @@
             label13.TabIndex = 2;
             label13.Text = "Seçilen Konum:";
             // 
-            // label9
+            // btnTrash
             // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(650, 80);
-            label9.Name = "label9";
-            label9.Size = new Size(99, 22);
-            label9.TabIndex = 2;
-            label9.Text = "Konum Seç:";
+            btnTrash.BackgroundImage = (Image)resources.GetObject("btnTrash.BackgroundImage");
+            btnTrash.BackgroundImageLayout = ImageLayout.Stretch;
+            btnTrash.FlatAppearance.BorderSize = 0;
+            btnTrash.FlatStyle = FlatStyle.Flat;
+            btnTrash.Location = new Point(876, 534);
+            btnTrash.Name = "btnTrash";
+            btnTrash.Size = new Size(80, 80);
+            btnTrash.TabIndex = 15;
+            btnTrash.UseVisualStyleBackColor = true;
+            btnTrash.Click += btnTrash_Click;
             // 
             // btnPrint
             // 
@@ -186,6 +246,7 @@
             btnPrint.Size = new Size(80, 80);
             btnPrint.TabIndex = 13;
             btnPrint.UseVisualStyleBackColor = true;
+            btnPrint.Click += btnPrint_Click;
             // 
             // btnChooseFileLocation
             // 
@@ -225,34 +286,54 @@
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
             // 
-            // panel2
+            // btnGoTheFolder
             // 
-            panel2.BackgroundImage = (Image)resources.GetObject("panel2.BackgroundImage");
-            panel2.BackgroundImageLayout = ImageLayout.Stretch;
-            panel2.Controls.Add(txtDeliveryDate);
-            panel2.Controls.Add(txtRemainingAmount);
-            panel2.Controls.Add(txtReceivedAmount);
-            panel2.Controls.Add(txtTotalAmount);
-            panel2.Controls.Add(txtDimensions);
-            panel2.Controls.Add(txtQty);
-            panel2.Controls.Add(txtLastName);
-            panel2.Controls.Add(txtName);
-            panel2.Controls.Add(txtBoxNotes);
-            panel2.Controls.Add(label5);
-            panel2.Controls.Add(label3);
-            panel2.Controls.Add(label6);
-            panel2.Controls.Add(label4);
-            panel2.Controls.Add(label7);
-            panel2.Controls.Add(label8);
-            panel2.Controls.Add(label2);
-            panel2.Controls.Add(label1);
-            panel2.Controls.Add(lblName);
-            panel2.Font = new Font("MV Boli", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            panel2.ForeColor = Color.DimGray;
-            panel2.Location = new Point(80, 55);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(479, 618);
-            panel2.TabIndex = 0;
+            btnGoTheFolder.BackgroundImage = (Image)resources.GetObject("btnGoTheFolder.BackgroundImage");
+            btnGoTheFolder.BackgroundImageLayout = ImageLayout.Stretch;
+            btnGoTheFolder.FlatAppearance.BorderSize = 0;
+            btnGoTheFolder.FlatStyle = FlatStyle.Flat;
+            btnGoTheFolder.Location = new Point(875, 269);
+            btnGoTheFolder.Name = "btnGoTheFolder";
+            btnGoTheFolder.Size = new Size(80, 80);
+            btnGoTheFolder.TabIndex = 14;
+            btnGoTheFolder.UseVisualStyleBackColor = true;
+            btnGoTheFolder.Click += btnGoTheFolder_Click;
+            // 
+            // pnlReceiptInputs
+            // 
+            pnlReceiptInputs.BackgroundImage = (Image)resources.GetObject("pnlReceiptInputs.BackgroundImage");
+            pnlReceiptInputs.BackgroundImageLayout = ImageLayout.Stretch;
+            pnlReceiptInputs.Controls.Add(numQty);
+            pnlReceiptInputs.Controls.Add(txtDeliveryDate);
+            pnlReceiptInputs.Controls.Add(txtRemainingAmount);
+            pnlReceiptInputs.Controls.Add(txtReceivedAmount);
+            pnlReceiptInputs.Controls.Add(txtTotalAmount);
+            pnlReceiptInputs.Controls.Add(txtDimensions);
+            pnlReceiptInputs.Controls.Add(txtLastName);
+            pnlReceiptInputs.Controls.Add(txtName);
+            pnlReceiptInputs.Controls.Add(txtBoxNotes);
+            pnlReceiptInputs.Controls.Add(label5);
+            pnlReceiptInputs.Controls.Add(label3);
+            pnlReceiptInputs.Controls.Add(label6);
+            pnlReceiptInputs.Controls.Add(label4);
+            pnlReceiptInputs.Controls.Add(label7);
+            pnlReceiptInputs.Controls.Add(label8);
+            pnlReceiptInputs.Controls.Add(label2);
+            pnlReceiptInputs.Controls.Add(label1);
+            pnlReceiptInputs.Controls.Add(lblName);
+            pnlReceiptInputs.Font = new Font("MV Boli", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            pnlReceiptInputs.ForeColor = Color.DimGray;
+            pnlReceiptInputs.Location = new Point(64, 50);
+            pnlReceiptInputs.Name = "pnlReceiptInputs";
+            pnlReceiptInputs.Size = new Size(479, 618);
+            pnlReceiptInputs.TabIndex = 0;
+            // 
+            // numQty
+            // 
+            numQty.Location = new Point(309, 169);
+            numQty.Name = "numQty";
+            numQty.Size = new Size(84, 32);
+            numQty.TabIndex = 4;
             // 
             // txtDeliveryDate
             // 
@@ -263,24 +344,32 @@
             // 
             // txtRemainingAmount
             // 
-            txtRemainingAmount.Location = new Point(284, 250);
+            txtRemainingAmount.Font = new Font("MV Boli", 9F, FontStyle.Bold);
+            txtRemainingAmount.Location = new Point(298, 250);
             txtRemainingAmount.Name = "txtRemainingAmount";
-            txtRemainingAmount.Size = new Size(77, 32);
+            txtRemainingAmount.ReadOnly = true;
+            txtRemainingAmount.Size = new Size(95, 27);
             txtRemainingAmount.TabIndex = 7;
             // 
             // txtReceivedAmount
             // 
-            txtReceivedAmount.Location = new Point(199, 250);
+            txtReceivedAmount.Font = new Font("MV Boli", 9F, FontStyle.Bold);
+            txtReceivedAmount.Location = new Point(195, 250);
             txtReceivedAmount.Name = "txtReceivedAmount";
-            txtReceivedAmount.Size = new Size(79, 32);
+            txtReceivedAmount.Size = new Size(95, 27);
             txtReceivedAmount.TabIndex = 6;
+            txtReceivedAmount.TextChanged += TextBox_TextChanged;
+            txtReceivedAmount.LostFocus += TextBox_LostFocus;
             // 
             // txtTotalAmount
             // 
-            txtTotalAmount.Location = new Point(114, 250);
+            txtTotalAmount.Font = new Font("MV Boli", 9F, FontStyle.Bold);
+            txtTotalAmount.Location = new Point(94, 250);
             txtTotalAmount.Name = "txtTotalAmount";
-            txtTotalAmount.Size = new Size(79, 32);
+            txtTotalAmount.Size = new Size(95, 27);
             txtTotalAmount.TabIndex = 5;
+            txtTotalAmount.TextChanged += TextBox_TextChanged;
+            txtTotalAmount.LostFocus += TextBox_LostFocus;
             // 
             // txtDimensions
             // 
@@ -288,13 +377,6 @@
             txtDimensions.Name = "txtDimensions";
             txtDimensions.Size = new Size(82, 32);
             txtDimensions.TabIndex = 3;
-            // 
-            // txtQty
-            // 
-            txtQty.Location = new Point(306, 169);
-            txtQty.Name = "txtQty";
-            txtQty.Size = new Size(82, 32);
-            txtQty.TabIndex = 4;
             // 
             // txtLastName
             // 
@@ -328,7 +410,7 @@
             // 
             // label3
             // 
-            label3.Location = new Point(284, 224);
+            label3.Location = new Point(309, 223);
             label3.Name = "label3";
             label3.Size = new Size(77, 23);
             label3.TabIndex = 0;
@@ -336,7 +418,7 @@
             // 
             // label6
             // 
-            label6.Location = new Point(114, 224);
+            label6.Location = new Point(104, 223);
             label6.Name = "label6";
             label6.Size = new Size(64, 23);
             label6.TabIndex = 0;
@@ -390,9 +472,36 @@
             lblName.TabIndex = 0;
             lblName.Text = "Ad:";
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.BackColor = Color.Transparent;
+            label9.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.ForeColor = SystemColors.ButtonFace;
+            label9.Location = new Point(37, 122);
+            label9.Name = "label9";
+            label9.Size = new Size(103, 22);
+            label9.TabIndex = 2;
+            label9.Text = "Makbuz Kes";
+            // 
             // errorProvider1
             // 
             errorProvider1.ContainerControl = this;
+            // 
+            // printDocument1
+            // 
+            printDocument1.PrintPage += PrintDocument1_PrintPage;
+            // 
+            // printPreviewDialog1
+            // 
+            printPreviewDialog1.AutoScrollMargin = new Size(0, 0);
+            printPreviewDialog1.AutoScrollMinSize = new Size(0, 0);
+            printPreviewDialog1.ClientSize = new Size(400, 300);
+            printPreviewDialog1.Document = printDocument1;
+            printPreviewDialog1.Enabled = true;
+            printPreviewDialog1.Icon = (Icon)resources.GetObject("printPreviewDialog1.Icon");
+            printPreviewDialog1.Name = "printPreviewDialog1";
+            printPreviewDialog1.Visible = false;
             // 
             // Form1
             // 
@@ -404,16 +513,18 @@
             Controls.Add(pnlReceipt);
             Controls.Add(btnFindFolder);
             Controls.Add(btnCreateReceipt);
+            Controls.Add(label9);
             DoubleBuffered = true;
             Name = "Form1";
             Text = "Stüdyo-emin";
-            Load += Form1_Load;
             pnlReceipt.ResumeLayout(false);
             pnlReceipt.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            pnlReceiptInputs.ResumeLayout(false);
+            pnlReceiptInputs.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numQty).EndInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -421,7 +532,7 @@
         private Button btnCreateReceipt;
         private Panel pnlReceipt;
         private Button btnSave;
-        private Panel panel2;
+        private Panel pnlReceiptInputs;
         private Label lblName;
         private Label label5;
         private Label label3;
@@ -431,7 +542,6 @@
         private Label label2;
         private Label label1;
         private TextBox txtDeliveryDate;
-        private TextBox txtQty;
         private TextBox txtLastName;
         private TextBox txtName;
         private RichTextBox txtBoxNotes;
@@ -450,5 +560,14 @@
         private Label label13;
         private ErrorProvider errorProvider1;
         private TextBox textBoxFileLocation;
+        private Label label14;
+        private Button btnGoTheFolder;
+        private Label lblReceiptCaption;
+        private Label lblReceiptName;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private PrintPreviewDialog printPreviewDialog1;
+        private Button btnTrash;
+        private Label label15;
+        private NumericUpDown numQty;
     }
 }
