@@ -77,7 +77,6 @@
             txtFileNameInput = new TextBox();
             btnSearchFile = new Button();
             cmbBoxDriver = new ComboBox();
-            label23 = new Label();
             label18 = new Label();
             label17 = new Label();
             label20 = new Label();
@@ -563,7 +562,6 @@
             pnlFindFolder.Controls.Add(txtFileNameInput);
             pnlFindFolder.Controls.Add(btnSearchFile);
             pnlFindFolder.Controls.Add(cmbBoxDriver);
-            pnlFindFolder.Controls.Add(label23);
             pnlFindFolder.Controls.Add(label18);
             pnlFindFolder.Controls.Add(label17);
             pnlFindFolder.Controls.Add(label20);
@@ -604,7 +602,7 @@
             btnSearchFile.BackgroundImageLayout = ImageLayout.Stretch;
             btnSearchFile.FlatAppearance.BorderSize = 0;
             btnSearchFile.FlatStyle = FlatStyle.Flat;
-            btnSearchFile.Location = new Point(352, 193);
+            btnSearchFile.Location = new Point(352, 218);
             btnSearchFile.Name = "btnSearchFile";
             btnSearchFile.Size = new Size(120, 100);
             btnSearchFile.TabIndex = 0;
@@ -620,18 +618,6 @@
             cmbBoxDriver.Name = "cmbBoxDriver";
             cmbBoxDriver.Size = new Size(132, 33);
             cmbBoxDriver.TabIndex = 0;
-            // 
-            // label23
-            // 
-            label23.AutoSize = true;
-            label23.BackColor = Color.Transparent;
-            label23.Font = new Font("Arial", 19.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label23.ForeColor = SystemColors.ButtonFace;
-            label23.Location = new Point(399, 355);
-            label23.Name = "label23";
-            label23.Size = new Size(32, 32);
-            label23.TabIndex = 2;
-            label23.Text = "V";
             // 
             // label18
             // 
@@ -663,7 +649,7 @@
             label20.BackColor = Color.Transparent;
             label20.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label20.ForeColor = SystemColors.ActiveCaptionText;
-            label20.Location = new Point(386, 295);
+            label20.Location = new Point(386, 320);
             label20.Name = "label20";
             label20.Size = new Size(54, 32);
             label20.TabIndex = 2;
@@ -845,7 +831,6 @@
         private Button btnMyComputer;
         private Label label22;
         private Label label21;
-        private Label label23;
         private Label label19;
         private ListBox listBoxFiles;
         private Label label25;
