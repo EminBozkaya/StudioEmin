@@ -137,6 +137,7 @@ namespace PhotoEmin
             ClearTextBoxes(pnlReceiptInputs);
             textBoxFileLocation.Clear();
             lblReceiptName.Text = "";
+            lblFileLocation.Text = "";
             newReceipt = new Receipt();
         }
 
@@ -190,7 +191,6 @@ namespace PhotoEmin
         private void PrintDocument1_PrintPage(object sender, PrintPageEventArgs e)
         {
             string name = newReceipt.Name!;
-            string lastName = newReceipt.LastName!;
             string dimensions = newReceipt.Dimensions!;
             decimal? qty = newReceipt.Quantity == 0 ? null : newReceipt.Quantity;
             string totalAmountText = (newReceipt.TotalAmount != 0) ? $"Tutar: {newReceipt.TotalAmount} ₺" : "Tutar: ";
@@ -199,8 +199,7 @@ namespace PhotoEmin
             string deliveryDate = newReceipt.DeliveryDate!;
             string note = newReceipt.Note!;
 
-            //string name = "John";
-            //string lastName = "Doe";
+            //string name = "John Doe";
             //string dimensions = "25x25";
             //int qty = 2;
             //decimal totalAmount = 10200;
@@ -245,12 +244,13 @@ namespace PhotoEmin
 
             // Tabloyu oluşturmak
             DataTable table = new DataTable();
+            Font tableCapitalFont = new Font("Arial", 15, FontStyle.Bold);
             Font tableFont = new Font("Arial", 15, FontStyle.Regular);
             table.Columns.Add("Özellik", typeof(string));
             table.Columns.Add("Değer", typeof(string));
 
             // İlk satırı eklemek
-            table.Rows.Add($"Adı Soyadı: {name} {lastName}");
+            table.Rows.Add($"Ad-Soyad:{name}");
 
             // İkinci satırı eklemek
             table.Rows.Add($"Ebat: {dimensions}", $"Adet: {qty}");
@@ -259,7 +259,7 @@ namespace PhotoEmin
             table.Rows.Add(totalAmountText, receivedAmountText);
 
             // Dördüncü satırı eklemek
-            table.Rows.Add(remainingAmountText, $"Teslim Tarihi: {deliveryDate}");
+            table.Rows.Add(remainingAmountText, $"Teslim Tarihi:{deliveryDate}");
 
             // Beşinci satırı eklemek için:
             table.Rows.Add($"Not: {note}");
@@ -282,26 +282,34 @@ namespace PhotoEmin
                 // İlk ve son satır için
                 if (row == 0 || row == table.Rows.Count - 1)
                 {
-                    if(row == 0)
+                    if (row == 0)
                     {
                         e.Graphics.FillRectangle(Brushes.White, new Rectangle(tableStartX, (int)currentY, tableWidth, cellHeight));
                         e.Graphics.DrawRectangle(Pens.Black, new Rectangle(tableStartX, (int)currentY, tableWidth, cellHeight));
-                        e.Graphics.DrawString(table.Rows[row][0].ToString(), tableFont, Brushes.Black, new RectangleF(tableStartX, (int)currentY, tableWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+
+                        string[] rowItems = SplitAndReturn(table.Rows[row][0].ToString()!);
+
+                        e.Graphics.DrawString(rowItems[0], tableCapitalFont, Brushes.Black, new RectangleF(tableStartX, (int)currentY, tableWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                        e.Graphics.DrawString(rowItems[1], tableFont, Brushes.Black, new RectangleF(tableStartX + (rowItems[0].Length * 12), (int)currentY, tableWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
                     }
                     else
                     {
                         int noteCellHeight = 30;
+                        Font noteCapitalFont = new Font("Arial", 14, FontStyle.Bold);
                         Font noteFont = new Font("Arial", 13, FontStyle.Regular);
                         string yourString = table.Rows[row][0].ToString()!;
                         string[] lines = yourString.Split("\n");
                         int noteHeight = lines.Length < 7 ? 280 : noteCellHeight * lines.Length;
                         for (int i = 0; i < lines.Length; i++)
                         {
-                            if(i == 0)
+                            if (i == 0)
                             {
+                                string[] lineItems = SplitAndReturn(lines[i]);
+
                                 e.Graphics.FillRectangle(Brushes.White, new Rectangle(tableStartX, (int)currentY, tableWidth, noteCellHeight));
                                 e.Graphics.DrawRectangle(Pens.Black, new Rectangle(tableStartX, (int)currentY, tableWidth, noteHeight));
-                                e.Graphics.DrawString(lines[i], noteFont, Brushes.Black, new RectangleF(tableStartX, (int)currentY, tableWidth, noteCellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                                e.Graphics.DrawString(lineItems[0], noteCapitalFont, Brushes.Black, new RectangleF(tableStartX, (int)currentY, tableWidth, noteCellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                                e.Graphics.DrawString(lineItems[1], noteFont, Brushes.Black, new RectangleF(tableStartX + (lineItems[0].Length * 10), (int)currentY, tableWidth, noteCellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
                                 currentYlast = currentY + noteHeight;
                             }
                             else
@@ -321,7 +329,11 @@ namespace PhotoEmin
                     {
                         e.Graphics.FillRectangle(Brushes.White, new Rectangle(tableStartX + i * cellWidth, (int)currentY, cellWidth, cellHeight));
                         e.Graphics.DrawRectangle(Pens.Black, new Rectangle(tableStartX + i * cellWidth, (int)currentY, cellWidth, cellHeight));
-                        e.Graphics.DrawString(table.Rows[row][i].ToString(), tableFont, Brushes.Black, new RectangleF(tableStartX + i * cellWidth, (int)currentY, cellWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+
+                        string[] columnItems = SplitAndReturn(table.Rows[row][i].ToString()!);
+
+                        e.Graphics.DrawString(columnItems[0], tableCapitalFont, Brushes.Black, new RectangleF(tableStartX + i * cellWidth, (int)currentY, cellWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                        e.Graphics.DrawString(columnItems[1], tableFont, Brushes.Black, new RectangleF(tableStartX + i * cellWidth + (float)(columnItems[0].Length * 10), (int)currentY, cellWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
                     }
                 }
 
@@ -338,14 +350,7 @@ namespace PhotoEmin
             string name = txtName.Text.Trim();
             if (String.IsNullOrEmpty(name))
             {
-                MessageBox.Show("Ad alanı boş olamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            string lastName = txtLastName.Text.Trim();
-            if (String.IsNullOrEmpty(lastName))
-            {
-                MessageBox.Show("Soyad alanı boş olamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ad-Soyad alanı boş olamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
@@ -366,18 +371,18 @@ namespace PhotoEmin
             string deliveryDate = txtDeliveryDate.Text;
             string note = txtBoxNotes.Text.Trim();
 
-            if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(lastName) && !string.IsNullOrWhiteSpace(textBoxFileLocation.Text))
+            if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(textBoxFileLocation.Text))
             {
                 try
                 {
                     // Klasör oluştur
-                    string folderName = $"{name} {lastName}";
+                    string folderName = $"{name}";
                     string folderPath = Path.Combine(textBoxFileLocation.Text, folderName);
                     // Eğer klasör zaten varsa, farklı bir isim belirle
                     int count = 1;
                     while (Directory.Exists(folderPath))
                     {
-                        folderName = $"{name} {lastName}_{count}";
+                        folderName = $"{name}_{count}";
                         folderPath = Path.Combine(textBoxFileLocation.Text, folderName);
                         count++;
                     }
@@ -388,8 +393,7 @@ namespace PhotoEmin
                     string filePath = Path.Combine(folderPath, fileName);
                     using (StreamWriter writer = new StreamWriter(filePath))
                     {
-                        writer.WriteLine($"Ad: {name}");
-                        writer.WriteLine($"Soyad: {lastName}");
+                        writer.WriteLine($"Ad-Soyad: {name}");
                         writer.WriteLine($"Ebat: {dimensions}");
                         writer.WriteLine($"Adet: {quantity}");
                         writer.WriteLine($"Toplam Tutar: {totalAmount}");
@@ -405,7 +409,6 @@ namespace PhotoEmin
                         MessageBox.Show("Klasör ve dosya başarıyla oluşturuldu.", "İşlem Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     newReceipt.Name = name;
-                    newReceipt.LastName = lastName;
                     newReceipt.Dimensions = dimensions;
                     newReceipt.Quantity = quantity;
                     newReceipt.TotalAmount = totalAmount;
@@ -424,7 +427,7 @@ namespace PhotoEmin
             }
             else
             {
-                MessageBox.Show("Lütfen ad ve soyadı girin, ve bir klasör seçin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Lütfen Ad-Soyad girin ve bir klasör seçin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
         }
@@ -550,7 +553,6 @@ namespace PhotoEmin
             }
         }
 
-
         private void ListBoxFiles_DoubleClick(object sender, EventArgs e)
         {
             // ListBox'ta çift tıklanan öğenin adını al
@@ -585,6 +587,32 @@ namespace PhotoEmin
             {
                 MessageBox.Show($"Hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void txtFileNameInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Eğer Enter tuşuna basıldıysa
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Başka bir butonun Click olayını tetikle
+                btnSearchFile.PerformClick();
+            }
+        }
+
+        static string[] SplitAndReturn(string input)
+        {
+            int index = input.IndexOf(":");
+
+            if (index == -1 || index == 0)
+            {
+                return new string[] { "", "" };
+            }
+            string firstPart = input.Substring(0, index + 1);
+            string secondPart = input.Substring(index + 1);
+
+            string[] result = { firstPart, secondPart };
+
+            return result;
         }
 
     }
