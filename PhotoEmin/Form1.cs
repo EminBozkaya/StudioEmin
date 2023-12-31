@@ -31,6 +31,7 @@ namespace PhotoEmin
 
                 pnlReceipt.Visible = false;
                 pnlFindFolder.Visible = false;
+                pictureBoxLoading.Visible = false; // Başlangıçta görünmez yapın
             };
 
             // Form üzerinde herhangi bir yere tıklandığında
@@ -72,7 +73,7 @@ namespace PhotoEmin
 
         private void btnGoTheFolder_Click(object sender, EventArgs e)
         {
-            string folderPath = lblFileLocation.Text; // Klasör yolunu buraya ekleyin
+            string folderPath = Path.Combine(textBoxFileLocation.Text, lblFileLocation.Text);
             if (!String.IsNullOrEmpty(folderPath))
             {
                 try
@@ -95,7 +96,7 @@ namespace PhotoEmin
 
         private void btnGoTheReceipt_Click(object sender, EventArgs e)
         {
-            string folderPath = Path.Combine(lblFileLocation.Text, lblReceiptName.Text);
+            string folderPath = Path.Combine(textBoxFileLocation.Text, lblFileLocation.Text, lblReceiptName.Text);
             if (!String.IsNullOrEmpty(folderPath))
             {
                 try
@@ -141,8 +142,10 @@ namespace PhotoEmin
             newReceipt = new Receipt();
         }
 
-        private void TextBox_TextChanged(object sender, EventArgs e)
+        private void TextBoxesAmount_TextChanged(object sender, EventArgs e)
         {
+            setVisibleAfterSaveProcess(true);//kayıt işleminden sonra butonları göster
+
             // Hangi TextBox'ın değiştiğini kontrol et
             TextBox changedTextBox = (TextBox)sender;
 
@@ -359,16 +362,17 @@ namespace PhotoEmin
                 MessageBox.Show("Lütfen kayıt için konum seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-
+            name = name.ToUpper(new CultureInfo("tr-TR"));
             string dimensions = txtDimensions.Text.Trim(); ;
             decimal quantity = numQty.Value;
             decimal totalAmount = 0;
             decimal receivedAmount = 0;
             decimal remainingAmount = 0;
-            if (decimal.TryParse(txtTotalAmount.Text, out totalAmount)) { }
-            if (decimal.TryParse(txtReceivedAmount.Text, out receivedAmount)) { }
-            if (decimal.TryParse(txtRemainingAmount.Text, out remainingAmount)) { }
-            string deliveryDate = txtDeliveryDate.Text;
+            CultureInfo turkishCulture = new CultureInfo("tr-TR");
+            if (decimal.TryParse(txtTotalAmount.Text, turkishCulture, out totalAmount)) { }
+            if (decimal.TryParse(txtReceivedAmount.Text, turkishCulture, out receivedAmount)) { }
+            if (decimal.TryParse(txtRemainingAmount.Text, turkishCulture, out remainingAmount)) { }
+            string deliveryDate = txtDeliveryDate.Text.Trim();
             string note = txtBoxNotes.Text.Trim();
 
             if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(textBoxFileLocation.Text))
@@ -403,11 +407,18 @@ namespace PhotoEmin
                         writer.WriteLine($"Not: {note}");
                     }
                     lblReceiptName.Text = fileName;
-                    lblFileLocation.Text = folderPath;
+                    lblFileLocation.Text = folderName;
                     if (!isSaveAndPrint)
                     {
                         MessageBox.Show("Klasör ve dosya başarıyla oluşturuldu.", "İşlem Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    if (count > 1)
+                    {
+                        MessageBox.Show($"Daha önce aynı isimli kayıt olduğu için, yeni kaydınız \"{folderName}\" olarak oluşturuldu.", "Bilgilendirme!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    setVisibleAfterSaveProcess(false);
+
                     newReceipt.Name = name;
                     newReceipt.Dimensions = dimensions;
                     newReceipt.Quantity = quantity;
@@ -431,7 +442,13 @@ namespace PhotoEmin
                 return false;
             }
         }
-
+        private void setVisibleAfterSaveProcess(bool status)
+        {
+            btnSave.Visible = status;
+            lblSave.Visible = status;
+            btnSaveAndPrint.Visible = status;
+            lblSaveAndPrint.Visible = status;
+        }
         void PrintProcess()
         {
             if (!string.IsNullOrWhiteSpace(lblReceiptName.Text))
@@ -502,29 +519,75 @@ namespace PhotoEmin
             // Geçerli bir dosya adı ve sürücü var mı kontrol et
             if (!string.IsNullOrEmpty(klasorAdi) && !string.IsNullOrEmpty(secilenSurucu))
             {
-                // Klasörleri ara ve bulunanları ListBox'a ekle
-                ListFolderNames(secilenSurucu, klasorAdi);
+                try
+                {
+                    Thread threadInput = new Thread(() => DisplayData(secilenSurucu, klasorAdi));
+                    threadInput.Start();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
                 MessageBox.Show("Lütfen klasör adını ve sürücüyü seçin.", "Eksik Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+        private void DisplayData(string secilenSurucu, string klasorAdi)
+        {
+            // Loading göstergesini göster
+            SetLoading(true);
+
+            // Diğer işlemler burada gerçekleştirilir
+            ListFolderNames(secilenSurucu, klasorAdi);
+
+            // Loading göstergesini gizle
+            SetLoading(false);
+        }
+
+        private void SetLoading(bool displayLoader)
+        {
+            // this.Invoke ile UI thread üzerinde işlemler yapılır
+            this.Invoke((MethodInvoker)delegate
+            {
+                if (displayLoader)
+                {
+                    // Loading göstergesini göster ve cursor'ı "wait" durumuna getir
+                    btnSearchFile.Visible = false;
+                    lblSearchFile.Visible = false;
+                    pictureBoxLoading.Visible = true;
+                    this.Cursor = Cursors.WaitCursor;
+                }
+                else
+                {
+                    // Loading göstergesini gizle ve cursor'ı varsayılan duruma getir
+                    btnSearchFile.Visible = true;
+                    lblSearchFile.Visible = true;
+                    pictureBoxLoading.Visible = false;
+                    this.Cursor = Cursors.Default;
+                }
+            });
+        }
 
         private void ListFolderNames(string dizinYolu, string arananKlasorAdi)
         {
             try
             {
-                listBoxFiles.Items.Clear(); // ListBox'ı temizle
-
+                SetLoading(true);
+                this.Invoke((MethodInvoker)delegate
+                {
+                    listBoxFiles.Items.Clear();
+                });
                 // Dizin içindeki klasörleri kontrol et
                 DirectoryInfo di = new DirectoryInfo(dizinYolu);
 
-                // Tüm dizinleri al
-                var klasorlerVeDosyalar = di.GetFileSystemInfos("*", SearchOption.AllDirectories);
+                List<DirectoryInfo> erisilebilenKlasorler = new List<DirectoryInfo>();
+
+                CheckDirectories(di, erisilebilenKlasorler);
 
                 // Sadece klasörleri eklemek için filtreleme adımı
-                var filtrelenmisKlasorler = klasorlerVeDosyalar
+                var filtrelenmisKlasorler = erisilebilenKlasorler
                     .Where(info => (info.Attributes & FileAttributes.Directory) == FileAttributes.Directory && info.Name.Contains(arananKlasorAdi, StringComparison.OrdinalIgnoreCase))
                     .ToList();
 
@@ -532,16 +595,26 @@ namespace PhotoEmin
                 {
                     // Klasör isimlerini alıyoruz
                     string klasorAdi = klasorDosya.FullName;
-                    listBoxFiles.Items.Add(klasorAdi);
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        listBoxFiles.Items.Add(klasorAdi);
+                    });
+
                     // Yatay kaydırma çubuğunu güncelle
                 }
 
                 if (listBoxFiles.Items.Count == 0)
                 {
-                    listBoxFiles.Items.Add("Bulunamadı");
-                }
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        listBoxFiles.Items.Add("Bulunamadı");
+                    });
 
-                listBoxFiles.SelectedIndex = 0; // İlk öğeyi seç
+                }
+                this.Invoke((MethodInvoker)delegate
+                {
+                    listBoxFiles.SelectedIndex = 0; // İlk öğeyi seç
+                });
             }
             catch (UnauthorizedAccessException)
             {
@@ -549,10 +622,28 @@ namespace PhotoEmin
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Hata oluştu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
+
+        static void CheckDirectories(DirectoryInfo currentDirectory, List<DirectoryInfo> accessibleDirectories)
+        {
+            accessibleDirectories.Add(currentDirectory);
+
+            try
+            {
+                // UnauthorizedAccessException hatası alınmazsa, alt klasörleri ile birlikte kontrol et
+                foreach (var subDirectory in currentDirectory.GetDirectories())
+                {
+                    CheckDirectories(subDirectory, accessibleDirectories);
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+
+            }
+        }
         private void ListBoxFiles_DoubleClick(object sender, EventArgs e)
         {
             // ListBox'ta çift tıklanan öğenin adını al
@@ -615,5 +706,9 @@ namespace PhotoEmin
             return result;
         }
 
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            setVisibleAfterSaveProcess(true);
+        }
     }
 }
