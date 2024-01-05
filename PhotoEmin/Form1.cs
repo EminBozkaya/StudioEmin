@@ -31,6 +31,7 @@ namespace PhotoEmin
 
                 pnlReceipt.Visible = false;
                 pnlFindFolder.Visible = false;
+                flowLayoutPanelArchive.Visible = false;
                 pictureBoxLoading.Visible = false; // Başlangıçta görünmez yapın
             };
 
@@ -39,6 +40,7 @@ namespace PhotoEmin
             {
                 pnlReceipt.Visible = false;
                 pnlFindFolder.Visible = false;
+                flowLayoutPanelArchive.Visible = false;
             };
         }
 
@@ -66,9 +68,14 @@ namespace PhotoEmin
         {
             pnlReceipt.Visible = true;
             pnlFindFolder.Visible = false;
+            flowLayoutPanelArchive.Visible = false;
+        }
 
-            //pnlFindFolder.SendToBack();
-            //pnlReceipt.BringToFront();
+        private void flowLayoutPanelArchive_Click(object sender, EventArgs e)
+        {
+            flowLayoutPanelArchive.Visible = true;
+            pnlFindFolder.Visible = false;
+            pnlReceipt.Visible = false;
         }
 
         private void btnGoTheFolder_Click(object sender, EventArgs e)
@@ -482,6 +489,7 @@ namespace PhotoEmin
         {
             pnlReceipt.Visible = false;
             pnlFindFolder.Visible = true;
+            flowLayoutPanelArchive.Visible = false;
 
             //pnlReceipt.SendToBack();
             //pnlFindFolder.BringToFront();
@@ -709,6 +717,11 @@ namespace PhotoEmin
         private void txtName_TextChanged(object sender, EventArgs e)
         {
             setVisibleAfterSaveProcess(true);
+        }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }

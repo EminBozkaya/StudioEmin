@@ -88,12 +88,20 @@
             label21 = new Label();
             label22 = new Label();
             btnMyComputer = new Button();
+            button1 = new Button();
+            label1 = new Label();
+            flowLayoutPanelArchive = new FlowLayoutPanel();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            button2 = new Button();
+            button3 = new Button();
             pnlReceipt.SuspendLayout();
             pnlReceiptInputs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numQty).BeginInit();
             pnlFindFolder.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLoading).BeginInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
+            flowLayoutPanelArchive.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // btnFindFolder
@@ -103,7 +111,7 @@
             btnFindFolder.BackgroundImageLayout = ImageLayout.Stretch;
             btnFindFolder.FlatAppearance.BorderSize = 0;
             btnFindFolder.FlatStyle = FlatStyle.Flat;
-            btnFindFolder.Location = new Point(37, 178);
+            btnFindFolder.Location = new Point(34, 148);
             btnFindFolder.Name = "btnFindFolder";
             btnFindFolder.Size = new Size(100, 100);
             btnFindFolder.TabIndex = 0;
@@ -117,7 +125,7 @@
             btnCreateReceipt.BackgroundImageLayout = ImageLayout.Stretch;
             btnCreateReceipt.FlatAppearance.BorderSize = 0;
             btnCreateReceipt.FlatStyle = FlatStyle.Flat;
-            btnCreateReceipt.Location = new Point(37, 22);
+            btnCreateReceipt.Location = new Point(34, 286);
             btnCreateReceipt.Name = "btnCreateReceipt";
             btnCreateReceipt.Size = new Size(100, 100);
             btnCreateReceipt.TabIndex = 0;
@@ -126,7 +134,7 @@
             // 
             // pnlReceipt
             // 
-            pnlReceipt.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlReceipt.AutoSize = true;
             pnlReceipt.BackColor = Color.Transparent;
             pnlReceipt.Controls.Add(textBoxFileLocation);
             pnlReceipt.Controls.Add(label12);
@@ -149,16 +157,16 @@
             pnlReceipt.Controls.Add(btnSave);
             pnlReceipt.Controls.Add(btnGoReceipt);
             pnlReceipt.Controls.Add(btnGoTheFolder);
-            pnlReceipt.Location = new Point(227, 81);
+            pnlReceipt.Location = new Point(249, 83);
             pnlReceipt.Name = "pnlReceipt";
-            pnlReceipt.Size = new Size(1289, 639);
+            pnlReceipt.Size = new Size(1340, 614);
             pnlReceipt.TabIndex = 1;
             // 
             // textBoxFileLocation
             // 
             textBoxFileLocation.BackColor = SystemColors.ScrollBar;
             textBoxFileLocation.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxFileLocation.Location = new Point(493, 196);
+            textBoxFileLocation.Location = new Point(487, 192);
             textBoxFileLocation.Name = "textBoxFileLocation";
             textBoxFileLocation.ReadOnly = true;
             textBoxFileLocation.Size = new Size(282, 27);
@@ -169,7 +177,7 @@
             label12.AutoSize = true;
             label12.FlatStyle = FlatStyle.Flat;
             label12.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label12.Location = new Point(596, 595);
+            label12.Location = new Point(589, 591);
             label12.Name = "label12";
             label12.Size = new Size(58, 22);
             label12.TabIndex = 2;
@@ -181,7 +189,7 @@
             lblFileLocation.FlatStyle = FlatStyle.Flat;
             lblFileLocation.Font = new Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblFileLocation.ForeColor = SystemColors.ButtonHighlight;
-            lblFileLocation.Location = new Point(803, 241);
+            lblFileLocation.Location = new Point(796, 237);
             lblFileLocation.Name = "lblFileLocation";
             lblFileLocation.Size = new Size(0, 18);
             lblFileLocation.TabIndex = 2;
@@ -192,7 +200,7 @@
             lblReceiptName.FlatStyle = FlatStyle.Flat;
             lblReceiptName.Font = new Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblReceiptName.ForeColor = SystemColors.ButtonHighlight;
-            lblReceiptName.Location = new Point(803, 299);
+            lblReceiptName.Location = new Point(796, 295);
             lblReceiptName.Name = "lblReceiptName";
             lblReceiptName.Size = new Size(0, 18);
             lblReceiptName.TabIndex = 2;
@@ -202,7 +210,7 @@
             lblSave.AutoSize = true;
             lblSave.FlatStyle = FlatStyle.Flat;
             lblSave.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSave.Location = new Point(595, 500);
+            lblSave.Location = new Point(589, 496);
             lblSave.Name = "lblSave";
             lblSave.Size = new Size(63, 22);
             lblSave.TabIndex = 2;
@@ -213,7 +221,7 @@
             lblSaveAndPrint.AutoSize = true;
             lblSaveAndPrint.FlatStyle = FlatStyle.Flat;
             lblSaveAndPrint.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSaveAndPrint.Location = new Point(551, 384);
+            lblSaveAndPrint.Location = new Point(544, 380);
             lblSaveAndPrint.Name = "lblSaveAndPrint";
             lblSaveAndPrint.Size = new Size(136, 22);
             lblSaveAndPrint.TabIndex = 2;
@@ -224,7 +232,7 @@
             label15.AutoSize = true;
             label15.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label15.ForeColor = Color.Red;
-            label15.Location = new Point(793, 593);
+            label15.Location = new Point(774, 591);
             label15.Name = "label15";
             label15.Size = new Size(123, 22);
             label15.TabIndex = 2;
@@ -252,7 +260,7 @@
             pnlReceiptInputs.Controls.Add(lblName);
             pnlReceiptInputs.Font = new Font("MV Boli", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             pnlReceiptInputs.ForeColor = Color.DimGray;
-            pnlReceiptInputs.Location = new Point(13, 21);
+            pnlReceiptInputs.Location = new Point(6, 17);
             pnlReceiptInputs.Name = "pnlReceiptInputs";
             pnlReceiptInputs.Size = new Size(474, 594);
             pnlReceiptInputs.TabIndex = 0;
@@ -403,7 +411,7 @@
             label26.AutoSize = true;
             label26.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
             label26.ForeColor = SystemColors.ButtonFace;
-            label26.Location = new Point(911, 438);
+            label26.Location = new Point(905, 434);
             label26.Name = "label26";
             label26.Size = new Size(108, 22);
             label26.TabIndex = 2;
@@ -414,7 +422,7 @@
             label14.AutoSize = true;
             label14.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
             label14.ForeColor = SystemColors.ButtonFace;
-            label14.Location = new Point(793, 438);
+            label14.Location = new Point(787, 434);
             label14.Name = "label14";
             label14.Size = new Size(94, 22);
             label14.TabIndex = 2;
@@ -424,7 +432,7 @@
             // 
             label25.AutoSize = true;
             label25.Font = new Font("Palatino Linotype", 15.75F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
-            label25.Location = new Point(803, 267);
+            label25.Location = new Point(796, 263);
             label25.Name = "label25";
             label25.Size = new Size(140, 28);
             label25.TabIndex = 2;
@@ -434,7 +442,7 @@
             // 
             label24.AutoSize = true;
             label24.Font = new Font("Palatino Linotype", 15.75F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
-            label24.Location = new Point(803, 206);
+            label24.Location = new Point(796, 202);
             label24.Name = "label24";
             label24.Size = new Size(135, 28);
             label24.TabIndex = 2;
@@ -444,7 +452,7 @@
             // 
             lblReceiptCaption.AutoSize = true;
             lblReceiptCaption.Font = new Font("Palatino Linotype", 17.25F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
-            lblReceiptCaption.Location = new Point(803, 175);
+            lblReceiptCaption.Location = new Point(796, 171);
             lblReceiptCaption.Name = "lblReceiptCaption";
             lblReceiptCaption.Size = new Size(243, 31);
             lblReceiptCaption.TabIndex = 2;
@@ -454,7 +462,7 @@
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label13.Location = new Point(543, 166);
+            label13.Location = new Point(536, 162);
             label13.Name = "label13";
             label13.Size = new Size(154, 26);
             label13.TabIndex = 2;
@@ -466,7 +474,7 @@
             btnTrash.BackgroundImageLayout = ImageLayout.Stretch;
             btnTrash.FlatAppearance.BorderSize = 0;
             btnTrash.FlatStyle = FlatStyle.Flat;
-            btnTrash.Location = new Point(805, 511);
+            btnTrash.Location = new Point(799, 507);
             btnTrash.Name = "btnTrash";
             btnTrash.Size = new Size(80, 80);
             btnTrash.TabIndex = 15;
@@ -479,7 +487,7 @@
             btnPrint.BackgroundImageLayout = ImageLayout.Stretch;
             btnPrint.FlatAppearance.BorderSize = 0;
             btnPrint.FlatStyle = FlatStyle.Flat;
-            btnPrint.Location = new Point(586, 531);
+            btnPrint.Location = new Point(579, 527);
             btnPrint.Name = "btnPrint";
             btnPrint.Size = new Size(80, 73);
             btnPrint.TabIndex = 13;
@@ -492,7 +500,7 @@
             btnChooseFileLocation.BackgroundImageLayout = ImageLayout.Stretch;
             btnChooseFileLocation.FlatAppearance.BorderSize = 0;
             btnChooseFileLocation.FlatStyle = FlatStyle.Flat;
-            btnChooseFileLocation.Location = new Point(566, 89);
+            btnChooseFileLocation.Location = new Point(559, 85);
             btnChooseFileLocation.Name = "btnChooseFileLocation";
             btnChooseFileLocation.Size = new Size(108, 81);
             btnChooseFileLocation.TabIndex = 10;
@@ -505,7 +513,7 @@
             btnSaveAndPrint.BackgroundImageLayout = ImageLayout.Stretch;
             btnSaveAndPrint.FlatAppearance.BorderSize = 0;
             btnSaveAndPrint.FlatStyle = FlatStyle.Flat;
-            btnSaveAndPrint.Location = new Point(526, 253);
+            btnSaveAndPrint.Location = new Point(520, 249);
             btnSaveAndPrint.Name = "btnSaveAndPrint";
             btnSaveAndPrint.Size = new Size(195, 147);
             btnSaveAndPrint.TabIndex = 11;
@@ -518,7 +526,7 @@
             btnSave.BackgroundImageLayout = ImageLayout.Stretch;
             btnSave.FlatAppearance.BorderSize = 0;
             btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Location = new Point(586, 438);
+            btnSave.Location = new Point(579, 434);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(80, 64);
             btnSave.TabIndex = 12;
@@ -531,7 +539,7 @@
             btnGoReceipt.BackgroundImageLayout = ImageLayout.Stretch;
             btnGoReceipt.FlatAppearance.BorderSize = 0;
             btnGoReceipt.FlatStyle = FlatStyle.Flat;
-            btnGoReceipt.Location = new Point(921, 355);
+            btnGoReceipt.Location = new Point(914, 351);
             btnGoReceipt.Name = "btnGoReceipt";
             btnGoReceipt.Size = new Size(80, 80);
             btnGoReceipt.TabIndex = 14;
@@ -544,7 +552,7 @@
             btnGoTheFolder.BackgroundImageLayout = ImageLayout.Stretch;
             btnGoTheFolder.FlatAppearance.BorderSize = 0;
             btnGoTheFolder.FlatStyle = FlatStyle.Flat;
-            btnGoTheFolder.Location = new Point(803, 355);
+            btnGoTheFolder.Location = new Point(796, 351);
             btnGoTheFolder.Name = "btnGoTheFolder";
             btnGoTheFolder.Size = new Size(80, 80);
             btnGoTheFolder.TabIndex = 14;
@@ -565,10 +573,10 @@
             pnlFindFolder.Controls.Add(lblSearchFile);
             pnlFindFolder.Controls.Add(label19);
             pnlFindFolder.Controls.Add(label16);
-            pnlFindFolder.Location = new Point(274, 44);
+            pnlFindFolder.Location = new Point(284, 40);
             pnlFindFolder.Margin = new Padding(2, 1, 2, 1);
             pnlFindFolder.Name = "pnlFindFolder";
-            pnlFindFolder.Size = new Size(1060, 589);
+            pnlFindFolder.Size = new Size(1149, 650);
             pnlFindFolder.TabIndex = 16;
             // 
             // pictureBoxLoading
@@ -593,7 +601,7 @@
             listBoxFiles.Location = new Point(193, 436);
             listBoxFiles.Margin = new Padding(2, 1, 2, 1);
             listBoxFiles.Name = "listBoxFiles";
-            listBoxFiles.Size = new Size(507, 130);
+            listBoxFiles.Size = new Size(507, 109);
             listBoxFiles.TabIndex = 5;
             listBoxFiles.DoubleClick += ListBoxFiles_DoubleClick;
             // 
@@ -647,11 +655,11 @@
             // 
             label17.AutoSize = true;
             label17.BackColor = Color.Transparent;
-            label17.Font = new Font("Palatino Linotype", 13.875F, FontStyle.Bold);
+            label17.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold);
             label17.ForeColor = SystemColors.ActiveCaptionText;
-            label17.Location = new Point(193, 105);
+            label17.Location = new Point(174, 105);
             label17.Name = "label17";
-            label17.Size = new Size(116, 26);
+            label17.Size = new Size(144, 32);
             label17.TabIndex = 2;
             label17.Text = "Sürücü Seç:";
             // 
@@ -675,21 +683,21 @@
             label19.ForeColor = SystemColors.ActiveCaptionText;
             label19.Location = new Point(317, 403);
             label19.Name = "label19";
-            label19.Size = new Size(217, 32);
+            label19.Size = new Size(219, 32);
             label19.TabIndex = 2;
-            label19.Text = "Bulunan Dosyalar:";
+            label19.Text = "Bulunan Klasörler:";
             // 
             // label16
             // 
             label16.AutoSize = true;
             label16.BackColor = Color.Transparent;
-            label16.Font = new Font("Palatino Linotype", 13.875F, FontStyle.Bold);
+            label16.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold);
             label16.ForeColor = SystemColors.ActiveCaptionText;
             label16.Location = new Point(556, 105);
             label16.Name = "label16";
-            label16.Size = new Size(144, 26);
+            label16.Size = new Size(177, 32);
             label16.TabIndex = 2;
-            label16.Text = "Dosya Adı Gir:";
+            label16.Text = "Klasör Adı Gir:";
             // 
             // label9
             // 
@@ -697,7 +705,7 @@
             label9.BackColor = Color.Transparent;
             label9.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label9.ForeColor = SystemColors.ButtonFace;
-            label9.Location = new Point(37, 122);
+            label9.Location = new Point(34, 386);
             label9.Name = "label9";
             label9.Size = new Size(103, 22);
             label9.TabIndex = 2;
@@ -728,11 +736,11 @@
             label21.BackColor = Color.Transparent;
             label21.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label21.ForeColor = SystemColors.ButtonFace;
-            label21.Location = new Point(37, 283);
+            label21.Location = new Point(34, 253);
             label21.Name = "label21";
-            label21.Size = new Size(86, 22);
+            label21.Size = new Size(88, 22);
             label21.TabIndex = 2;
-            label21.Text = "Dosya Ara";
+            label21.Text = "Klasör Ara";
             // 
             // label22
             // 
@@ -740,7 +748,7 @@
             label22.BackColor = Color.Transparent;
             label22.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label22.ForeColor = SystemColors.ButtonFace;
-            label22.Location = new Point(37, 437);
+            label22.Location = new Point(34, 119);
             label22.Name = "label22";
             label22.Size = new Size(104, 22);
             label22.TabIndex = 2;
@@ -753,12 +761,95 @@
             btnMyComputer.BackgroundImageLayout = ImageLayout.Stretch;
             btnMyComputer.FlatAppearance.BorderSize = 0;
             btnMyComputer.FlatStyle = FlatStyle.Flat;
-            btnMyComputer.Location = new Point(37, 332);
+            btnMyComputer.Location = new Point(34, 16);
             btnMyComputer.Name = "btnMyComputer";
             btnMyComputer.Size = new Size(100, 100);
             btnMyComputer.TabIndex = 0;
             btnMyComputer.UseVisualStyleBackColor = false;
             btnMyComputer.Click += btnMyComputer_Click;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.Transparent;
+            button1.BackgroundImage = Properties.Resources.btnArchive;
+            button1.BackgroundImageLayout = ImageLayout.Stretch;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Location = new Point(34, 428);
+            button1.Name = "button1";
+            button1.Size = new Size(100, 100);
+            button1.TabIndex = 0;
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += flowLayoutPanelArchive_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.BackColor = Color.Transparent;
+            label1.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = SystemColors.ButtonFace;
+            label1.Location = new Point(58, 531);
+            label1.Name = "label1";
+            label1.Size = new Size(50, 22);
+            label1.TabIndex = 2;
+            label1.Text = "Arşiv";
+            // 
+            // flowLayoutPanelArchive
+            // 
+            flowLayoutPanelArchive.BackColor = SystemColors.ControlLight;
+            flowLayoutPanelArchive.Controls.Add(tableLayoutPanel1);
+            flowLayoutPanelArchive.Location = new Point(222, 95);
+            flowLayoutPanelArchive.Margin = new Padding(2, 1, 2, 1);
+            flowLayoutPanelArchive.Name = "flowLayoutPanelArchive";
+            flowLayoutPanelArchive.Size = new Size(1057, 554);
+            flowLayoutPanelArchive.TabIndex = 17;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.InsetDouble;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(button2, 0, 0);
+            tableLayoutPanel1.Controls.Add(button3, 0, 1);
+            tableLayoutPanel1.Location = new Point(2, 1);
+            tableLayoutPanel1.Margin = new Padding(2, 1, 2, 1);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.Size = new Size(150, 263);
+            tableLayoutPanel1.TabIndex = 18;
+            // 
+            // button2
+            // 
+            button2.FlatAppearance.BorderColor = Color.Black;
+            button2.FlatAppearance.BorderSize = 5;
+            button2.FlatAppearance.MouseDownBackColor = Color.Silver;
+            button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
+            button2.FlatStyle = FlatStyle.System;
+            button2.Font = new Font("Segoe UI", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button2.Location = new Point(11, 10);
+            button2.Margin = new Padding(8, 7, 8, 7);
+            button2.Name = "button2";
+            button2.Size = new Size(128, 69);
+            button2.TabIndex = 19;
+            button2.Text = "Arşivde Fotoğraf Ara";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.FlatAppearance.BorderColor = Color.Black;
+            button3.FlatAppearance.BorderSize = 10;
+            button3.FlatStyle = FlatStyle.System;
+            button3.Font = new Font("Segoe UI", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button3.Location = new Point(11, 96);
+            button3.Margin = new Padding(8, 7, 8, 7);
+            button3.Name = "button3";
+            button3.Size = new Size(128, 69);
+            button3.TabIndex = 19;
+            button3.Text = "Klasörü Arşive Ekle";
+            button3.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -766,15 +857,18 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.ArkaFon;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1663, 761);
+            ClientSize = new Size(1678, 709);
             Controls.Add(pnlReceipt);
             Controls.Add(pnlFindFolder);
-            Controls.Add(btnMyComputer);
-            Controls.Add(btnFindFolder);
-            Controls.Add(label22);
-            Controls.Add(btnCreateReceipt);
-            Controls.Add(label21);
+            Controls.Add(flowLayoutPanelArchive);
+            Controls.Add(label1);
             Controls.Add(label9);
+            Controls.Add(label21);
+            Controls.Add(button1);
+            Controls.Add(btnCreateReceipt);
+            Controls.Add(btnFindFolder);
+            Controls.Add(btnMyComputer);
+            Controls.Add(label22);
             DoubleBuffered = true;
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
@@ -788,6 +882,8 @@
             pnlFindFolder.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLoading).EndInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
+            flowLayoutPanelArchive.ResumeLayout(false);
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -851,5 +947,15 @@
         private Label label26;
         private Button btnGoReceipt;
         private PictureBox pictureBoxLoading;
+        private ToolStripMenuItem arşivİşlemleriToolStripMenuItem;
+        private TabControl tabControlMenu;
+        private TabPage tabMenu;
+        private TabPage tabPage2;
+        private Label label1;
+        private Button button1;
+        private TableLayoutPanel tableLayoutPanel1;
+        private FlowLayoutPanel flowLayoutPanelArchive;
+        private Button button2;
+        private Button button3;
     }
 }
