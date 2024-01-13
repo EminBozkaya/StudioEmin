@@ -92,7 +92,7 @@
             label1 = new Label();
             btnSearchPhoto = new Button();
             pnlBorder = new Panel();
-            panel1 = new Panel();
+            flowLayoutPanelArchive = new Panel();
             btnAddFoldersToArchive = new Button();
             btnAddSingleToArchive = new Button();
             btnMakeSpare = new Button();
@@ -104,7 +104,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBoxLoading).BeginInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             pnlBorder.SuspendLayout();
-            panel1.SuspendLayout();
+            flowLayoutPanelArchive.SuspendLayout();
             SuspendLayout();
             // 
             // btnFindFolder
@@ -819,7 +819,7 @@
             // 
             pnlBorder.Anchor = AnchorStyles.Top;
             pnlBorder.BackColor = Color.Silver;
-            pnlBorder.Controls.Add(panel1);
+            pnlBorder.Controls.Add(flowLayoutPanelArchive);
             pnlBorder.Controls.Add(pnlFindFolder);
             pnlBorder.Controls.Add(pnlReceipt);
             pnlBorder.Location = new Point(180, 95);
@@ -827,18 +827,18 @@
             pnlBorder.Size = new Size(1304, 640);
             pnlBorder.TabIndex = 18;
             // 
-            // panel1
+            // flowLayoutPanelArchive
             // 
-            panel1.BackColor = Color.Transparent;
-            panel1.Controls.Add(btnAddSpareToArchive);
-            panel1.Controls.Add(btnMakeSpare);
-            panel1.Controls.Add(btnAddSingleToArchive);
-            panel1.Controls.Add(btnAddFoldersToArchive);
-            panel1.Controls.Add(btnSearchPhoto);
-            panel1.Location = new Point(12, 33);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1289, 583);
-            panel1.TabIndex = 17;
+            flowLayoutPanelArchive.BackColor = Color.Transparent;
+            flowLayoutPanelArchive.Controls.Add(btnAddSpareToArchive);
+            flowLayoutPanelArchive.Controls.Add(btnMakeSpare);
+            flowLayoutPanelArchive.Controls.Add(btnAddSingleToArchive);
+            flowLayoutPanelArchive.Controls.Add(btnAddFoldersToArchive);
+            flowLayoutPanelArchive.Controls.Add(btnSearchPhoto);
+            flowLayoutPanelArchive.Location = new Point(12, 33);
+            flowLayoutPanelArchive.Name = "flowLayoutPanelArchive";
+            flowLayoutPanelArchive.Size = new Size(1289, 583);
+            flowLayoutPanelArchive.TabIndex = 17;
             // 
             // btnAddFoldersToArchive
             // 
@@ -943,7 +943,7 @@
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             pnlBorder.ResumeLayout(false);
             pnlBorder.PerformLayout();
-            panel1.ResumeLayout(false);
+            flowLayoutPanelArchive.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1015,7 +1015,7 @@
         private Button button1;
         private Button btnSearchPhoto;
         private Panel pnlBorder;
-        private Panel panel1;
+        private Panel flowLayoutPanelArchive;
         private Button btnMakeSpare;
         private Button btnAddSingleToArchive;
         private Button btnAddFoldersToArchive;
