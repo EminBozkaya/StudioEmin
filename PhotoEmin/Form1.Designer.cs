@@ -93,10 +93,13 @@
             btnSearchPhoto = new Button();
             pnlBorder = new Panel();
             flowLayoutPanelArchive = new Panel();
-            btnAddFoldersToArchive = new Button();
-            btnAddSingleToArchive = new Button();
-            btnMakeSpare = new Button();
+            lblExplanation = new Label();
+            lblEmpty = new Label();
+            lblMainArchiveCaption = new Label();
             btnAddSpareToArchive = new Button();
+            btnMakeSpare = new Button();
+            btnAddSingleToArchive = new Button();
+            btnAddFoldersToArchive = new Button();
             pnlReceipt.SuspendLayout();
             pnlReceiptInputs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numQty).BeginInit();
@@ -114,9 +117,10 @@
             btnFindFolder.BackgroundImageLayout = ImageLayout.Stretch;
             btnFindFolder.FlatAppearance.BorderSize = 0;
             btnFindFolder.FlatStyle = FlatStyle.Flat;
-            btnFindFolder.Location = new Point(34, 241);
+            btnFindFolder.Location = new Point(65, 341);
+            btnFindFolder.Margin = new Padding(6);
             btnFindFolder.Name = "btnFindFolder";
-            btnFindFolder.Size = new Size(100, 100);
+            btnFindFolder.Size = new Size(186, 213);
             btnFindFolder.TabIndex = 0;
             btnFindFolder.UseVisualStyleBackColor = false;
             btnFindFolder.Click += btnFindFolder_Click;
@@ -128,9 +132,10 @@
             btnCreateReceipt.BackgroundImageLayout = ImageLayout.Stretch;
             btnCreateReceipt.FlatAppearance.BorderSize = 0;
             btnCreateReceipt.FlatStyle = FlatStyle.Flat;
-            btnCreateReceipt.Location = new Point(34, 379);
+            btnCreateReceipt.Location = new Point(65, 636);
+            btnCreateReceipt.Margin = new Padding(6);
             btnCreateReceipt.Name = "btnCreateReceipt";
-            btnCreateReceipt.Size = new Size(100, 100);
+            btnCreateReceipt.Size = new Size(186, 213);
             btnCreateReceipt.TabIndex = 0;
             btnCreateReceipt.UseVisualStyleBackColor = false;
             btnCreateReceipt.Click += btnCreateReceipt_Click;
@@ -160,19 +165,21 @@
             pnlReceipt.Controls.Add(btnSave);
             pnlReceipt.Controls.Add(btnGoReceipt);
             pnlReceipt.Controls.Add(btnGoTheFolder);
-            pnlReceipt.Location = new Point(56, 16);
+            pnlReceipt.Location = new Point(104, 34);
+            pnlReceipt.Margin = new Padding(6);
             pnlReceipt.Name = "pnlReceipt";
-            pnlReceipt.Size = new Size(1230, 621);
+            pnlReceipt.Size = new Size(2381, 1355);
             pnlReceipt.TabIndex = 1;
             // 
             // textBoxFileLocation
             // 
             textBoxFileLocation.BackColor = SystemColors.ScrollBar;
             textBoxFileLocation.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxFileLocation.Location = new Point(487, 192);
+            textBoxFileLocation.Location = new Point(904, 410);
+            textBoxFileLocation.Margin = new Padding(6);
             textBoxFileLocation.Name = "textBoxFileLocation";
             textBoxFileLocation.ReadOnly = true;
-            textBoxFileLocation.Size = new Size(282, 27);
+            textBoxFileLocation.Size = new Size(520, 47);
             textBoxFileLocation.TabIndex = 14;
             // 
             // label12
@@ -180,9 +187,10 @@
             label12.AutoSize = true;
             label12.FlatStyle = FlatStyle.Flat;
             label12.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label12.Location = new Point(589, 591);
+            label12.Location = new Point(1094, 1261);
+            label12.Margin = new Padding(6, 0, 6, 0);
             label12.Name = "label12";
-            label12.Size = new Size(58, 22);
+            label12.Size = new Size(111, 44);
             label12.TabIndex = 2;
             label12.Text = "Yazdır";
             // 
@@ -192,9 +200,10 @@
             lblFileLocation.FlatStyle = FlatStyle.Flat;
             lblFileLocation.Font = new Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblFileLocation.ForeColor = SystemColors.MenuHighlight;
-            lblFileLocation.Location = new Point(796, 237);
+            lblFileLocation.Location = new Point(1478, 506);
+            lblFileLocation.Margin = new Padding(6, 0, 6, 0);
             lblFileLocation.Name = "lblFileLocation";
-            lblFileLocation.Size = new Size(0, 18);
+            lblFileLocation.Size = new Size(0, 35);
             lblFileLocation.TabIndex = 2;
             // 
             // lblReceiptName
@@ -203,9 +212,10 @@
             lblReceiptName.FlatStyle = FlatStyle.Flat;
             lblReceiptName.Font = new Font("Arial", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblReceiptName.ForeColor = SystemColors.MenuHighlight;
-            lblReceiptName.Location = new Point(796, 295);
+            lblReceiptName.Location = new Point(1478, 629);
+            lblReceiptName.Margin = new Padding(6, 0, 6, 0);
             lblReceiptName.Name = "lblReceiptName";
-            lblReceiptName.Size = new Size(0, 18);
+            lblReceiptName.Size = new Size(0, 35);
             lblReceiptName.TabIndex = 2;
             // 
             // lblSave
@@ -213,9 +223,10 @@
             lblSave.AutoSize = true;
             lblSave.FlatStyle = FlatStyle.Flat;
             lblSave.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSave.Location = new Point(589, 496);
+            lblSave.Location = new Point(1094, 1058);
+            lblSave.Margin = new Padding(6, 0, 6, 0);
             lblSave.Name = "lblSave";
-            lblSave.Size = new Size(63, 22);
+            lblSave.Size = new Size(125, 44);
             lblSave.TabIndex = 2;
             lblSave.Text = "Kaydet";
             // 
@@ -224,9 +235,10 @@
             lblSaveAndPrint.AutoSize = true;
             lblSaveAndPrint.FlatStyle = FlatStyle.Flat;
             lblSaveAndPrint.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSaveAndPrint.Location = new Point(544, 380);
+            lblSaveAndPrint.Location = new Point(1010, 811);
+            lblSaveAndPrint.Margin = new Padding(6, 0, 6, 0);
             lblSaveAndPrint.Name = "lblSaveAndPrint";
-            lblSaveAndPrint.Size = new Size(136, 22);
+            lblSaveAndPrint.Size = new Size(266, 44);
             lblSaveAndPrint.TabIndex = 2;
             lblSaveAndPrint.Text = "Kaydet ve Yazdır";
             // 
@@ -235,9 +247,10 @@
             label15.AutoSize = true;
             label15.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label15.ForeColor = Color.Red;
-            label15.Location = new Point(787, 589);
+            label15.Location = new Point(1462, 1257);
+            label15.Margin = new Padding(6, 0, 6, 0);
             label15.Name = "label15";
-            label15.Size = new Size(123, 22);
+            label15.Size = new Size(238, 44);
             label15.TabIndex = 2;
             label15.Text = "Formu Temizle";
             // 
@@ -263,46 +276,50 @@
             pnlReceiptInputs.Controls.Add(lblName);
             pnlReceiptInputs.Font = new Font("MV Boli", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             pnlReceiptInputs.ForeColor = Color.DimGray;
-            pnlReceiptInputs.Location = new Point(6, 17);
+            pnlReceiptInputs.Location = new Point(11, 36);
+            pnlReceiptInputs.Margin = new Padding(6);
             pnlReceiptInputs.Name = "pnlReceiptInputs";
-            pnlReceiptInputs.Size = new Size(474, 594);
+            pnlReceiptInputs.Size = new Size(880, 1267);
             pnlReceiptInputs.TabIndex = 0;
             // 
             // numQty
             // 
             numQty.Font = new Font("Arial", 14.25F);
-            numQty.Location = new Point(306, 145);
-            numQty.Margin = new Padding(2, 1, 2, 1);
+            numQty.Location = new Point(568, 309);
+            numQty.Margin = new Padding(4, 2, 4, 2);
             numQty.Name = "numQty";
-            numQty.Size = new Size(75, 29);
+            numQty.Size = new Size(139, 51);
             numQty.TabIndex = 4;
             numQty.ValueChanged += txtName_TextChanged;
             // 
             // txtDeliveryDate
             // 
             txtDeliveryDate.Font = new Font("Arial", 14.25F);
-            txtDeliveryDate.Location = new Point(269, 281);
+            txtDeliveryDate.Location = new Point(500, 599);
+            txtDeliveryDate.Margin = new Padding(6);
             txtDeliveryDate.Name = "txtDeliveryDate";
-            txtDeliveryDate.Size = new Size(116, 29);
+            txtDeliveryDate.Size = new Size(212, 51);
             txtDeliveryDate.TabIndex = 8;
             txtDeliveryDate.TextChanged += txtName_TextChanged;
             // 
             // txtRemainingAmount
             // 
             txtRemainingAmount.Font = new Font("Arial", 14.25F);
-            txtRemainingAmount.Location = new Point(295, 225);
+            txtRemainingAmount.Location = new Point(548, 480);
+            txtRemainingAmount.Margin = new Padding(6);
             txtRemainingAmount.Name = "txtRemainingAmount";
             txtRemainingAmount.ReadOnly = true;
-            txtRemainingAmount.Size = new Size(95, 29);
+            txtRemainingAmount.Size = new Size(173, 51);
             txtRemainingAmount.TabIndex = 7;
             txtRemainingAmount.TextChanged += txtName_TextChanged;
             // 
             // txtReceivedAmount
             // 
             txtReceivedAmount.Font = new Font("Arial", 14.25F);
-            txtReceivedAmount.Location = new Point(192, 225);
+            txtReceivedAmount.Location = new Point(357, 480);
+            txtReceivedAmount.Margin = new Padding(6);
             txtReceivedAmount.Name = "txtReceivedAmount";
-            txtReceivedAmount.Size = new Size(95, 29);
+            txtReceivedAmount.Size = new Size(173, 51);
             txtReceivedAmount.TabIndex = 6;
             txtReceivedAmount.TextChanged += TextBoxesAmount_TextChanged;
             txtReceivedAmount.LostFocus += TextBox_LostFocus;
@@ -310,9 +327,10 @@
             // txtTotalAmount
             // 
             txtTotalAmount.Font = new Font("Arial", 14.25F);
-            txtTotalAmount.Location = new Point(91, 225);
+            txtTotalAmount.Location = new Point(169, 480);
+            txtTotalAmount.Margin = new Padding(6);
             txtTotalAmount.Name = "txtTotalAmount";
-            txtTotalAmount.Size = new Size(95, 29);
+            txtTotalAmount.Size = new Size(173, 51);
             txtTotalAmount.TabIndex = 5;
             txtTotalAmount.TextChanged += TextBoxesAmount_TextChanged;
             txtTotalAmount.LostFocus += TextBox_LostFocus;
@@ -320,9 +338,10 @@
             // txtDimensions
             // 
             txtDimensions.Font = new Font("Arial", 14.25F);
-            txtDimensions.Location = new Point(139, 144);
+            txtDimensions.Location = new Point(258, 307);
+            txtDimensions.Margin = new Padding(6);
             txtDimensions.Name = "txtDimensions";
-            txtDimensions.Size = new Size(108, 29);
+            txtDimensions.Size = new Size(197, 51);
             txtDimensions.TabIndex = 3;
             txtDimensions.TextChanged += txtName_TextChanged;
             // 
@@ -330,83 +349,93 @@
             // 
             txtName.BackColor = Color.White;
             txtName.Font = new Font("Arial", 14.25F);
-            txtName.Location = new Point(91, 95);
+            txtName.Location = new Point(169, 203);
+            txtName.Margin = new Padding(6);
             txtName.Name = "txtName";
-            txtName.Size = new Size(294, 29);
+            txtName.Size = new Size(543, 51);
             txtName.TabIndex = 2;
             txtName.TextChanged += txtName_TextChanged;
             // 
             // txtBoxNotes
             // 
             txtBoxNotes.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBoxNotes.Location = new Point(91, 345);
+            txtBoxNotes.Location = new Point(169, 736);
+            txtBoxNotes.Margin = new Padding(6);
             txtBoxNotes.Name = "txtBoxNotes";
-            txtBoxNotes.Size = new Size(294, 219);
+            txtBoxNotes.Size = new Size(543, 463);
             txtBoxNotes.TabIndex = 9;
             txtBoxNotes.Text = "";
             txtBoxNotes.TextChanged += txtName_TextChanged;
             // 
             // label5
             // 
-            label5.Location = new Point(247, 147);
+            label5.Location = new Point(459, 314);
+            label5.Margin = new Padding(6, 0, 6, 0);
             label5.Name = "label5";
-            label5.Size = new Size(56, 23);
+            label5.Size = new Size(104, 49);
             label5.TabIndex = 0;
             label5.Text = "Adet:";
             // 
             // label3
             // 
-            label3.Location = new Point(306, 198);
+            label3.Location = new Point(568, 422);
+            label3.Margin = new Padding(6, 0, 6, 0);
             label3.Name = "label3";
-            label3.Size = new Size(77, 23);
+            label3.Size = new Size(143, 49);
             label3.TabIndex = 0;
             label3.Text = "Kalan:";
             // 
             // label6
             // 
-            label6.Location = new Point(101, 198);
+            label6.Location = new Point(188, 422);
+            label6.Margin = new Padding(6, 0, 6, 0);
             label6.Name = "label6";
-            label6.Size = new Size(64, 23);
+            label6.Size = new Size(119, 49);
             label6.TabIndex = 0;
             label6.Text = "Tutar:";
             // 
             // label4
             // 
-            label4.Location = new Point(91, 147);
+            label4.Location = new Point(169, 314);
+            label4.Margin = new Padding(6, 0, 6, 0);
             label4.Name = "label4";
-            label4.Size = new Size(100, 23);
+            label4.Size = new Size(186, 49);
             label4.TabIndex = 0;
             label4.Text = "Ebat:";
             // 
             // label7
             // 
-            label7.Location = new Point(150, 284);
+            label7.Location = new Point(279, 606);
+            label7.Margin = new Padding(6, 0, 6, 0);
             label7.Name = "label7";
-            label7.Size = new Size(126, 23);
+            label7.Size = new Size(234, 49);
             label7.TabIndex = 0;
             label7.Text = "Teslim Tarihi:";
             // 
             // label8
             // 
-            label8.Location = new Point(91, 319);
+            label8.Location = new Point(169, 681);
+            label8.Margin = new Padding(6, 0, 6, 0);
             label8.Name = "label8";
-            label8.Size = new Size(100, 23);
+            label8.Size = new Size(186, 49);
             label8.TabIndex = 0;
             label8.Text = "Not:";
             // 
             // label2
             // 
-            label2.Location = new Point(196, 199);
+            label2.Location = new Point(364, 425);
+            label2.Margin = new Padding(6, 0, 6, 0);
             label2.Name = "label2";
-            label2.Size = new Size(76, 23);
+            label2.Size = new Size(141, 49);
             label2.TabIndex = 0;
             label2.Text = "Alınan:";
             // 
             // lblName
             // 
-            lblName.Location = new Point(91, 70);
+            lblName.Location = new Point(169, 149);
+            lblName.Margin = new Padding(6, 0, 6, 0);
             lblName.Name = "lblName";
-            lblName.Size = new Size(128, 23);
+            lblName.Size = new Size(238, 49);
             lblName.TabIndex = 0;
             lblName.Text = "Ad - Soyad:";
             // 
@@ -415,9 +444,10 @@
             label26.AutoSize = true;
             label26.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
             label26.ForeColor = SystemColors.ControlText;
-            label26.Location = new Point(905, 434);
+            label26.Location = new Point(1681, 926);
+            label26.Margin = new Padding(6, 0, 6, 0);
             label26.Name = "label26";
-            label26.Size = new Size(108, 22);
+            label26.Size = new Size(215, 44);
             label26.TabIndex = 2;
             label26.Text = "Makbuza Git";
             // 
@@ -426,9 +456,10 @@
             label14.AutoSize = true;
             label14.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
             label14.ForeColor = SystemColors.ControlText;
-            label14.Location = new Point(787, 434);
+            label14.Location = new Point(1462, 926);
+            label14.Margin = new Padding(6, 0, 6, 0);
             label14.Name = "label14";
-            label14.Size = new Size(94, 22);
+            label14.Size = new Size(186, 44);
             label14.TabIndex = 2;
             label14.Text = "Klasöre Git";
             // 
@@ -436,9 +467,10 @@
             // 
             label25.AutoSize = true;
             label25.Font = new Font("Palatino Linotype", 15.75F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
-            label25.Location = new Point(796, 263);
+            label25.Location = new Point(1478, 561);
+            label25.Margin = new Padding(6, 0, 6, 0);
             label25.Name = "label25";
-            label25.Size = new Size(140, 28);
+            label25.Size = new Size(280, 57);
             label25.TabIndex = 2;
             label25.Text = "Makbuz Adı:";
             // 
@@ -446,9 +478,10 @@
             // 
             label24.AutoSize = true;
             label24.Font = new Font("Palatino Linotype", 15.75F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
-            label24.Location = new Point(796, 202);
+            label24.Location = new Point(1478, 431);
+            label24.Margin = new Padding(6, 0, 6, 0);
             label24.Name = "label24";
-            label24.Size = new Size(135, 28);
+            label24.Size = new Size(282, 57);
             label24.TabIndex = 2;
             label24.Text = "Klasör           :";
             // 
@@ -456,9 +489,10 @@
             // 
             lblReceiptCaption.AutoSize = true;
             lblReceiptCaption.Font = new Font("Palatino Linotype", 17.25F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
-            lblReceiptCaption.Location = new Point(796, 171);
+            lblReceiptCaption.Location = new Point(1478, 365);
+            lblReceiptCaption.Margin = new Padding(6, 0, 6, 0);
             lblReceiptCaption.Name = "lblReceiptCaption";
-            lblReceiptCaption.Size = new Size(243, 31);
+            lblReceiptCaption.Size = new Size(483, 62);
             lblReceiptCaption.TabIndex = 2;
             lblReceiptCaption.Text = "Oluşturulan Makbuz:";
             // 
@@ -466,9 +500,10 @@
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label13.Location = new Point(536, 162);
+            label13.Location = new Point(995, 346);
+            label13.Margin = new Padding(6, 0, 6, 0);
             label13.Name = "label13";
-            label13.Size = new Size(154, 26);
+            label13.Size = new Size(299, 51);
             label13.TabIndex = 2;
             label13.Text = "Seçilen Konum:";
             // 
@@ -478,9 +513,10 @@
             btnTrash.BackgroundImageLayout = ImageLayout.Stretch;
             btnTrash.FlatAppearance.BorderSize = 0;
             btnTrash.FlatStyle = FlatStyle.Flat;
-            btnTrash.Location = new Point(799, 507);
+            btnTrash.Location = new Point(1484, 1082);
+            btnTrash.Margin = new Padding(6);
             btnTrash.Name = "btnTrash";
-            btnTrash.Size = new Size(80, 80);
+            btnTrash.Size = new Size(149, 171);
             btnTrash.TabIndex = 15;
             btnTrash.UseVisualStyleBackColor = true;
             btnTrash.Click += btnTrash_Click;
@@ -491,9 +527,10 @@
             btnPrint.BackgroundImageLayout = ImageLayout.Stretch;
             btnPrint.FlatAppearance.BorderSize = 0;
             btnPrint.FlatStyle = FlatStyle.Flat;
-            btnPrint.Location = new Point(579, 527);
+            btnPrint.Location = new Point(1075, 1124);
+            btnPrint.Margin = new Padding(6);
             btnPrint.Name = "btnPrint";
-            btnPrint.Size = new Size(80, 73);
+            btnPrint.Size = new Size(149, 156);
             btnPrint.TabIndex = 13;
             btnPrint.UseVisualStyleBackColor = true;
             btnPrint.Click += btnPrint_Click;
@@ -504,9 +541,10 @@
             btnChooseFileLocation.BackgroundImageLayout = ImageLayout.Stretch;
             btnChooseFileLocation.FlatAppearance.BorderSize = 0;
             btnChooseFileLocation.FlatStyle = FlatStyle.Flat;
-            btnChooseFileLocation.Location = new Point(559, 85);
+            btnChooseFileLocation.Location = new Point(1038, 181);
+            btnChooseFileLocation.Margin = new Padding(6);
             btnChooseFileLocation.Name = "btnChooseFileLocation";
-            btnChooseFileLocation.Size = new Size(108, 81);
+            btnChooseFileLocation.Size = new Size(201, 173);
             btnChooseFileLocation.TabIndex = 10;
             btnChooseFileLocation.UseVisualStyleBackColor = true;
             btnChooseFileLocation.Click += btnChooseFileLocation_Click;
@@ -517,9 +555,10 @@
             btnSaveAndPrint.BackgroundImageLayout = ImageLayout.Stretch;
             btnSaveAndPrint.FlatAppearance.BorderSize = 0;
             btnSaveAndPrint.FlatStyle = FlatStyle.Flat;
-            btnSaveAndPrint.Location = new Point(520, 249);
+            btnSaveAndPrint.Location = new Point(966, 531);
+            btnSaveAndPrint.Margin = new Padding(6);
             btnSaveAndPrint.Name = "btnSaveAndPrint";
-            btnSaveAndPrint.Size = new Size(195, 147);
+            btnSaveAndPrint.Size = new Size(362, 314);
             btnSaveAndPrint.TabIndex = 11;
             btnSaveAndPrint.UseVisualStyleBackColor = true;
             btnSaveAndPrint.Click += btnSaveAndPrint_Click;
@@ -530,9 +569,10 @@
             btnSave.BackgroundImageLayout = ImageLayout.Stretch;
             btnSave.FlatAppearance.BorderSize = 0;
             btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Location = new Point(579, 434);
+            btnSave.Location = new Point(1075, 926);
+            btnSave.Margin = new Padding(6);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(80, 64);
+            btnSave.Size = new Size(149, 137);
             btnSave.TabIndex = 12;
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
@@ -543,9 +583,10 @@
             btnGoReceipt.BackgroundImageLayout = ImageLayout.Stretch;
             btnGoReceipt.FlatAppearance.BorderSize = 0;
             btnGoReceipt.FlatStyle = FlatStyle.Flat;
-            btnGoReceipt.Location = new Point(914, 351);
+            btnGoReceipt.Location = new Point(1697, 749);
+            btnGoReceipt.Margin = new Padding(6);
             btnGoReceipt.Name = "btnGoReceipt";
-            btnGoReceipt.Size = new Size(80, 80);
+            btnGoReceipt.Size = new Size(149, 171);
             btnGoReceipt.TabIndex = 14;
             btnGoReceipt.UseVisualStyleBackColor = true;
             btnGoReceipt.Click += btnGoTheReceipt_Click;
@@ -556,9 +597,10 @@
             btnGoTheFolder.BackgroundImageLayout = ImageLayout.Stretch;
             btnGoTheFolder.FlatAppearance.BorderSize = 0;
             btnGoTheFolder.FlatStyle = FlatStyle.Flat;
-            btnGoTheFolder.Location = new Point(796, 351);
+            btnGoTheFolder.Location = new Point(1478, 749);
+            btnGoTheFolder.Margin = new Padding(6);
             btnGoTheFolder.Name = "btnGoTheFolder";
-            btnGoTheFolder.Size = new Size(80, 80);
+            btnGoTheFolder.Size = new Size(149, 171);
             btnGoTheFolder.TabIndex = 14;
             btnGoTheFolder.UseVisualStyleBackColor = true;
             btnGoTheFolder.Click += btnGoTheFolder_Click;
@@ -576,10 +618,10 @@
             pnlFindFolder.Controls.Add(lblSearchFile);
             pnlFindFolder.Controls.Add(label19);
             pnlFindFolder.Controls.Add(label16);
-            pnlFindFolder.Location = new Point(208, 4);
-            pnlFindFolder.Margin = new Padding(2, 1, 2, 1);
+            pnlFindFolder.Location = new Point(386, 9);
+            pnlFindFolder.Margin = new Padding(4, 2, 4, 2);
             pnlFindFolder.Name = "pnlFindFolder";
-            pnlFindFolder.Size = new Size(992, 580);
+            pnlFindFolder.Size = new Size(1842, 1237);
             pnlFindFolder.TabIndex = 16;
             // 
             // pictureBoxLoading
@@ -587,10 +629,10 @@
             pictureBoxLoading.BackgroundImageLayout = ImageLayout.Stretch;
             pictureBoxLoading.Image = Properties.Resources.loading;
             pictureBoxLoading.InitialImage = Properties.Resources.loading;
-            pictureBoxLoading.Location = new Point(352, 215);
-            pictureBoxLoading.Margin = new Padding(2, 1, 2, 1);
+            pictureBoxLoading.Location = new Point(654, 459);
+            pictureBoxLoading.Margin = new Padding(4, 2, 4, 2);
             pictureBoxLoading.Name = "pictureBoxLoading";
-            pictureBoxLoading.Size = new Size(135, 117);
+            pictureBoxLoading.Size = new Size(251, 250);
             pictureBoxLoading.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBoxLoading.TabIndex = 6;
             pictureBoxLoading.TabStop = false;
@@ -600,21 +642,21 @@
             listBoxFiles.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             listBoxFiles.FormattingEnabled = true;
             listBoxFiles.HorizontalScrollbar = true;
-            listBoxFiles.ItemHeight = 21;
-            listBoxFiles.Location = new Point(193, 436);
-            listBoxFiles.Margin = new Padding(2, 1, 2, 1);
+            listBoxFiles.ItemHeight = 45;
+            listBoxFiles.Location = new Point(358, 930);
+            listBoxFiles.Margin = new Padding(4, 2, 4, 2);
             listBoxFiles.Name = "listBoxFiles";
-            listBoxFiles.Size = new Size(507, 109);
+            listBoxFiles.Size = new Size(938, 184);
             listBoxFiles.TabIndex = 5;
             listBoxFiles.DoubleClick += ListBoxFiles_DoubleClick;
             // 
             // txtFileNameInput
             // 
             txtFileNameInput.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtFileNameInput.Location = new Point(498, 140);
-            txtFileNameInput.Margin = new Padding(2, 1, 2, 1);
+            txtFileNameInput.Location = new Point(925, 299);
+            txtFileNameInput.Margin = new Padding(4, 2, 4, 2);
             txtFileNameInput.Name = "txtFileNameInput";
-            txtFileNameInput.Size = new Size(267, 33);
+            txtFileNameInput.Size = new Size(492, 58);
             txtFileNameInput.TabIndex = 3;
             txtFileNameInput.KeyDown += txtFileNameInput_KeyDown;
             // 
@@ -625,9 +667,10 @@
             btnSearchFile.BackgroundImageLayout = ImageLayout.Stretch;
             btnSearchFile.FlatAppearance.BorderSize = 0;
             btnSearchFile.FlatStyle = FlatStyle.Flat;
-            btnSearchFile.Location = new Point(352, 218);
+            btnSearchFile.Location = new Point(654, 465);
+            btnSearchFile.Margin = new Padding(6);
             btnSearchFile.Name = "btnSearchFile";
-            btnSearchFile.Size = new Size(120, 100);
+            btnSearchFile.Size = new Size(223, 213);
             btnSearchFile.TabIndex = 0;
             btnSearchFile.UseVisualStyleBackColor = false;
             btnSearchFile.Click += btnSearchFile_Click;
@@ -636,10 +679,10 @@
             // 
             cmbBoxDriver.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbBoxDriver.FormattingEnabled = true;
-            cmbBoxDriver.Location = new Point(181, 139);
-            cmbBoxDriver.Margin = new Padding(2, 1, 2, 1);
+            cmbBoxDriver.Location = new Point(336, 297);
+            cmbBoxDriver.Margin = new Padding(4, 2, 4, 2);
             cmbBoxDriver.Name = "cmbBoxDriver";
-            cmbBoxDriver.Size = new Size(132, 33);
+            cmbBoxDriver.Size = new Size(242, 59);
             cmbBoxDriver.TabIndex = 0;
             // 
             // label18
@@ -648,9 +691,10 @@
             label18.BackColor = Color.Transparent;
             label18.Font = new Font("Palatino Linotype", 19.875F, FontStyle.Bold);
             label18.ForeColor = SystemColors.ButtonFace;
-            label18.Location = new Point(402, 132);
+            label18.Location = new Point(747, 282);
+            label18.Margin = new Padding(6, 0, 6, 0);
             label18.Name = "label18";
-            label18.Size = new Size(31, 37);
+            label18.Size = new Size(57, 72);
             label18.TabIndex = 2;
             label18.Text = ">";
             // 
@@ -660,9 +704,10 @@
             label17.BackColor = Color.Transparent;
             label17.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold);
             label17.ForeColor = SystemColors.ActiveCaptionText;
-            label17.Location = new Point(174, 105);
+            label17.Location = new Point(323, 224);
+            label17.Margin = new Padding(6, 0, 6, 0);
             label17.Name = "label17";
-            label17.Size = new Size(144, 32);
+            label17.Size = new Size(282, 65);
             label17.TabIndex = 2;
             label17.Text = "Sürücü Seç:";
             // 
@@ -672,9 +717,10 @@
             lblSearchFile.BackColor = Color.Transparent;
             lblSearchFile.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSearchFile.ForeColor = SystemColors.ActiveCaptionText;
-            lblSearchFile.Location = new Point(392, 333);
+            lblSearchFile.Location = new Point(728, 710);
+            lblSearchFile.Margin = new Padding(6, 0, 6, 0);
             lblSearchFile.Name = "lblSearchFile";
-            lblSearchFile.Size = new Size(54, 32);
+            lblSearchFile.Size = new Size(108, 65);
             lblSearchFile.TabIndex = 2;
             lblSearchFile.Text = "Ara";
             // 
@@ -684,9 +730,10 @@
             label19.BackColor = Color.Transparent;
             label19.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label19.ForeColor = SystemColors.ActiveCaptionText;
-            label19.Location = new Point(317, 403);
+            label19.Location = new Point(589, 860);
+            label19.Margin = new Padding(6, 0, 6, 0);
             label19.Name = "label19";
-            label19.Size = new Size(219, 32);
+            label19.Size = new Size(443, 65);
             label19.TabIndex = 2;
             label19.Text = "Bulunan Klasörler:";
             // 
@@ -696,9 +743,10 @@
             label16.BackColor = Color.Transparent;
             label16.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold);
             label16.ForeColor = SystemColors.ActiveCaptionText;
-            label16.Location = new Point(556, 105);
+            label16.Location = new Point(1033, 224);
+            label16.Margin = new Padding(6, 0, 6, 0);
             label16.Name = "label16";
-            label16.Size = new Size(177, 32);
+            label16.Size = new Size(363, 65);
             label16.TabIndex = 2;
             label16.Text = "Klasör Adı Gir:";
             // 
@@ -708,9 +756,10 @@
             label9.BackColor = Color.Transparent;
             label9.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label9.ForeColor = SystemColors.ButtonFace;
-            label9.Location = new Point(34, 479);
+            label9.Location = new Point(65, 849);
+            label9.Margin = new Padding(6, 0, 6, 0);
             label9.Name = "label9";
-            label9.Size = new Size(103, 22);
+            label9.Size = new Size(206, 44);
             label9.TabIndex = 2;
             label9.Text = "Makbuz Kes";
             // 
@@ -739,9 +788,10 @@
             label21.BackColor = Color.Transparent;
             label21.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label21.ForeColor = SystemColors.ButtonFace;
-            label21.Location = new Point(34, 346);
+            label21.Location = new Point(65, 565);
+            label21.Margin = new Padding(6, 0, 6, 0);
             label21.Name = "label21";
-            label21.Size = new Size(88, 22);
+            label21.Size = new Size(174, 44);
             label21.TabIndex = 2;
             label21.Text = "Klasör Ara";
             // 
@@ -751,9 +801,10 @@
             label22.BackColor = Color.Transparent;
             label22.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label22.ForeColor = SystemColors.ButtonFace;
-            label22.Location = new Point(34, 212);
+            label22.Location = new Point(65, 279);
+            label22.Margin = new Padding(6, 0, 6, 0);
             label22.Name = "label22";
-            label22.Size = new Size(104, 22);
+            label22.Size = new Size(201, 44);
             label22.TabIndex = 2;
             label22.Text = "Bilgisayarım";
             // 
@@ -764,9 +815,10 @@
             btnMyComputer.BackgroundImageLayout = ImageLayout.Stretch;
             btnMyComputer.FlatAppearance.BorderSize = 0;
             btnMyComputer.FlatStyle = FlatStyle.Flat;
-            btnMyComputer.Location = new Point(34, 109);
+            btnMyComputer.Location = new Point(65, 60);
+            btnMyComputer.Margin = new Padding(6);
             btnMyComputer.Name = "btnMyComputer";
-            btnMyComputer.Size = new Size(100, 100);
+            btnMyComputer.Size = new Size(186, 213);
             btnMyComputer.TabIndex = 0;
             btnMyComputer.UseVisualStyleBackColor = false;
             btnMyComputer.Click += btnMyComputer_Click;
@@ -778,9 +830,10 @@
             button1.BackgroundImageLayout = ImageLayout.Stretch;
             button1.FlatAppearance.BorderSize = 0;
             button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(34, 521);
+            button1.Location = new Point(65, 938);
+            button1.Margin = new Padding(6);
             button1.Name = "button1";
-            button1.Size = new Size(100, 100);
+            button1.Size = new Size(186, 213);
             button1.TabIndex = 0;
             button1.UseVisualStyleBackColor = false;
             button1.Click += flowLayoutPanelArchive_Click;
@@ -791,9 +844,10 @@
             label1.BackColor = Color.Transparent;
             label1.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ButtonFace;
-            label1.Location = new Point(58, 624);
+            label1.Location = new Point(110, 1158);
+            label1.Margin = new Padding(6, 0, 6, 0);
             label1.Name = "label1";
-            label1.Size = new Size(50, 22);
+            label1.Size = new Size(98, 44);
             label1.TabIndex = 2;
             label1.Text = "Arşiv";
             // 
@@ -807,92 +861,74 @@
             btnSearchPhoto.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
             btnSearchPhoto.FlatStyle = FlatStyle.Flat;
             btnSearchPhoto.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSearchPhoto.Location = new Point(8, 60);
-            btnSearchPhoto.Margin = new Padding(8, 7, 8, 7);
+            btnSearchPhoto.Location = new Point(15, 231);
+            btnSearchPhoto.Margin = new Padding(15);
             btnSearchPhoto.Name = "btnSearchPhoto";
-            btnSearchPhoto.Size = new Size(137, 80);
+            btnSearchPhoto.Size = new Size(254, 171);
             btnSearchPhoto.TabIndex = 19;
             btnSearchPhoto.Text = "Arşivde Fotoğraf Ara";
             btnSearchPhoto.UseVisualStyleBackColor = false;
+            btnSearchPhoto.Click += btnSearchPhoto_Click;
             // 
             // pnlBorder
             // 
             pnlBorder.Anchor = AnchorStyles.Top;
             pnlBorder.BackColor = Color.Silver;
             pnlBorder.Controls.Add(flowLayoutPanelArchive);
-            pnlBorder.Controls.Add(pnlFindFolder);
             pnlBorder.Controls.Add(pnlReceipt);
-            pnlBorder.Location = new Point(180, 95);
+            pnlBorder.Controls.Add(pnlFindFolder);
+            pnlBorder.Location = new Point(334, 203);
+            pnlBorder.Margin = new Padding(6);
             pnlBorder.Name = "pnlBorder";
-            pnlBorder.Size = new Size(1304, 640);
+            pnlBorder.Size = new Size(2422, 1365);
             pnlBorder.TabIndex = 18;
             // 
             // flowLayoutPanelArchive
             // 
             flowLayoutPanelArchive.BackColor = Color.Transparent;
+            flowLayoutPanelArchive.Controls.Add(lblExplanation);
+            flowLayoutPanelArchive.Controls.Add(lblEmpty);
+            flowLayoutPanelArchive.Controls.Add(lblMainArchiveCaption);
             flowLayoutPanelArchive.Controls.Add(btnAddSpareToArchive);
             flowLayoutPanelArchive.Controls.Add(btnMakeSpare);
             flowLayoutPanelArchive.Controls.Add(btnAddSingleToArchive);
             flowLayoutPanelArchive.Controls.Add(btnAddFoldersToArchive);
             flowLayoutPanelArchive.Controls.Add(btnSearchPhoto);
-            flowLayoutPanelArchive.Location = new Point(12, 33);
+            flowLayoutPanelArchive.Location = new Point(22, 70);
+            flowLayoutPanelArchive.Margin = new Padding(6);
             flowLayoutPanelArchive.Name = "flowLayoutPanelArchive";
-            flowLayoutPanelArchive.Size = new Size(1289, 583);
+            flowLayoutPanelArchive.Size = new Size(2394, 1244);
             flowLayoutPanelArchive.TabIndex = 17;
             // 
-            // btnAddFoldersToArchive
+            // lblExplanation
             // 
-            btnAddFoldersToArchive.BackColor = Color.Gold;
-            btnAddFoldersToArchive.BackgroundImageLayout = ImageLayout.None;
-            btnAddFoldersToArchive.FlatAppearance.BorderColor = Color.Black;
-            btnAddFoldersToArchive.FlatAppearance.BorderSize = 3;
-            btnAddFoldersToArchive.FlatAppearance.MouseDownBackColor = Color.Silver;
-            btnAddFoldersToArchive.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
-            btnAddFoldersToArchive.FlatStyle = FlatStyle.Flat;
-            btnAddFoldersToArchive.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddFoldersToArchive.Location = new Point(8, 154);
-            btnAddFoldersToArchive.Margin = new Padding(8, 7, 8, 7);
-            btnAddFoldersToArchive.Name = "btnAddFoldersToArchive";
-            btnAddFoldersToArchive.Size = new Size(137, 80);
-            btnAddFoldersToArchive.TabIndex = 19;
-            btnAddFoldersToArchive.Text = "Hazırlanan Dosyaları Arşive Ekle";
-            btnAddFoldersToArchive.UseVisualStyleBackColor = false;
+            lblExplanation.AutoSize = true;
+            lblExplanation.BackColor = Color.Silver;
+            lblExplanation.Font = new Font("Segoe UI Black", 10.875F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblExplanation.ForeColor = SystemColors.WindowFrame;
+            lblExplanation.Location = new Point(394, 19);
+            lblExplanation.Name = "lblExplanation";
+            lblExplanation.Size = new Size(0, 40);
+            lblExplanation.TabIndex = 20;
             // 
-            // btnAddSingleToArchive
+            // lblEmpty
             // 
-            btnAddSingleToArchive.BackColor = Color.Gold;
-            btnAddSingleToArchive.BackgroundImageLayout = ImageLayout.None;
-            btnAddSingleToArchive.FlatAppearance.BorderColor = Color.Black;
-            btnAddSingleToArchive.FlatAppearance.BorderSize = 3;
-            btnAddSingleToArchive.FlatAppearance.MouseDownBackColor = Color.Silver;
-            btnAddSingleToArchive.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
-            btnAddSingleToArchive.FlatStyle = FlatStyle.Flat;
-            btnAddSingleToArchive.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddSingleToArchive.Location = new Point(8, 251);
-            btnAddSingleToArchive.Margin = new Padding(8, 7, 8, 7);
-            btnAddSingleToArchive.Name = "btnAddSingleToArchive";
-            btnAddSingleToArchive.Size = new Size(137, 80);
-            btnAddSingleToArchive.TabIndex = 19;
-            btnAddSingleToArchive.Text = "Kişi Klasörünü Arşive Ekle";
-            btnAddSingleToArchive.UseVisualStyleBackColor = false;
+            lblEmpty.Font = new Font("Comic Sans MS", 14.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblEmpty.Location = new Point(16, 15);
+            lblEmpty.Name = "lblEmpty";
+            lblEmpty.Size = new Size(351, 174);
+            lblEmpty.TabIndex = 1;
             // 
-            // btnMakeSpare
+            // lblMainArchiveCaption
             // 
-            btnMakeSpare.BackColor = Color.Gold;
-            btnMakeSpare.BackgroundImageLayout = ImageLayout.None;
-            btnMakeSpare.FlatAppearance.BorderColor = Color.Black;
-            btnMakeSpare.FlatAppearance.BorderSize = 3;
-            btnMakeSpare.FlatAppearance.MouseDownBackColor = Color.Silver;
-            btnMakeSpare.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
-            btnMakeSpare.FlatStyle = FlatStyle.Flat;
-            btnMakeSpare.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnMakeSpare.Location = new Point(8, 345);
-            btnMakeSpare.Margin = new Padding(8, 7, 8, 7);
-            btnMakeSpare.Name = "btnMakeSpare";
-            btnMakeSpare.Size = new Size(137, 80);
-            btnMakeSpare.TabIndex = 19;
-            btnMakeSpare.Text = "Arşivi Yedekle";
-            btnMakeSpare.UseVisualStyleBackColor = false;
+            lblMainArchiveCaption.AutoSize = true;
+            lblMainArchiveCaption.Font = new Font("Comic Sans MS", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMainArchiveCaption.ForeColor = Color.Black;
+            lblMainArchiveCaption.Location = new Point(603, 6);
+            lblMainArchiveCaption.Name = "lblMainArchiveCaption";
+            lblMainArchiveCaption.Size = new Size(957, 135);
+            lblMainArchiveCaption.TabIndex = 0;
+            lblMainArchiveCaption.Text = "ARŞİV İŞLEMLERİ";
             // 
             // btnAddSpareToArchive
             // 
@@ -904,21 +940,79 @@
             btnAddSpareToArchive.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
             btnAddSpareToArchive.FlatStyle = FlatStyle.Flat;
             btnAddSpareToArchive.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddSpareToArchive.Location = new Point(8, 439);
-            btnAddSpareToArchive.Margin = new Padding(8, 7, 8, 7);
+            btnAddSpareToArchive.Location = new Point(15, 1040);
+            btnAddSpareToArchive.Margin = new Padding(15);
             btnAddSpareToArchive.Name = "btnAddSpareToArchive";
-            btnAddSpareToArchive.Size = new Size(137, 80);
+            btnAddSpareToArchive.Size = new Size(254, 171);
             btnAddSpareToArchive.TabIndex = 19;
             btnAddSpareToArchive.Text = "Yedeği Arşive Yükle";
             btnAddSpareToArchive.UseVisualStyleBackColor = false;
+            btnAddSpareToArchive.Click += btnAddSpareToArchive_Click;
+            // 
+            // btnMakeSpare
+            // 
+            btnMakeSpare.BackColor = Color.Gold;
+            btnMakeSpare.BackgroundImageLayout = ImageLayout.None;
+            btnMakeSpare.FlatAppearance.BorderColor = Color.Black;
+            btnMakeSpare.FlatAppearance.BorderSize = 3;
+            btnMakeSpare.FlatAppearance.MouseDownBackColor = Color.Silver;
+            btnMakeSpare.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
+            btnMakeSpare.FlatStyle = FlatStyle.Flat;
+            btnMakeSpare.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnMakeSpare.Location = new Point(15, 839);
+            btnMakeSpare.Margin = new Padding(15);
+            btnMakeSpare.Name = "btnMakeSpare";
+            btnMakeSpare.Size = new Size(254, 171);
+            btnMakeSpare.TabIndex = 19;
+            btnMakeSpare.Text = "Arşivi Yedekle";
+            btnMakeSpare.UseVisualStyleBackColor = false;
+            btnMakeSpare.Click += btnMakeSpare_Click;
+            // 
+            // btnAddSingleToArchive
+            // 
+            btnAddSingleToArchive.BackColor = Color.Gold;
+            btnAddSingleToArchive.BackgroundImageLayout = ImageLayout.None;
+            btnAddSingleToArchive.FlatAppearance.BorderColor = Color.Black;
+            btnAddSingleToArchive.FlatAppearance.BorderSize = 3;
+            btnAddSingleToArchive.FlatAppearance.MouseDownBackColor = Color.Silver;
+            btnAddSingleToArchive.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
+            btnAddSingleToArchive.FlatStyle = FlatStyle.Flat;
+            btnAddSingleToArchive.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAddSingleToArchive.Location = new Point(15, 638);
+            btnAddSingleToArchive.Margin = new Padding(15);
+            btnAddSingleToArchive.Name = "btnAddSingleToArchive";
+            btnAddSingleToArchive.Size = new Size(254, 171);
+            btnAddSingleToArchive.TabIndex = 19;
+            btnAddSingleToArchive.Text = "Kişi Klasörünü Arşive Ekle";
+            btnAddSingleToArchive.UseVisualStyleBackColor = false;
+            btnAddSingleToArchive.Click += btnAddSingleToArchive_Click;
+            // 
+            // btnAddFoldersToArchive
+            // 
+            btnAddFoldersToArchive.BackColor = Color.Gold;
+            btnAddFoldersToArchive.BackgroundImageLayout = ImageLayout.None;
+            btnAddFoldersToArchive.FlatAppearance.BorderColor = Color.Black;
+            btnAddFoldersToArchive.FlatAppearance.BorderSize = 3;
+            btnAddFoldersToArchive.FlatAppearance.MouseDownBackColor = Color.Silver;
+            btnAddFoldersToArchive.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
+            btnAddFoldersToArchive.FlatStyle = FlatStyle.Flat;
+            btnAddFoldersToArchive.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAddFoldersToArchive.Location = new Point(15, 432);
+            btnAddFoldersToArchive.Margin = new Padding(15);
+            btnAddFoldersToArchive.Name = "btnAddFoldersToArchive";
+            btnAddFoldersToArchive.Size = new Size(254, 171);
+            btnAddFoldersToArchive.TabIndex = 19;
+            btnAddFoldersToArchive.Text = "Hazırlanan Dosyaları Arşive Ekle";
+            btnAddFoldersToArchive.UseVisualStyleBackColor = false;
+            btnAddFoldersToArchive.Click += btnAddFoldersToArchive_Click;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.ArkaFon;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1704, 936);
+            ClientSize = new Size(2884, 1759);
             Controls.Add(label1);
             Controls.Add(label9);
             Controls.Add(label21);
@@ -929,6 +1023,7 @@
             Controls.Add(label22);
             Controls.Add(pnlBorder);
             DoubleBuffered = true;
+            Margin = new Padding(6);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Stüdyo-emin";
@@ -944,6 +1039,7 @@
             pnlBorder.ResumeLayout(false);
             pnlBorder.PerformLayout();
             flowLayoutPanelArchive.ResumeLayout(false);
+            flowLayoutPanelArchive.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1020,5 +1116,8 @@
         private Button btnAddSingleToArchive;
         private Button btnAddFoldersToArchive;
         private Button btnAddSpareToArchive;
+        private Label lblMainArchiveCaption;
+        private Label lblEmpty;
+        private Label lblExplanation;
     }
 }

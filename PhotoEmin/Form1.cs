@@ -397,7 +397,7 @@ namespace PhotoEmin
                     int count = 1;
                     while (Directory.Exists(folderPath))
                     {
-                        folderName = $"{name}_{count}";
+                        folderName = $"{name}-{count}";
                         folderPath = Path.Combine(textBoxFileLocation.Text, folderName);
                         count++;
                     }
@@ -724,9 +724,34 @@ namespace PhotoEmin
             setVisibleAfterSaveProcess(true);
         }
 
-        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void btnSearchPhoto_Click(object sender, EventArgs e)
         {
+            lblEmpty.Text = btnSearchPhoto.Text + " :";
+            lblExplanation.Text = ArchiveExplanations.SearchPhoto;
+        }
 
+        private void btnAddFoldersToArchive_Click(object sender, EventArgs e)
+        {
+            lblEmpty.Text = btnAddFoldersToArchive.Text + " :";
+            lblExplanation.Text = ArchiveExplanations.AddFoldersToArchive;
+        }
+
+        private void btnAddSingleToArchive_Click(object sender, EventArgs e)
+        {
+            lblEmpty.Text = btnAddSingleToArchive.Text + " :";
+            lblExplanation.Text = ArchiveExplanations.AddSingleToArchive;
+        }
+
+        private void btnMakeSpare_Click(object sender, EventArgs e)
+        {
+            lblEmpty.Text = btnMakeSpare.Text + " :";
+            lblExplanation.Text = ArchiveExplanations.MakeSpare;
+        }
+
+        private void btnAddSpareToArchive_Click(object sender, EventArgs e)
+        {
+            lblEmpty.Text = btnAddSpareToArchive.Text + " :";
+            lblExplanation.Text = ArchiveExplanations.AddSpareToArchive;
         }
     }
 }
