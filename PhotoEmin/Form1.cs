@@ -24,23 +24,25 @@ namespace PhotoEmin
             this.Load += (s, e) =>
             {
                 // Formun genişlik ve yüksekliğini belirleyin (örneğin, 800x600)
-                this.Width = 1500;
-                this.Height = 900;
+                this.Width = 1720;
+                this.Height = 975;
                 textBoxFileLocation.Multiline = false;
                 textBoxFileLocation.ScrollBars = ScrollBars.Vertical;
 
-                pnlReceipt.Visible = false;
-                pnlFindFolder.Visible = false;
-                flowLayoutPanelArchive.Visible = false;
+                //pnlReceipt.Visible = false;
+                //pnlFindFolder.Visible = false;
+                //flowLayoutPanelArchive.Visible = false;
                 pictureBoxLoading.Visible = false; // Başlangıçta görünmez yapın
+                pnlBorder.Visible = false;
             };
 
             // Form üzerinde herhangi bir yere tıklandığında
             this.Click += (s, e) =>
             {
-                pnlReceipt.Visible = false;
-                pnlFindFolder.Visible = false;
-                flowLayoutPanelArchive.Visible = false;
+                //pnlReceipt.Visible = false;
+                //pnlFindFolder.Visible = false;
+                //flowLayoutPanelArchive.Visible = false;
+                pnlBorder.Visible = false;
             };
         }
 
@@ -66,6 +68,7 @@ namespace PhotoEmin
 
         private void btnCreateReceipt_Click(object sender, EventArgs e)
         {
+            pnlBorder.Visible = true;
             pnlReceipt.Visible = true;
             pnlFindFolder.Visible = false;
             flowLayoutPanelArchive.Visible = false;
@@ -73,6 +76,7 @@ namespace PhotoEmin
 
         private void flowLayoutPanelArchive_Click(object sender, EventArgs e)
         {
+            pnlBorder.Visible = true;
             flowLayoutPanelArchive.Visible = true;
             pnlFindFolder.Visible = false;
             pnlReceipt.Visible = false;
@@ -487,6 +491,7 @@ namespace PhotoEmin
 
         private void btnFindFolder_Click(object sender, EventArgs e)
         {
+            pnlBorder.Visible = true;
             pnlReceipt.Visible = false;
             pnlFindFolder.Visible = true;
             flowLayoutPanelArchive.Visible = false;
