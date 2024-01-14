@@ -93,12 +93,11 @@
             btnSearchPhoto = new Button();
             pnlBorder = new Panel();
             flowLayoutPanelArchive = new Panel();
+            lblMainArchiveCaption = new Label();
             lblExplanation = new Label();
             lblEmpty = new Label();
-            lblMainArchiveCaption = new Label();
             btnAddSpareToArchive = new Button();
             btnMakeSpare = new Button();
-            btnAddSingleToArchive = new Button();
             btnAddFoldersToArchive = new Button();
             pnlReceipt.SuspendLayout();
             pnlReceiptInputs.SuspendLayout();
@@ -165,10 +164,10 @@
             pnlReceipt.Controls.Add(btnSave);
             pnlReceipt.Controls.Add(btnGoReceipt);
             pnlReceipt.Controls.Add(btnGoTheFolder);
-            pnlReceipt.Location = new Point(104, 34);
+            pnlReceipt.Location = new Point(128, 30);
             pnlReceipt.Margin = new Padding(6);
             pnlReceipt.Name = "pnlReceipt";
-            pnlReceipt.Size = new Size(2381, 1355);
+            pnlReceipt.Size = new Size(2305, 1355);
             pnlReceipt.TabIndex = 1;
             // 
             // textBoxFileLocation
@@ -860,11 +859,11 @@
             btnSearchPhoto.FlatAppearance.MouseDownBackColor = Color.Silver;
             btnSearchPhoto.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
             btnSearchPhoto.FlatStyle = FlatStyle.Flat;
-            btnSearchPhoto.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSearchPhoto.Location = new Point(15, 231);
+            btnSearchPhoto.Font = new Font("Segoe UI", 16.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSearchPhoto.Location = new Point(14, 311);
             btnSearchPhoto.Margin = new Padding(15);
             btnSearchPhoto.Name = "btnSearchPhoto";
-            btnSearchPhoto.Size = new Size(254, 171);
+            btnSearchPhoto.Size = new Size(275, 200);
             btnSearchPhoto.TabIndex = 19;
             btnSearchPhoto.Text = "Arşivde Fotoğraf Ara";
             btnSearchPhoto.UseVisualStyleBackColor = false;
@@ -880,55 +879,53 @@
             pnlBorder.Location = new Point(334, 203);
             pnlBorder.Margin = new Padding(6);
             pnlBorder.Name = "pnlBorder";
-            pnlBorder.Size = new Size(2422, 1365);
+            pnlBorder.Size = new Size(2535, 1401);
             pnlBorder.TabIndex = 18;
             // 
             // flowLayoutPanelArchive
             // 
             flowLayoutPanelArchive.BackColor = Color.Transparent;
             flowLayoutPanelArchive.Controls.Add(lblExplanation);
-            flowLayoutPanelArchive.Controls.Add(lblEmpty);
             flowLayoutPanelArchive.Controls.Add(lblMainArchiveCaption);
+            flowLayoutPanelArchive.Controls.Add(lblEmpty);
             flowLayoutPanelArchive.Controls.Add(btnAddSpareToArchive);
             flowLayoutPanelArchive.Controls.Add(btnMakeSpare);
-            flowLayoutPanelArchive.Controls.Add(btnAddSingleToArchive);
             flowLayoutPanelArchive.Controls.Add(btnAddFoldersToArchive);
             flowLayoutPanelArchive.Controls.Add(btnSearchPhoto);
-            flowLayoutPanelArchive.Location = new Point(22, 70);
+            flowLayoutPanelArchive.Location = new Point(10, 51);
             flowLayoutPanelArchive.Margin = new Padding(6);
             flowLayoutPanelArchive.Name = "flowLayoutPanelArchive";
-            flowLayoutPanelArchive.Size = new Size(2394, 1244);
+            flowLayoutPanelArchive.Size = new Size(2507, 1244);
             flowLayoutPanelArchive.TabIndex = 17;
+            // 
+            // lblMainArchiveCaption
+            // 
+            lblMainArchiveCaption.AutoSize = true;
+            lblMainArchiveCaption.Font = new Font("Comic Sans MS", 48F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMainArchiveCaption.ForeColor = Color.Black;
+            lblMainArchiveCaption.Location = new Point(567, 44);
+            lblMainArchiveCaption.Name = "lblMainArchiveCaption";
+            lblMainArchiveCaption.Size = new Size(1278, 178);
+            lblMainArchiveCaption.TabIndex = 0;
+            lblMainArchiveCaption.Text = "ARŞİV İŞLEMLERİ";
             // 
             // lblExplanation
             // 
-            lblExplanation.AutoSize = true;
             lblExplanation.BackColor = Color.Silver;
             lblExplanation.Font = new Font("Segoe UI Black", 10.875F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             lblExplanation.ForeColor = SystemColors.WindowFrame;
-            lblExplanation.Location = new Point(394, 19);
+            lblExplanation.Location = new Point(391, 15);
             lblExplanation.Name = "lblExplanation";
-            lblExplanation.Size = new Size(0, 40);
+            lblExplanation.Size = new Size(2102, 301);
             lblExplanation.TabIndex = 20;
             // 
             // lblEmpty
             // 
             lblEmpty.Font = new Font("Comic Sans MS", 14.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblEmpty.Location = new Point(16, 15);
+            lblEmpty.Location = new Point(14, 69);
             lblEmpty.Name = "lblEmpty";
             lblEmpty.Size = new Size(351, 174);
             lblEmpty.TabIndex = 1;
-            // 
-            // lblMainArchiveCaption
-            // 
-            lblMainArchiveCaption.AutoSize = true;
-            lblMainArchiveCaption.Font = new Font("Comic Sans MS", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblMainArchiveCaption.ForeColor = Color.Black;
-            lblMainArchiveCaption.Location = new Point(603, 6);
-            lblMainArchiveCaption.Name = "lblMainArchiveCaption";
-            lblMainArchiveCaption.Size = new Size(957, 135);
-            lblMainArchiveCaption.TabIndex = 0;
-            lblMainArchiveCaption.Text = "ARŞİV İŞLEMLERİ";
             // 
             // btnAddSpareToArchive
             // 
@@ -939,11 +936,11 @@
             btnAddSpareToArchive.FlatAppearance.MouseDownBackColor = Color.Silver;
             btnAddSpareToArchive.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
             btnAddSpareToArchive.FlatStyle = FlatStyle.Flat;
-            btnAddSpareToArchive.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddSpareToArchive.Location = new Point(15, 1040);
+            btnAddSpareToArchive.Font = new Font("Segoe UI", 16.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAddSpareToArchive.Location = new Point(14, 1001);
             btnAddSpareToArchive.Margin = new Padding(15);
             btnAddSpareToArchive.Name = "btnAddSpareToArchive";
-            btnAddSpareToArchive.Size = new Size(254, 171);
+            btnAddSpareToArchive.Size = new Size(275, 200);
             btnAddSpareToArchive.TabIndex = 19;
             btnAddSpareToArchive.Text = "Yedeği Arşive Yükle";
             btnAddSpareToArchive.UseVisualStyleBackColor = false;
@@ -958,34 +955,15 @@
             btnMakeSpare.FlatAppearance.MouseDownBackColor = Color.Silver;
             btnMakeSpare.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
             btnMakeSpare.FlatStyle = FlatStyle.Flat;
-            btnMakeSpare.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnMakeSpare.Location = new Point(15, 839);
+            btnMakeSpare.Font = new Font("Segoe UI", 16.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnMakeSpare.Location = new Point(14, 771);
             btnMakeSpare.Margin = new Padding(15);
             btnMakeSpare.Name = "btnMakeSpare";
-            btnMakeSpare.Size = new Size(254, 171);
+            btnMakeSpare.Size = new Size(275, 200);
             btnMakeSpare.TabIndex = 19;
             btnMakeSpare.Text = "Arşivi Yedekle";
             btnMakeSpare.UseVisualStyleBackColor = false;
             btnMakeSpare.Click += btnMakeSpare_Click;
-            // 
-            // btnAddSingleToArchive
-            // 
-            btnAddSingleToArchive.BackColor = Color.Gold;
-            btnAddSingleToArchive.BackgroundImageLayout = ImageLayout.None;
-            btnAddSingleToArchive.FlatAppearance.BorderColor = Color.Black;
-            btnAddSingleToArchive.FlatAppearance.BorderSize = 3;
-            btnAddSingleToArchive.FlatAppearance.MouseDownBackColor = Color.Silver;
-            btnAddSingleToArchive.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
-            btnAddSingleToArchive.FlatStyle = FlatStyle.Flat;
-            btnAddSingleToArchive.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddSingleToArchive.Location = new Point(15, 638);
-            btnAddSingleToArchive.Margin = new Padding(15);
-            btnAddSingleToArchive.Name = "btnAddSingleToArchive";
-            btnAddSingleToArchive.Size = new Size(254, 171);
-            btnAddSingleToArchive.TabIndex = 19;
-            btnAddSingleToArchive.Text = "Kişi Klasörünü Arşive Ekle";
-            btnAddSingleToArchive.UseVisualStyleBackColor = false;
-            btnAddSingleToArchive.Click += btnAddSingleToArchive_Click;
             // 
             // btnAddFoldersToArchive
             // 
@@ -996,11 +974,11 @@
             btnAddFoldersToArchive.FlatAppearance.MouseDownBackColor = Color.Silver;
             btnAddFoldersToArchive.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
             btnAddFoldersToArchive.FlatStyle = FlatStyle.Flat;
-            btnAddFoldersToArchive.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddFoldersToArchive.Location = new Point(15, 432);
+            btnAddFoldersToArchive.Font = new Font("Segoe UI", 16.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAddFoldersToArchive.Location = new Point(14, 541);
             btnAddFoldersToArchive.Margin = new Padding(15);
             btnAddFoldersToArchive.Name = "btnAddFoldersToArchive";
-            btnAddFoldersToArchive.Size = new Size(254, 171);
+            btnAddFoldersToArchive.Size = new Size(275, 200);
             btnAddFoldersToArchive.TabIndex = 19;
             btnAddFoldersToArchive.Text = "Hazırlanan Dosyaları Arşive Ekle";
             btnAddFoldersToArchive.UseVisualStyleBackColor = false;
@@ -1113,7 +1091,6 @@
         private Panel pnlBorder;
         private Panel flowLayoutPanelArchive;
         private Button btnMakeSpare;
-        private Button btnAddSingleToArchive;
         private Button btnAddFoldersToArchive;
         private Button btnAddSpareToArchive;
         private Label lblMainArchiveCaption;

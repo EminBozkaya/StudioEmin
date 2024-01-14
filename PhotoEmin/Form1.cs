@@ -80,6 +80,8 @@ namespace PhotoEmin
             flowLayoutPanelArchive.Visible = true;
             pnlFindFolder.Visible = false;
             pnlReceipt.Visible = false;
+            lblExplanation.Visible = false;
+            lblEmpty.Visible = false;
         }
 
         private void btnGoTheFolder_Click(object sender, EventArgs e)
@@ -727,30 +729,32 @@ namespace PhotoEmin
         private void btnSearchPhoto_Click(object sender, EventArgs e)
         {
             lblEmpty.Text = btnSearchPhoto.Text + " :";
+            lblExplanation.Visible = true;
+            lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.SearchPhoto;
         }
 
         private void btnAddFoldersToArchive_Click(object sender, EventArgs e)
         {
             lblEmpty.Text = btnAddFoldersToArchive.Text + " :";
+            lblExplanation.Visible = true;
+            lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.AddFoldersToArchive;
-        }
-
-        private void btnAddSingleToArchive_Click(object sender, EventArgs e)
-        {
-            lblEmpty.Text = btnAddSingleToArchive.Text + " :";
-            lblExplanation.Text = ArchiveExplanations.AddSingleToArchive;
         }
 
         private void btnMakeSpare_Click(object sender, EventArgs e)
         {
             lblEmpty.Text = btnMakeSpare.Text + " :";
+            lblExplanation.Visible = true;
+            lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.MakeSpare;
         }
 
         private void btnAddSpareToArchive_Click(object sender, EventArgs e)
         {
             lblEmpty.Text = btnAddSpareToArchive.Text + " :";
+            lblExplanation.Visible = true;
+            lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.AddSpareToArchive;
         }
     }
