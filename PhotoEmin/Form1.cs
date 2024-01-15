@@ -80,6 +80,7 @@ namespace PhotoEmin
             flowLayoutPanelArchive.Visible = true;
             pnlFindFolder.Visible = false;
             pnlReceipt.Visible = false;
+            pnlArchiveContents.Visible = false;
             lblExplanation.Visible = false;
             lblEmpty.Visible = false;
         }
@@ -732,6 +733,7 @@ namespace PhotoEmin
             lblExplanation.Visible = true;
             lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.SearchPhoto;
+            pnlArchiveContents.Visible = true;
         }
 
         private void btnAddFoldersToArchive_Click(object sender, EventArgs e)
@@ -740,6 +742,7 @@ namespace PhotoEmin
             lblExplanation.Visible = true;
             lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.AddFoldersToArchive;
+            pnlArchiveContents.Visible = true;
         }
 
         private void btnMakeSpare_Click(object sender, EventArgs e)
@@ -748,6 +751,7 @@ namespace PhotoEmin
             lblExplanation.Visible = true;
             lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.MakeSpare;
+            pnlArchiveContents.Visible = true;
         }
 
         private void btnAddSpareToArchive_Click(object sender, EventArgs e)
@@ -756,6 +760,7 @@ namespace PhotoEmin
             lblExplanation.Visible = true;
             lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.AddSpareToArchive;
+            pnlArchiveContents.Visible = true;
         }
     }
 }

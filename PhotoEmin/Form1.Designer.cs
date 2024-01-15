@@ -93,12 +93,17 @@
             btnSearchPhoto = new Button();
             pnlBorder = new Panel();
             flowLayoutPanelArchive = new Panel();
-            lblMainArchiveCaption = new Label();
+            pnlArchiveContents = new Panel();
             lblExplanation = new Label();
+            lblMainArchiveCaption = new Label();
             lblEmpty = new Label();
             btnAddSpareToArchive = new Button();
             btnMakeSpare = new Button();
             btnAddFoldersToArchive = new Button();
+            pnlSearchPhoto = new Panel();
+            pnlAddFoldersToArchive = new Panel();
+            pnlMakeSpare = new Panel();
+            pnlAddSpareToArchive = new Panel();
             pnlReceipt.SuspendLayout();
             pnlReceiptInputs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numQty).BeginInit();
@@ -107,6 +112,7 @@
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             pnlBorder.SuspendLayout();
             flowLayoutPanelArchive.SuspendLayout();
+            pnlArchiveContents.SuspendLayout();
             SuspendLayout();
             // 
             // btnFindFolder
@@ -885,6 +891,7 @@
             // flowLayoutPanelArchive
             // 
             flowLayoutPanelArchive.BackColor = Color.Transparent;
+            flowLayoutPanelArchive.Controls.Add(pnlArchiveContents);
             flowLayoutPanelArchive.Controls.Add(lblExplanation);
             flowLayoutPanelArchive.Controls.Add(lblMainArchiveCaption);
             flowLayoutPanelArchive.Controls.Add(lblEmpty);
@@ -898,16 +905,16 @@
             flowLayoutPanelArchive.Size = new Size(2507, 1244);
             flowLayoutPanelArchive.TabIndex = 17;
             // 
-            // lblMainArchiveCaption
+            // pnlArchiveContents
             // 
-            lblMainArchiveCaption.AutoSize = true;
-            lblMainArchiveCaption.Font = new Font("Comic Sans MS", 48F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblMainArchiveCaption.ForeColor = Color.Black;
-            lblMainArchiveCaption.Location = new Point(567, 44);
-            lblMainArchiveCaption.Name = "lblMainArchiveCaption";
-            lblMainArchiveCaption.Size = new Size(1278, 178);
-            lblMainArchiveCaption.TabIndex = 0;
-            lblMainArchiveCaption.Text = "ARŞİV İŞLEMLERİ";
+            pnlArchiveContents.Controls.Add(pnlAddSpareToArchive);
+            pnlArchiveContents.Controls.Add(pnlMakeSpare);
+            pnlArchiveContents.Controls.Add(pnlAddFoldersToArchive);
+            pnlArchiveContents.Controls.Add(pnlSearchPhoto);
+            pnlArchiveContents.Location = new Point(307, 319);
+            pnlArchiveContents.Name = "pnlArchiveContents";
+            pnlArchiveContents.Size = new Size(2186, 913);
+            pnlArchiveContents.TabIndex = 21;
             // 
             // lblExplanation
             // 
@@ -918,6 +925,17 @@
             lblExplanation.Name = "lblExplanation";
             lblExplanation.Size = new Size(2102, 301);
             lblExplanation.TabIndex = 20;
+            // 
+            // lblMainArchiveCaption
+            // 
+            lblMainArchiveCaption.AutoSize = true;
+            lblMainArchiveCaption.Font = new Font("Comic Sans MS", 48F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMainArchiveCaption.ForeColor = Color.Black;
+            lblMainArchiveCaption.Location = new Point(567, 44);
+            lblMainArchiveCaption.Name = "lblMainArchiveCaption";
+            lblMainArchiveCaption.Size = new Size(1278, 178);
+            lblMainArchiveCaption.TabIndex = 0;
+            lblMainArchiveCaption.Text = "ARŞİV İŞLEMLERİ";
             // 
             // lblEmpty
             // 
@@ -984,6 +1002,34 @@
             btnAddFoldersToArchive.UseVisualStyleBackColor = false;
             btnAddFoldersToArchive.Click += btnAddFoldersToArchive_Click;
             // 
+            // pnlSearchPhoto
+            // 
+            pnlSearchPhoto.Location = new Point(10, 60);
+            pnlSearchPhoto.Name = "pnlSearchPhoto";
+            pnlSearchPhoto.Size = new Size(2163, 802);
+            pnlSearchPhoto.TabIndex = 0;
+            // 
+            // pnlAddFoldersToArchive
+            // 
+            pnlAddFoldersToArchive.Location = new Point(24, 36);
+            pnlAddFoldersToArchive.Name = "pnlAddFoldersToArchive";
+            pnlAddFoldersToArchive.Size = new Size(2135, 840);
+            pnlAddFoldersToArchive.TabIndex = 1;
+            // 
+            // pnlMakeSpare
+            // 
+            pnlMakeSpare.Location = new Point(45, 25);
+            pnlMakeSpare.Name = "pnlMakeSpare";
+            pnlMakeSpare.Size = new Size(2101, 870);
+            pnlMakeSpare.TabIndex = 2;
+            // 
+            // pnlAddSpareToArchive
+            // 
+            pnlAddSpareToArchive.Location = new Point(69, 3);
+            pnlAddSpareToArchive.Name = "pnlAddSpareToArchive";
+            pnlAddSpareToArchive.Size = new Size(2069, 898);
+            pnlAddSpareToArchive.TabIndex = 0;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
@@ -1018,6 +1064,7 @@
             pnlBorder.PerformLayout();
             flowLayoutPanelArchive.ResumeLayout(false);
             flowLayoutPanelArchive.PerformLayout();
+            pnlArchiveContents.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1096,5 +1143,10 @@
         private Label lblMainArchiveCaption;
         private Label lblEmpty;
         private Label lblExplanation;
+        private Panel pnlArchiveContents;
+        private Panel pnlSearchPhoto;
+        private Panel pnlAddFoldersToArchive;
+        private Panel pnlMakeSpare;
+        private Panel pnlAddSpareToArchive;
     }
 }
