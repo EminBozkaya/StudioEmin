@@ -10,14 +10,8 @@ namespace PhotoEmin
 {
     public partial class Form1 : Form
     {
-        // Declare a string to hold the entire document contents.
-        private string documentContents = "";
 
-        // Declare a variable to hold the portion of the document that
-        // is not printed.
-        private string stringToPrint = "";
-
-        private Receipt newReceipt = new Receipt();
+        private Receipt newReceipt = new();
         public Form1()
         {
             InitializeComponent();
@@ -45,7 +39,6 @@ namespace PhotoEmin
                 pnlBorder.Visible = false;
             };
         }
-
 
 
         private void btnChooseFileLocation_Click(object sender, EventArgs e)
@@ -226,7 +219,7 @@ namespace PhotoEmin
             //string note = "heeey";
 
             // Logo eklemek
-            Bitmap logo = Properties.Resources.makbuzResim;
+            Bitmap logo = Extensions.Resources.makbuzResim;
             int logoWidth = 500;
             int logoHeight = 180;
             e.Graphics!.DrawImage(logo, new Rectangle((e.PageBounds.Width - logoWidth) / 2, 50, logoWidth, logoHeight));
@@ -509,6 +502,7 @@ namespace PhotoEmin
         {
             // ComboBox'ı temizle
             cmbBoxDriver.Items.Clear();
+            comboBoxDriversForRecord.Items.Clear();
 
             // Bilgisayardaki sürücüleri al
             DriveInfo[] drives = DriveInfo.GetDrives();
@@ -517,12 +511,14 @@ namespace PhotoEmin
             foreach (DriveInfo drive in drives)
             {
                 cmbBoxDriver.Items.Add(drive.Name);
+                comboBoxDriversForRecord.Items.Add(drive.Name);
             }
 
             // ComboBox'da bir öğe seçili hale getirebilirsiniz, örneğin:
             if (cmbBoxDriver.Items.Count > 0)
             {
                 cmbBoxDriver.SelectedIndex = 0;
+                comboBoxDriversForRecord.SelectedIndex = 0;
             }
         }
 
@@ -530,7 +526,7 @@ namespace PhotoEmin
         {
             // Dosya adını ve sürücüyü al
             string klasorAdi = txtFileNameInput.Text.Trim();
-            string secilenSurucu = cmbBoxDriver.SelectedItem as string;
+            string? secilenSurucu = cmbBoxDriver.SelectedItem as string;
 
             // Geçerli bir dosya adı ve sürücü var mı kontrol et
             if (!string.IsNullOrEmpty(klasorAdi) && !string.IsNullOrEmpty(secilenSurucu))
@@ -663,14 +659,14 @@ namespace PhotoEmin
         private void ListBoxFiles_DoubleClick(object sender, EventArgs e)
         {
             // ListBox'ta çift tıklanan öğenin adını al
-            string secilenKlasor = listBoxFiles.SelectedItem as string;
+            string? secilenKlasor = listBoxFiles.SelectedItem as string;
 
             // Geçerli bir öğe seçildiyse ve "Bulunamadı" öğesi değilse işlem yap
             if (!string.IsNullOrEmpty(secilenKlasor) && secilenKlasor != "Bulunamadı")
             {
                 // Klasör yolunu oluştur ve aç
-                string secilenSurucu = cmbBoxDriver.SelectedItem as string;
-                string klasorYolu = Path.Combine(secilenSurucu, secilenKlasor);
+                string? secilenSurucu = cmbBoxDriver.SelectedItem as string;
+                string? klasorYolu = Path.Combine(secilenSurucu!, secilenKlasor);
 
                 try
                 {
@@ -734,6 +730,11 @@ namespace PhotoEmin
             lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.SearchPhoto;
             pnlArchiveContents.Visible = true;
+            pnlSearchPhoto.Visible = true;
+            pnlAddFoldersToArchive.Visible = false;
+            pnlAddSpareToArchive.Visible = false;
+            pnlMakeSpare.Visible = false;
+            PopulateDriveComboBox();
         }
 
         private void btnAddFoldersToArchive_Click(object sender, EventArgs e)
@@ -743,6 +744,10 @@ namespace PhotoEmin
             lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.AddFoldersToArchive;
             pnlArchiveContents.Visible = true;
+            pnlSearchPhoto.Visible = false;
+            pnlAddFoldersToArchive.Visible = true;
+            pnlAddSpareToArchive.Visible = false;
+            pnlMakeSpare.Visible = false;
         }
 
         private void btnMakeSpare_Click(object sender, EventArgs e)
@@ -752,6 +757,10 @@ namespace PhotoEmin
             lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.MakeSpare;
             pnlArchiveContents.Visible = true;
+            pnlSearchPhoto.Visible = false;
+            pnlAddFoldersToArchive.Visible = false;
+            pnlAddSpareToArchive.Visible = false;
+            pnlMakeSpare.Visible = true;
         }
 
         private void btnAddSpareToArchive_Click(object sender, EventArgs e)
@@ -761,6 +770,49 @@ namespace PhotoEmin
             lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.AddSpareToArchive;
             pnlArchiveContents.Visible = true;
+            pnlSearchPhoto.Visible = false;
+            pnlAddFoldersToArchive.Visible = false;
+            pnlAddSpareToArchive.Visible = true;
+            pnlMakeSpare.Visible = false;
+        }
+
+        private void btnChooseUpperFolder_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                DialogResult result = folderDialog.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
+                {
+                    txtChosenUpperFolder.Text = folderDialog.SelectedPath;
+                }
+            }
+        }
+
+        private void btnLocationForArchive_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                DialogResult result = folderDialog.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
+                {
+                    txtLocationForArchive.Text = folderDialog.SelectedPath;
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                DialogResult result = folderDialog.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
+                {
+                    txtLocationOfSpareFolder.Text = folderDialog.SelectedPath;
+                }
+            }
         }
     }
 }
