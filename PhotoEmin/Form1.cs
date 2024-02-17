@@ -1,4 +1,5 @@
-﻿using PhotoEmin.Model;
+﻿using Npgsql;
+using PhotoEmin.Model;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing.Printing;
@@ -10,7 +11,7 @@ namespace PhotoEmin
 {
     public partial class Form1 : Form
     {
-
+        private const string ConnectionString = "Server=localhost;Port=5432;Database=dbPhoto;User Id=postgres;Password=postgres;";
         private Receipt newReceipt = new();
         public Form1()
         {
@@ -814,5 +815,179 @@ namespace PhotoEmin
                 }
             }
         }
+
+        private void btnAddFolderToArchive_Click(object sender, EventArgs e)
+        {
+            string folderPath = txtChosenUpperFolder.Text;
+            Dictionary<string, byte[]> fileDictionary = new Dictionary<string, byte[]>();
+
+            if (Directory.Exists(folderPath))
+            {
+                string[] directories = Directory.GetDirectories(folderPath);
+
+                foreach (string directory in directories)
+                {
+                    string[] files = Directory.GetFiles(directory, "a.jpeg", SearchOption.AllDirectories);
+
+                    foreach (string file in files)
+                    {
+                        string fileName = Path.GetFileName(file);
+                        byte[] fileBytes = File.ReadAllBytes(file);
+
+                        // Dosya adı ve içeriğini sözlüğe ekle
+                        fileDictionary.Add(fileName, fileBytes);
+                    }
+                }
+
+                // fileDictionary içeriğini kullanabilirsiniz.
+            }
+            else
+            {
+                MessageBox.Show("Belirtilen klasör bulunamadı!");
+            }
+        }
+
+        //private void txtFullName_TextChanged(object sender, EventArgs e)
+        //{
+        //    string searchText = txtFullName.Text.Trim().ToLower(); // Küçük harfe dönüştür
+
+        //    using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+        //    {
+        //        connection.Open();
+
+        //        string sql = "SELECT fullname, foldername, photodata FROM customers WHERE fullname ILIKE @searchText";
+
+        //        using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
+
+        //            using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
+        //            {
+        //                DataTable dataTable = new DataTable();
+        //                adapter.Fill(dataTable);
+
+        //                // Bind the DataTable to the DataGridView
+        //                dataGridRecords.DataSource = dataTable;
+
+        //                // Highlight the first row if there are any rows
+        //                if (dataTable.Rows.Count > 0)
+        //                {
+        //                    dataGridRecords.Rows[0].Selected = true;
+
+        //                    // Convert the photodata to Image and display in PictureBox
+        //                    byte[] imageData = (byte[])dataTable.Rows[0]["photodata"];
+        //                    Image image;
+        //                    using (var ms = new System.IO.MemoryStream(imageData))
+        //                    {
+        //                        image = Image.FromStream(ms);
+        //                    }
+        //                    pictureBoxChosenPhoto.Image = image;
+
+        //                    // Set the foldername to the txtDataUpperFileName TextBox
+        //                    txtDataUpperFileName.Text = dataTable.Rows[0]["foldername"].ToString();
+        //                }
+        //                else
+        //                {
+        //                    // Clear PictureBox and TextBox if no records found
+        //                    pictureBoxChosenPhoto.Image = null;
+        //                    txtDataUpperFileName.Text = "";
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
+
+        private void txtFullName_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = txtFullName.Text.Trim().ToLower(); // Küçük harfe dönüştür
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText";
+
+                using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
+
+                    using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        // Bind the DataTable to the DataGridView
+                        dataGridRecords.DataSource = dataTable;
+
+                        // Hide the id column
+                        dataGridRecords.Columns["id"].Visible = false;
+
+                        // Set the header text of the fullname column
+                        dataGridRecords.Columns["Ad Soyad"].HeaderText = "Ad Soyad";
+                    }
+                }
+            }
+        }
+
+
+        private void dataGridRecords_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridRecords.SelectedRows.Count > 0)
+            {
+                int selectedId;
+                if (dataGridRecords.SelectedRows.Count > 0 && dataGridRecords.SelectedRows[0].Cells["id"].Value != null)
+                {
+                    if (int.TryParse(dataGridRecords.SelectedRows[0].Cells["id"].Value.ToString(), out selectedId))
+                    {
+                        using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+                        {
+                            connection.Open();
+
+                            string sql = "SELECT foldername, photodata FROM customers WHERE id = @id";
+
+                            using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
+                            {
+                                command.Parameters.AddWithValue("@id", selectedId);
+
+                                using (NpgsqlDataReader reader = command.ExecuteReader())
+                                {
+                                    if (reader.Read())
+                                    {
+                                        txtDataUpperFileName.Text = reader["foldername"].ToString();
+
+                                        // Check if photodata is not null
+                                        if (!reader.IsDBNull(reader.GetOrdinal("photodata")))
+                                        {
+                                            byte[] imageData = (byte[])reader["photodata"];
+                                            Image image;
+                                            using (var ms = new System.IO.MemoryStream(imageData))
+                                            {
+                                                try
+                                                {
+                                                    image = Image.FromStream(ms);
+                                                    pictureBoxChosenPhoto.SizeMode = PictureBoxSizeMode.Zoom; // PictureBox'ın SizeMode özelliğini "Zoom" olarak ayarla
+                                                    pictureBoxChosenPhoto.Image = image;
+                                                }
+                                                catch (Exception)
+                                                {
+
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            pictureBoxChosenPhoto.Image = null;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
 }
