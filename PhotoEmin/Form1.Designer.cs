@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             dataGridRecords = new DataGridView();
             btnFindFolder = new Button();
@@ -97,6 +98,10 @@
             flowLayoutPanelArchive = new Panel();
             pnlArchiveContents = new Panel();
             pnlSearchPhoto = new Panel();
+            lblSearchArchive = new Label();
+            pictureBoxLoadingArchive = new PictureBox();
+            btnSearchArchive = new Button();
+            listBoxArchive = new ListBox();
             label39 = new Label();
             txtDataUpperFileName = new TextBox();
             lblGoRecord = new Label();
@@ -153,6 +158,7 @@
             flowLayoutPanelArchive.SuspendLayout();
             pnlArchiveContents.SuspendLayout();
             pnlSearchPhoto.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLoadingArchive).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxChosenPhoto).BeginInit();
             pnlAddFoldersToArchive.SuspendLayout();
             pnlAddSpareToArchive.SuspendLayout();
@@ -161,18 +167,30 @@
             // 
             // dataGridRecords
             // 
+            dataGridRecords.AllowUserToAddRows = false;
+            dataGridRecords.AllowUserToDeleteRows = false;
             dataGridRecords.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridRecords.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dataGridRecords.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridRecords.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dataGridRecords.DefaultCellStyle = dataGridViewCellStyle4;
             dataGridRecords.Location = new Point(3, 70);
             dataGridRecords.Name = "dataGridRecords";
+            dataGridRecords.ReadOnly = true;
+            dataGridRecords.RowHeadersVisible = false;
             dataGridRecords.RowHeadersWidth = 82;
             dataGridRecords.Size = new Size(347, 221);
             dataGridRecords.TabIndex = 3;
@@ -893,8 +911,8 @@
             pnlBorder.Anchor = AnchorStyles.Top;
             pnlBorder.BackColor = Color.Silver;
             pnlBorder.Controls.Add(flowLayoutPanelArchive);
-            pnlBorder.Controls.Add(pnlFindFolder);
             pnlBorder.Controls.Add(pnlReceipt);
+            pnlBorder.Controls.Add(pnlFindFolder);
             pnlBorder.Location = new Point(214, 71);
             pnlBorder.Name = "pnlBorder";
             pnlBorder.Size = new Size(1365, 657);
@@ -931,6 +949,10 @@
             // 
             // pnlSearchPhoto
             // 
+            pnlSearchPhoto.Controls.Add(lblSearchArchive);
+            pnlSearchPhoto.Controls.Add(pictureBoxLoadingArchive);
+            pnlSearchPhoto.Controls.Add(btnSearchArchive);
+            pnlSearchPhoto.Controls.Add(listBoxArchive);
             pnlSearchPhoto.Controls.Add(label39);
             pnlSearchPhoto.Controls.Add(txtDataUpperFileName);
             pnlSearchPhoto.Controls.Add(lblGoRecord);
@@ -949,6 +971,57 @@
             pnlSearchPhoto.Size = new Size(1165, 376);
             pnlSearchPhoto.TabIndex = 0;
             // 
+            // lblSearchArchive
+            // 
+            lblSearchArchive.AutoSize = true;
+            lblSearchArchive.BackColor = Color.Transparent;
+            lblSearchArchive.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSearchArchive.ForeColor = Color.Black;
+            lblSearchArchive.Location = new Point(921, 152);
+            lblSearchArchive.Name = "lblSearchArchive";
+            lblSearchArchive.Size = new Size(154, 26);
+            lblSearchArchive.TabIndex = 25;
+            lblSearchArchive.Text = "Üst Klasörü Ara";
+            // 
+            // pictureBoxLoadingArchive
+            // 
+            pictureBoxLoadingArchive.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBoxLoadingArchive.Image = Extensions.Resources.loading;
+            pictureBoxLoadingArchive.InitialImage = Extensions.Resources.loading;
+            pictureBoxLoadingArchive.Location = new Point(954, 75);
+            pictureBoxLoadingArchive.Margin = new Padding(2, 1, 2, 1);
+            pictureBoxLoadingArchive.Name = "pictureBoxLoadingArchive";
+            pictureBoxLoadingArchive.Size = new Size(89, 81);
+            pictureBoxLoadingArchive.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBoxLoadingArchive.TabIndex = 24;
+            pictureBoxLoadingArchive.TabStop = false;
+            // 
+            // btnSearchArchive
+            // 
+            btnSearchArchive.BackColor = Color.Transparent;
+            btnSearchArchive.BackgroundImage = Extensions.Resources.btnSearchFolder;
+            btnSearchArchive.BackgroundImageLayout = ImageLayout.Stretch;
+            btnSearchArchive.FlatAppearance.BorderSize = 0;
+            btnSearchArchive.FlatStyle = FlatStyle.Flat;
+            btnSearchArchive.Location = new Point(954, 85);
+            btnSearchArchive.Name = "btnSearchArchive";
+            btnSearchArchive.Size = new Size(80, 64);
+            btnSearchArchive.TabIndex = 22;
+            btnSearchArchive.UseVisualStyleBackColor = false;
+            btnSearchArchive.Click += btnSearchArchive_Click;
+            // 
+            // listBoxArchive
+            // 
+            listBoxArchive.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            listBoxArchive.FormattingEnabled = true;
+            listBoxArchive.HorizontalScrollbar = true;
+            listBoxArchive.ItemHeight = 21;
+            listBoxArchive.Location = new Point(853, 198);
+            listBoxArchive.Margin = new Padding(2, 1, 2, 1);
+            listBoxArchive.Name = "listBoxArchive";
+            listBoxArchive.Size = new Size(303, 67);
+            listBoxArchive.TabIndex = 21;
+            // 
             // label39
             // 
             label39.AutoSize = true;
@@ -964,7 +1037,7 @@
             // txtDataUpperFileName
             // 
             txtDataUpperFileName.BackColor = SystemColors.ScrollBar;
-            txtDataUpperFileName.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtDataUpperFileName.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtDataUpperFileName.ForeColor = SystemColors.MenuHighlight;
             txtDataUpperFileName.Location = new Point(32, 325);
             txtDataUpperFileName.Name = "txtDataUpperFileName";
@@ -977,7 +1050,7 @@
             lblGoRecord.AutoSize = true;
             lblGoRecord.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
             lblGoRecord.ForeColor = SystemColors.ControlText;
-            lblGoRecord.Location = new Point(1004, 214);
+            lblGoRecord.Location = new Point(934, 352);
             lblGoRecord.Name = "lblGoRecord";
             lblGoRecord.Size = new Size(158, 22);
             lblGoRecord.TabIndex = 15;
@@ -989,17 +1062,18 @@
             btnGoRecord.BackgroundImageLayout = ImageLayout.Stretch;
             btnGoRecord.FlatAppearance.BorderSize = 0;
             btnGoRecord.FlatStyle = FlatStyle.Flat;
-            btnGoRecord.Location = new Point(1039, 131);
+            btnGoRecord.Location = new Point(969, 269);
             btnGoRecord.Name = "btnGoRecord";
             btnGoRecord.Size = new Size(80, 80);
             btnGoRecord.TabIndex = 16;
             btnGoRecord.UseVisualStyleBackColor = true;
+            btnGoRecord.Click += btnGoRecord_Click;
             // 
             // comboBoxDriversForRecord
             // 
             comboBoxDriversForRecord.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBoxDriversForRecord.FormattingEnabled = true;
-            comboBoxDriversForRecord.Location = new Point(842, 200);
+            comboBoxDriversForRecord.Location = new Point(930, 36);
             comboBoxDriversForRecord.Margin = new Padding(2, 1, 2, 1);
             comboBoxDriversForRecord.Name = "comboBoxDriversForRecord";
             comboBoxDriversForRecord.Size = new Size(132, 33);
@@ -1009,18 +1083,17 @@
             // 
             lblChooseDriver.AutoSize = true;
             lblChooseDriver.BackColor = Color.Transparent;
-            lblChooseDriver.Font = new Font("Palatino Linotype", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblChooseDriver.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblChooseDriver.ForeColor = Color.Black;
-            lblChooseDriver.Location = new Point(842, 171);
+            lblChooseDriver.Location = new Point(930, 7);
             lblChooseDriver.Name = "lblChooseDriver";
-            lblChooseDriver.Size = new Size(129, 28);
+            lblChooseDriver.Size = new Size(116, 26);
             lblChooseDriver.TabIndex = 6;
             lblChooseDriver.Text = "Sürücü Seç:";
             // 
             // pictureBoxChosenPhoto
             // 
             pictureBoxChosenPhoto.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBoxChosenPhoto.BorderStyle = BorderStyle.FixedSingle;
             pictureBoxChosenPhoto.Location = new Point(387, 70);
             pictureBoxChosenPhoto.Name = "pictureBoxChosenPhoto";
             pictureBoxChosenPhoto.Size = new Size(446, 303);
@@ -1533,6 +1606,7 @@
             pnlArchiveContents.ResumeLayout(false);
             pnlSearchPhoto.ResumeLayout(false);
             pnlSearchPhoto.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLoadingArchive).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxChosenPhoto).EndInit();
             pnlAddFoldersToArchive.ResumeLayout(false);
             pnlAddFoldersToArchive.PerformLayout();
@@ -1659,5 +1733,9 @@
         private Label label38;
         private TextBox txtDataUpperFileName;
         private Label label39;
+        private ListBox listBoxArchive;
+        private PictureBox pictureBoxLoadingArchive;
+        private Button btnSearchArchive;
+        private Label lblSearchArchive;
     }
 }

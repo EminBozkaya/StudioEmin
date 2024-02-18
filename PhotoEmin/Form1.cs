@@ -28,6 +28,7 @@ namespace PhotoEmin
                 //pnlFindFolder.Visible = false;
                 //flowLayoutPanelArchive.Visible = false;
                 pictureBoxLoading.Visible = false; // Başlangıçta görünmez yapın
+                pictureBoxLoadingArchive.Visible = false;
                 pnlBorder.Visible = false;
             };
 
@@ -356,6 +357,7 @@ namespace PhotoEmin
             //currentYlast += 200; // Önceki metinden sonra bir boşluk bırakmak için
             e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(120, (int)currentYlast, 600, 160), new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
+
         bool SaveProcess(bool isSaveAndPrint = false)
         {
             string name = txtName.Text.Trim();
@@ -450,6 +452,7 @@ namespace PhotoEmin
                 return false;
             }
         }
+
         private void setVisibleAfterSaveProcess(bool status)
         {
             btnSave.Visible = status;
@@ -457,6 +460,7 @@ namespace PhotoEmin
             btnSaveAndPrint.Visible = status;
             lblSaveAndPrint.Visible = status;
         }
+
         void PrintProcess()
         {
             if (!string.IsNullOrWhiteSpace(lblReceiptName.Text))
@@ -525,16 +529,31 @@ namespace PhotoEmin
 
         private void btnSearchFile_Click(object sender, EventArgs e)
         {
+            Search(false);
+        }
+
+        private void Search(bool fromArchive = false)
+        {
             // Dosya adını ve sürücüyü al
-            string klasorAdi = txtFileNameInput.Text.Trim();
-            string? secilenSurucu = cmbBoxDriver.SelectedItem as string;
+            string klasorAdi = "";
+            string? secilenSurucu = "";
+            if (!fromArchive)
+            {
+                klasorAdi = txtFileNameInput.Text.Trim();
+                secilenSurucu = cmbBoxDriver.SelectedItem as string;
+            }
+            else
+            {
+                klasorAdi = txtDataUpperFileName.Text;
+                secilenSurucu = comboBoxDriversForRecord.SelectedItem as string;
+            }
 
             // Geçerli bir dosya adı ve sürücü var mı kontrol et
             if (!string.IsNullOrEmpty(klasorAdi) && !string.IsNullOrEmpty(secilenSurucu))
             {
                 try
                 {
-                    Thread threadInput = new Thread(() => DisplayData(secilenSurucu, klasorAdi));
+                    Thread threadInput = new Thread(() => DisplayData(secilenSurucu, klasorAdi, fromArchive));
                     threadInput.Start();
                 }
                 catch (Exception ex)
@@ -547,19 +566,20 @@ namespace PhotoEmin
                 MessageBox.Show("Lütfen klasör adını ve sürücüyü seçin.", "Eksik Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        private void DisplayData(string secilenSurucu, string klasorAdi)
+
+        private void DisplayData(string secilenSurucu, string klasorAdi, bool fromArchive)
         {
             // Loading göstergesini göster
-            SetLoading(true);
+            SetLoading(true, fromArchive);
 
             // Diğer işlemler burada gerçekleştirilir
-            ListFolderNames(secilenSurucu, klasorAdi);
+            ListFolderNames(secilenSurucu, klasorAdi, fromArchive);
 
             // Loading göstergesini gizle
-            SetLoading(false);
+            SetLoading(false, fromArchive);
         }
 
-        private void SetLoading(bool displayLoader)
+        private void SetLoading(bool displayLoader, bool fromArchive)
         {
             // this.Invoke ile UI thread üzerinde işlemler yapılır
             this.Invoke((MethodInvoker)delegate
@@ -567,67 +587,132 @@ namespace PhotoEmin
                 if (displayLoader)
                 {
                     // Loading göstergesini göster ve cursor'ı "wait" durumuna getir
-                    btnSearchFile.Visible = false;
-                    lblSearchFile.Visible = false;
-                    pictureBoxLoading.Visible = true;
-                    this.Cursor = Cursors.WaitCursor;
+                    if (!fromArchive)
+                    {
+                        btnSearchFile.Visible = false;
+                        lblSearchFile.Visible = false;
+                        pictureBoxLoading.Visible = true;
+                        this.Cursor = Cursors.WaitCursor;
+                    }
+                    else
+                    {
+                        btnSearchArchive.Visible = false;
+                        lblSearchArchive.Visible = false;
+                        pictureBoxLoadingArchive.Visible = true;
+                        this.Cursor = Cursors.WaitCursor;
+                    }
                 }
                 else
                 {
                     // Loading göstergesini gizle ve cursor'ı varsayılan duruma getir
-                    btnSearchFile.Visible = true;
-                    lblSearchFile.Visible = true;
-                    pictureBoxLoading.Visible = false;
-                    this.Cursor = Cursors.Default;
+                    if (!fromArchive)
+                    {
+                        btnSearchFile.Visible = true;
+                        lblSearchFile.Visible = true;
+                        pictureBoxLoading.Visible = false;
+                        this.Cursor = Cursors.Default;
+                    }
+                    else
+                    {
+                        btnSearchArchive.Visible = true;
+                        lblSearchArchive.Visible = true;
+                        pictureBoxLoadingArchive.Visible = false;
+                        this.Cursor = Cursors.Default;
+                    }
                 }
             });
         }
 
-        private void ListFolderNames(string dizinYolu, string arananKlasorAdi)
+        private void ListFolderNames(string dizinYolu, string arananKlasorAdi, bool fromArchive)
         {
             try
             {
-                SetLoading(true);
+                if (!fromArchive)
+                    SetLoading(true, fromArchive);
+
                 this.Invoke((MethodInvoker)delegate
                 {
-                    listBoxFiles.Items.Clear();
+                    if (!fromArchive)
+                    {
+                        listBoxFiles.Items.Clear();
+                    }
+                    else
+                    {
+                        listBoxArchive.Items.Clear();
+                    }
                 });
                 // Dizin içindeki klasörleri kontrol et
                 DirectoryInfo di = new DirectoryInfo(dizinYolu);
 
-                List<DirectoryInfo> erisilebilenKlasorler = new List<DirectoryInfo>();
+                List<DirectoryInfo> erisilebilenKlasorler = [];
+                List<DirectoryInfo> filtrelenmisKlasorler = [];
+                if (!fromArchive)
+                {
+                    CheckDirectories(di, erisilebilenKlasorler);
 
-                CheckDirectories(di, erisilebilenKlasorler);
-
-                // Sadece klasörleri eklemek için filtreleme adımı
-                var filtrelenmisKlasorler = erisilebilenKlasorler
+                    filtrelenmisKlasorler = erisilebilenKlasorler
                     .Where(info => (info.Attributes & FileAttributes.Directory) == FileAttributes.Directory && info.Name.Contains(arananKlasorAdi, StringComparison.OrdinalIgnoreCase))
                     .ToList();
 
-                foreach (var klasorDosya in filtrelenmisKlasorler)
-                {
-                    // Klasör isimlerini alıyoruz
-                    string klasorAdi = klasorDosya.FullName;
+                    foreach (var klasorDosya in filtrelenmisKlasorler)
+                    {
+                        // Klasör isimlerini alıyoruz
+                        string klasorAdi = klasorDosya.FullName;
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            listBoxFiles.Items.Add(klasorAdi);
+                        });
+
+                        // Yatay kaydırma çubuğunu güncelle
+                    }
+
+                    if (listBoxFiles.Items.Count == 0)
+                    {
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            listBoxFiles.Items.Add("Bulunamadı");
+                        });
+
+                    }
                     this.Invoke((MethodInvoker)delegate
                     {
-                        listBoxFiles.Items.Add(klasorAdi);
+                        listBoxFiles.SelectedIndex = 0; // İlk öğeyi seç
                     });
-
-                    // Yatay kaydırma çubuğunu güncelle
                 }
-
-                if (listBoxFiles.Items.Count == 0)
+                
+                else
                 {
+                    CheckDirectory(di, erisilebilenKlasorler, txtDataUpperFileName.Text);
+
+                    filtrelenmisKlasorler = erisilebilenKlasorler;
+                    //filtrelenmisKlasorler = erisilebilenKlasorler.Where(info => (info.Attributes & FileAttributes.Directory) == FileAttributes.Directory && info.Name.Equals(arananKlasorAdi, StringComparison.Ordinal)).ToList();
+
+                    foreach (var klasorDosya in filtrelenmisKlasorler)
+                    {
+                        // Klasör isimlerini alıyoruz
+                        string klasorAdi = klasorDosya.FullName;
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            listBoxArchive.Items.Add(klasorAdi);
+                        });
+
+                        // Yatay kaydırma çubuğunu güncelle
+                    }
+
+                    if (listBoxArchive.Items.Count == 0)
+                    {
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            listBoxArchive.Items.Add("Bulunamadı");
+                        });
+
+                    }
                     this.Invoke((MethodInvoker)delegate
                     {
-                        listBoxFiles.Items.Add("Bulunamadı");
+                        listBoxArchive.SelectedIndex = 0; // İlk öğeyi seç
                     });
-
                 }
-                this.Invoke((MethodInvoker)delegate
-                {
-                    listBoxFiles.SelectedIndex = 0; // İlk öğeyi seç
-                });
+
             }
             catch (UnauthorizedAccessException)
             {
@@ -639,11 +724,9 @@ namespace PhotoEmin
             }
         }
 
-
         static void CheckDirectories(DirectoryInfo currentDirectory, List<DirectoryInfo> accessibleDirectories)
         {
             accessibleDirectories.Add(currentDirectory);
-
             try
             {
                 // UnauthorizedAccessException hatası alınmazsa, alt klasörleri ile birlikte kontrol et
@@ -657,6 +740,43 @@ namespace PhotoEmin
 
             }
         }
+
+        static void CheckDirectory(DirectoryInfo rootDirectory, List<DirectoryInfo> accessibleDirectories, string targetDirectoryName)
+        {
+            Queue<DirectoryInfo> queue = new Queue<DirectoryInfo>();
+            queue.Enqueue(rootDirectory);
+
+            while (queue.Count > 0)
+            {
+                DirectoryInfo currentDirectory = queue.Dequeue();
+
+                try
+                {
+                    // Mevcut klasörün alt klasörlerini al
+                    DirectoryInfo[] subDirectories = currentDirectory.GetDirectories();
+
+                    // Mevcut klasör altındaki klasörleri döngüye al
+                    foreach (var subDirectory in subDirectories)
+                    {
+                        // Alt klasörün adı hedef klasör adı ile eşleşiyorsa
+                        if (subDirectory.Name.Equals(targetDirectoryName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            // Eğer koşul sağlanıyorsa, klasörü listBox'a ekle
+                            accessibleDirectories.Add(subDirectory);
+                            return; // Bulunduğunda arama işleminden çık
+                        }
+
+                        // Alt klasörü arama kuyruğuna ekle
+                        queue.Enqueue(subDirectory);
+                    }
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    // Eğer erişim izni yoksa devam et
+                }
+            }
+        }
+
         private void ListBoxFiles_DoubleClick(object sender, EventArgs e)
         {
             // ListBox'ta çift tıklanan öğenin adını al
@@ -847,57 +967,6 @@ namespace PhotoEmin
             }
         }
 
-        //private void txtFullName_TextChanged(object sender, EventArgs e)
-        //{
-        //    string searchText = txtFullName.Text.Trim().ToLower(); // Küçük harfe dönüştür
-
-        //    using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
-        //    {
-        //        connection.Open();
-
-        //        string sql = "SELECT fullname, foldername, photodata FROM customers WHERE fullname ILIKE @searchText";
-
-        //        using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
-        //        {
-        //            command.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
-
-        //            using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
-        //            {
-        //                DataTable dataTable = new DataTable();
-        //                adapter.Fill(dataTable);
-
-        //                // Bind the DataTable to the DataGridView
-        //                dataGridRecords.DataSource = dataTable;
-
-        //                // Highlight the first row if there are any rows
-        //                if (dataTable.Rows.Count > 0)
-        //                {
-        //                    dataGridRecords.Rows[0].Selected = true;
-
-        //                    // Convert the photodata to Image and display in PictureBox
-        //                    byte[] imageData = (byte[])dataTable.Rows[0]["photodata"];
-        //                    Image image;
-        //                    using (var ms = new System.IO.MemoryStream(imageData))
-        //                    {
-        //                        image = Image.FromStream(ms);
-        //                    }
-        //                    pictureBoxChosenPhoto.Image = image;
-
-        //                    // Set the foldername to the txtDataUpperFileName TextBox
-        //                    txtDataUpperFileName.Text = dataTable.Rows[0]["foldername"].ToString();
-        //                }
-        //                else
-        //                {
-        //                    // Clear PictureBox and TextBox if no records found
-        //                    pictureBoxChosenPhoto.Image = null;
-        //                    txtDataUpperFileName.Text = "";
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
-
         private void txtFullName_TextChanged(object sender, EventArgs e)
         {
             string searchText = txtFullName.Text.Trim().ToLower(); // Küçük harfe dönüştür
@@ -924,61 +993,57 @@ namespace PhotoEmin
                         dataGridRecords.Columns["id"].Visible = false;
 
                         // Set the header text of the fullname column
-                        dataGridRecords.Columns["Ad Soyad"].HeaderText = "Ad Soyad";
+                        dataGridRecords.Columns["Ad Soyad"].HeaderText = "Ad Soyad:";
                     }
                 }
             }
         }
 
-
         private void dataGridRecords_SelectionChanged(object sender, EventArgs e)
         {
-            if (dataGridRecords.SelectedRows.Count > 0)
+            int selectedId;
+            if (dataGridRecords.CurrentRow != null && dataGridRecords.CurrentRow.Cells["id"].Value != null)
             {
-                int selectedId;
-                if (dataGridRecords.SelectedRows.Count > 0 && dataGridRecords.SelectedRows[0].Cells["id"].Value != null)
+                if (int.TryParse(dataGridRecords.CurrentRow.Cells["id"].Value.ToString(), out selectedId))
                 {
-                    if (int.TryParse(dataGridRecords.SelectedRows[0].Cells["id"].Value.ToString(), out selectedId))
+                    using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
                     {
-                        using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+                        connection.Open();
+
+                        string sql = "SELECT foldername, photodata FROM customers WHERE id = @id";
+
+                        using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
                         {
-                            connection.Open();
+                            command.Parameters.AddWithValue("@id", selectedId);
 
-                            string sql = "SELECT foldername, photodata FROM customers WHERE id = @id";
-
-                            using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
+                            using (NpgsqlDataReader reader = command.ExecuteReader())
                             {
-                                command.Parameters.AddWithValue("@id", selectedId);
-
-                                using (NpgsqlDataReader reader = command.ExecuteReader())
+                                if (reader.Read())
                                 {
-                                    if (reader.Read())
+                                    txtDataUpperFileName.Text = reader["foldername"].ToString();
+
+                                    // Check if photodata is not null
+                                    if (!reader.IsDBNull(reader.GetOrdinal("photodata")))
                                     {
-                                        txtDataUpperFileName.Text = reader["foldername"].ToString();
-
-                                        // Check if photodata is not null
-                                        if (!reader.IsDBNull(reader.GetOrdinal("photodata")))
+                                        byte[] imageData = (byte[])reader["photodata"];
+                                        Image image;
+                                        using (var ms = new System.IO.MemoryStream(imageData))
                                         {
-                                            byte[] imageData = (byte[])reader["photodata"];
-                                            Image image;
-                                            using (var ms = new System.IO.MemoryStream(imageData))
+                                            try
                                             {
-                                                try
-                                                {
-                                                    image = Image.FromStream(ms);
-                                                    pictureBoxChosenPhoto.SizeMode = PictureBoxSizeMode.Zoom; // PictureBox'ın SizeMode özelliğini "Zoom" olarak ayarla
-                                                    pictureBoxChosenPhoto.Image = image;
-                                                }
-                                                catch (Exception)
-                                                {
+                                                image = Image.FromStream(ms);
+                                                pictureBoxChosenPhoto.SizeMode = PictureBoxSizeMode.Zoom; // PictureBox'ın SizeMode özelliğini "Zoom" olarak ayarla
+                                                pictureBoxChosenPhoto.Image = image;
+                                            }
+                                            catch (Exception)
+                                            {
 
-                                                }
                                             }
                                         }
-                                        else
-                                        {
-                                            pictureBoxChosenPhoto.Image = null;
-                                        }
+                                    }
+                                    else
+                                    {
+                                        pictureBoxChosenPhoto.Image = null;
                                     }
                                 }
                             }
@@ -988,6 +1053,53 @@ namespace PhotoEmin
             }
         }
 
+        private void btnGoRecord_Click(object sender, EventArgs e)
+        {
+            if(dataGridRecords.CurrentRow.Cells["Ad Soyad"] != null && dataGridRecords.CurrentRow.Cells["Ad Soyad"].Value != null)
+            {
+                // txtDataUpperFileName ve comboBoxDriversForRecord boş olmamalıdır
+                if (string.IsNullOrEmpty(txtDataUpperFileName.Text) || comboBoxDriversForRecord.SelectedItem == null)
+                {
+                    MessageBox.Show("Lütfen klasör adını ve sürücüyü seçin.");
+                    return;
+                }
+                // ListBox'taki öğenin adını al
+                string? selectedUpperFolder = listBoxArchive.SelectedItem as string;
 
+                // Geçerli bir öğe seçildiyse ve "Bulunamadı" öğesi değilse işlem yap
+                if (!string.IsNullOrEmpty(selectedUpperFolder) && selectedUpperFolder != "Bulunamadı")
+                {
+                    // Klasör yolunu oluştur ve aç
+                    string selectedFullName = dataGridRecords.CurrentRow.Cells["Ad Soyad"].Value.ToString()!;
+                    string? completePath = Path.Combine(selectedUpperFolder, selectedFullName!);
+
+                    // Klasörün varlığını kontrol et
+                    if (Directory.Exists(completePath))
+                    {
+                        try
+                        {
+                            Process.Start("explorer.exe", completePath);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Klasör açılamadı: " + ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Belirtilen klasör bulunamadı: " + completePath);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Lütfen Ad-Soyad tablosundan bir kayıt seçin");
+            }
+        }
+
+        private void btnSearchArchive_Click(object sender, EventArgs e)
+        {
+            Search(true);
+        }
     }
 }
