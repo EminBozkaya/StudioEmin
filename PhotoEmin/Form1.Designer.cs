@@ -97,7 +97,39 @@
             pnlBorder = new Panel();
             flowLayoutPanelArchive = new Panel();
             pnlArchiveContents = new Panel();
+            pnlAddFoldersToArchive = new Panel();
+            pictureBoxAddFolderToArchive = new PictureBox();
+            lblAddFolderToArchive = new Label();
+            btnAddFolderToArchive = new Button();
+            label27 = new Label();
+            txtChosenUpperFolder = new TextBox();
+            label23 = new Label();
+            btnChooseUpperFolder = new Button();
+            label20 = new Label();
+            label11 = new Label();
+            label10 = new Label();
+            pnlAddSpareToArchive = new Panel();
+            label34 = new Label();
+            label35 = new Label();
+            button2 = new Button();
+            txtLocationOfSpareFolder = new TextBox();
+            label36 = new Label();
+            btnChooseSpareFolder = new Button();
+            label37 = new Label();
+            label38 = new Label();
+            pnlMakeSpare = new Panel();
+            label33 = new Label();
+            label32 = new Label();
+            btnDBtoFolder = new Button();
+            txtLocationForArchive = new TextBox();
+            label31 = new Label();
+            btnLocationForArchive = new Button();
+            label30 = new Label();
+            label29 = new Label();
             pnlSearchPhoto = new Panel();
+            panel1 = new Panel();
+            lblTotalRecord = new Label();
+            label40 = new Label();
             lblSearchArchive = new Label();
             pictureBoxLoadingArchive = new PictureBox();
             btnSearchArchive = new Button();
@@ -113,34 +145,6 @@
             lblFound = new Label();
             txtFullName = new TextBox();
             lblFullName = new Label();
-            pnlAddFoldersToArchive = new Panel();
-            label28 = new Label();
-            btnAddFolderToArchive = new Button();
-            label27 = new Label();
-            txtChosenUpperFolder = new TextBox();
-            label23 = new Label();
-            btnChooseUpperFolder = new Button();
-            label20 = new Label();
-            label11 = new Label();
-            label10 = new Label();
-            pnlAddSpareToArchive = new Panel();
-            label34 = new Label();
-            label35 = new Label();
-            button2 = new Button();
-            txtLocationOfSpareFolder = new TextBox();
-            label36 = new Label();
-            button3 = new Button();
-            label37 = new Label();
-            label38 = new Label();
-            pnlMakeSpare = new Panel();
-            label33 = new Label();
-            label32 = new Label();
-            btnDBtoFolder = new Button();
-            txtLocationForArchive = new TextBox();
-            label31 = new Label();
-            btnLocationForArchive = new Button();
-            label30 = new Label();
-            label29 = new Label();
             lblExplanation = new Label();
             lblMainArchiveCaption = new Label();
             lblEmpty = new Label();
@@ -157,12 +161,14 @@
             pnlBorder.SuspendLayout();
             flowLayoutPanelArchive.SuspendLayout();
             pnlArchiveContents.SuspendLayout();
-            pnlSearchPhoto.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxLoadingArchive).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxChosenPhoto).BeginInit();
             pnlAddFoldersToArchive.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxAddFolderToArchive).BeginInit();
             pnlAddSpareToArchive.SuspendLayout();
             pnlMakeSpare.SuspendLayout();
+            pnlSearchPhoto.SuspendLayout();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLoadingArchive).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxChosenPhoto).BeginInit();
             SuspendLayout();
             // 
             // dataGridRecords
@@ -192,7 +198,7 @@
             dataGridRecords.ReadOnly = true;
             dataGridRecords.RowHeadersVisible = false;
             dataGridRecords.RowHeadersWidth = 82;
-            dataGridRecords.Size = new Size(347, 221);
+            dataGridRecords.Size = new Size(347, 207);
             dataGridRecords.TabIndex = 3;
             dataGridRecords.SelectionChanged += dataGridRecords_SelectionChanged;
             // 
@@ -937,216 +943,20 @@
             // pnlArchiveContents
             // 
             pnlArchiveContents.BorderStyle = BorderStyle.FixedSingle;
-            pnlArchiveContents.Controls.Add(pnlSearchPhoto);
             pnlArchiveContents.Controls.Add(pnlAddFoldersToArchive);
             pnlArchiveContents.Controls.Add(pnlAddSpareToArchive);
             pnlArchiveContents.Controls.Add(pnlMakeSpare);
+            pnlArchiveContents.Controls.Add(pnlSearchPhoto);
             pnlArchiveContents.Location = new Point(165, 150);
             pnlArchiveContents.Margin = new Padding(2, 1, 2, 1);
             pnlArchiveContents.Name = "pnlArchiveContents";
             pnlArchiveContents.Size = new Size(1178, 429);
             pnlArchiveContents.TabIndex = 21;
             // 
-            // pnlSearchPhoto
-            // 
-            pnlSearchPhoto.Controls.Add(lblSearchArchive);
-            pnlSearchPhoto.Controls.Add(pictureBoxLoadingArchive);
-            pnlSearchPhoto.Controls.Add(btnSearchArchive);
-            pnlSearchPhoto.Controls.Add(listBoxArchive);
-            pnlSearchPhoto.Controls.Add(label39);
-            pnlSearchPhoto.Controls.Add(txtDataUpperFileName);
-            pnlSearchPhoto.Controls.Add(lblGoRecord);
-            pnlSearchPhoto.Controls.Add(btnGoRecord);
-            pnlSearchPhoto.Controls.Add(comboBoxDriversForRecord);
-            pnlSearchPhoto.Controls.Add(lblChooseDriver);
-            pnlSearchPhoto.Controls.Add(pictureBoxChosenPhoto);
-            pnlSearchPhoto.Controls.Add(dataGridRecords);
-            pnlSearchPhoto.Controls.Add(lblFoundPhoto);
-            pnlSearchPhoto.Controls.Add(lblFound);
-            pnlSearchPhoto.Controls.Add(txtFullName);
-            pnlSearchPhoto.Controls.Add(lblFullName);
-            pnlSearchPhoto.Location = new Point(5, 28);
-            pnlSearchPhoto.Margin = new Padding(2, 1, 2, 1);
-            pnlSearchPhoto.Name = "pnlSearchPhoto";
-            pnlSearchPhoto.Size = new Size(1165, 376);
-            pnlSearchPhoto.TabIndex = 0;
-            // 
-            // lblSearchArchive
-            // 
-            lblSearchArchive.AutoSize = true;
-            lblSearchArchive.BackColor = Color.Transparent;
-            lblSearchArchive.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSearchArchive.ForeColor = Color.Black;
-            lblSearchArchive.Location = new Point(921, 152);
-            lblSearchArchive.Name = "lblSearchArchive";
-            lblSearchArchive.Size = new Size(154, 26);
-            lblSearchArchive.TabIndex = 25;
-            lblSearchArchive.Text = "Üst Klasörü Ara";
-            // 
-            // pictureBoxLoadingArchive
-            // 
-            pictureBoxLoadingArchive.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBoxLoadingArchive.Image = Extensions.Resources.loading;
-            pictureBoxLoadingArchive.InitialImage = Extensions.Resources.loading;
-            pictureBoxLoadingArchive.Location = new Point(954, 75);
-            pictureBoxLoadingArchive.Margin = new Padding(2, 1, 2, 1);
-            pictureBoxLoadingArchive.Name = "pictureBoxLoadingArchive";
-            pictureBoxLoadingArchive.Size = new Size(89, 81);
-            pictureBoxLoadingArchive.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBoxLoadingArchive.TabIndex = 24;
-            pictureBoxLoadingArchive.TabStop = false;
-            // 
-            // btnSearchArchive
-            // 
-            btnSearchArchive.BackColor = Color.Transparent;
-            btnSearchArchive.BackgroundImage = Extensions.Resources.btnSearchFolder;
-            btnSearchArchive.BackgroundImageLayout = ImageLayout.Stretch;
-            btnSearchArchive.FlatAppearance.BorderSize = 0;
-            btnSearchArchive.FlatStyle = FlatStyle.Flat;
-            btnSearchArchive.Location = new Point(954, 85);
-            btnSearchArchive.Name = "btnSearchArchive";
-            btnSearchArchive.Size = new Size(80, 64);
-            btnSearchArchive.TabIndex = 22;
-            btnSearchArchive.UseVisualStyleBackColor = false;
-            btnSearchArchive.Click += btnSearchArchive_Click;
-            // 
-            // listBoxArchive
-            // 
-            listBoxArchive.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            listBoxArchive.FormattingEnabled = true;
-            listBoxArchive.HorizontalScrollbar = true;
-            listBoxArchive.ItemHeight = 21;
-            listBoxArchive.Location = new Point(853, 198);
-            listBoxArchive.Margin = new Padding(2, 1, 2, 1);
-            listBoxArchive.Name = "listBoxArchive";
-            listBoxArchive.Size = new Size(303, 67);
-            listBoxArchive.TabIndex = 21;
-            // 
-            // label39
-            // 
-            label39.AutoSize = true;
-            label39.BackColor = Color.Gold;
-            label39.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label39.ForeColor = Color.Black;
-            label39.Location = new Point(32, 301);
-            label39.Name = "label39";
-            label39.Size = new Size(268, 21);
-            label39.TabIndex = 19;
-            label39.Text = "Seçilen Kaydın Bulunduğu Üst Klasör:";
-            // 
-            // txtDataUpperFileName
-            // 
-            txtDataUpperFileName.BackColor = SystemColors.ScrollBar;
-            txtDataUpperFileName.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtDataUpperFileName.ForeColor = SystemColors.MenuHighlight;
-            txtDataUpperFileName.Location = new Point(32, 325);
-            txtDataUpperFileName.Name = "txtDataUpperFileName";
-            txtDataUpperFileName.ReadOnly = true;
-            txtDataUpperFileName.Size = new Size(268, 33);
-            txtDataUpperFileName.TabIndex = 18;
-            // 
-            // lblGoRecord
-            // 
-            lblGoRecord.AutoSize = true;
-            lblGoRecord.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
-            lblGoRecord.ForeColor = SystemColors.ControlText;
-            lblGoRecord.Location = new Point(934, 352);
-            lblGoRecord.Name = "lblGoRecord";
-            lblGoRecord.Size = new Size(158, 22);
-            lblGoRecord.TabIndex = 15;
-            lblGoRecord.Text = "Kayıt Dosyasına Git";
-            // 
-            // btnGoRecord
-            // 
-            btnGoRecord.BackgroundImage = Extensions.Resources.btnOpenFolder;
-            btnGoRecord.BackgroundImageLayout = ImageLayout.Stretch;
-            btnGoRecord.FlatAppearance.BorderSize = 0;
-            btnGoRecord.FlatStyle = FlatStyle.Flat;
-            btnGoRecord.Location = new Point(969, 269);
-            btnGoRecord.Name = "btnGoRecord";
-            btnGoRecord.Size = new Size(80, 80);
-            btnGoRecord.TabIndex = 16;
-            btnGoRecord.UseVisualStyleBackColor = true;
-            btnGoRecord.Click += btnGoRecord_Click;
-            // 
-            // comboBoxDriversForRecord
-            // 
-            comboBoxDriversForRecord.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            comboBoxDriversForRecord.FormattingEnabled = true;
-            comboBoxDriversForRecord.Location = new Point(930, 36);
-            comboBoxDriversForRecord.Margin = new Padding(2, 1, 2, 1);
-            comboBoxDriversForRecord.Name = "comboBoxDriversForRecord";
-            comboBoxDriversForRecord.Size = new Size(132, 33);
-            comboBoxDriversForRecord.TabIndex = 5;
-            // 
-            // lblChooseDriver
-            // 
-            lblChooseDriver.AutoSize = true;
-            lblChooseDriver.BackColor = Color.Transparent;
-            lblChooseDriver.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblChooseDriver.ForeColor = Color.Black;
-            lblChooseDriver.Location = new Point(930, 7);
-            lblChooseDriver.Name = "lblChooseDriver";
-            lblChooseDriver.Size = new Size(116, 26);
-            lblChooseDriver.TabIndex = 6;
-            lblChooseDriver.Text = "Sürücü Seç:";
-            // 
-            // pictureBoxChosenPhoto
-            // 
-            pictureBoxChosenPhoto.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBoxChosenPhoto.Location = new Point(387, 70);
-            pictureBoxChosenPhoto.Name = "pictureBoxChosenPhoto";
-            pictureBoxChosenPhoto.Size = new Size(446, 303);
-            pictureBoxChosenPhoto.TabIndex = 4;
-            pictureBoxChosenPhoto.TabStop = false;
-            // 
-            // lblFoundPhoto
-            // 
-            lblFoundPhoto.AutoSize = true;
-            lblFoundPhoto.BackColor = Color.Gold;
-            lblFoundPhoto.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            lblFoundPhoto.ForeColor = Color.Black;
-            lblFoundPhoto.Location = new Point(523, 46);
-            lblFoundPhoto.Name = "lblFoundPhoto";
-            lblFoundPhoto.Size = new Size(166, 21);
-            lblFoundPhoto.TabIndex = 2;
-            lblFoundPhoto.Text = "Temsili Kayıt Fotoğrafı";
-            // 
-            // lblFound
-            // 
-            lblFound.AutoSize = true;
-            lblFound.BackColor = Color.Gold;
-            lblFound.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            lblFound.ForeColor = Color.Black;
-            lblFound.Location = new Point(95, 45);
-            lblFound.Name = "lblFound";
-            lblFound.Size = new Size(130, 21);
-            lblFound.TabIndex = 2;
-            lblFound.Text = "Bulunan Kayıtlar:";
-            // 
-            // txtFullName
-            // 
-            txtFullName.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtFullName.Location = new Point(434, 4);
-            txtFullName.Name = "txtFullName";
-            txtFullName.Size = new Size(369, 33);
-            txtFullName.TabIndex = 1;
-            txtFullName.TextChanged += txtFullName_TextChanged;
-            // 
-            // lblFullName
-            // 
-            lblFullName.AutoSize = true;
-            lblFullName.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblFullName.ForeColor = Color.Black;
-            lblFullName.Location = new Point(8, 5);
-            lblFullName.Name = "lblFullName";
-            lblFullName.Size = new Size(389, 25);
-            lblFullName.TabIndex = 0;
-            lblFullName.Text = "Aradığınız kaydın ismini giriniz (ad soyad):";
-            // 
             // pnlAddFoldersToArchive
             // 
-            pnlAddFoldersToArchive.Controls.Add(label28);
+            pnlAddFoldersToArchive.Controls.Add(pictureBoxAddFolderToArchive);
+            pnlAddFoldersToArchive.Controls.Add(lblAddFolderToArchive);
             pnlAddFoldersToArchive.Controls.Add(btnAddFolderToArchive);
             pnlAddFoldersToArchive.Controls.Add(label27);
             pnlAddFoldersToArchive.Controls.Add(txtChosenUpperFolder);
@@ -1161,17 +971,30 @@
             pnlAddFoldersToArchive.Size = new Size(1150, 394);
             pnlAddFoldersToArchive.TabIndex = 1;
             // 
-            // label28
+            // pictureBoxAddFolderToArchive
             // 
-            label28.AutoSize = true;
-            label28.BackColor = Color.DarkOrange;
-            label28.Font = new Font("Palatino Linotype", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label28.ForeColor = Color.White;
-            label28.Location = new Point(831, 260);
-            label28.Name = "label28";
-            label28.Size = new Size(124, 28);
-            label28.TabIndex = 20;
-            label28.Text = "Arşive Ekle";
+            pictureBoxAddFolderToArchive.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBoxAddFolderToArchive.Image = Extensions.Resources.loading;
+            pictureBoxAddFolderToArchive.InitialImage = Extensions.Resources.loading;
+            pictureBoxAddFolderToArchive.Location = new Point(823, 112);
+            pictureBoxAddFolderToArchive.Margin = new Padding(2, 1, 2, 1);
+            pictureBoxAddFolderToArchive.Name = "pictureBoxAddFolderToArchive";
+            pictureBoxAddFolderToArchive.Size = new Size(135, 117);
+            pictureBoxAddFolderToArchive.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBoxAddFolderToArchive.TabIndex = 21;
+            pictureBoxAddFolderToArchive.TabStop = false;
+            // 
+            // lblAddFolderToArchive
+            // 
+            lblAddFolderToArchive.AutoSize = true;
+            lblAddFolderToArchive.BackColor = Color.DarkOrange;
+            lblAddFolderToArchive.Font = new Font("Palatino Linotype", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblAddFolderToArchive.ForeColor = Color.White;
+            lblAddFolderToArchive.Location = new Point(831, 260);
+            lblAddFolderToArchive.Name = "lblAddFolderToArchive";
+            lblAddFolderToArchive.Size = new Size(124, 28);
+            lblAddFolderToArchive.TabIndex = 20;
+            lblAddFolderToArchive.Text = "Arşive Ekle";
             // 
             // btnAddFolderToArchive
             // 
@@ -1272,7 +1095,7 @@
             pnlAddSpareToArchive.Controls.Add(button2);
             pnlAddSpareToArchive.Controls.Add(txtLocationOfSpareFolder);
             pnlAddSpareToArchive.Controls.Add(label36);
-            pnlAddSpareToArchive.Controls.Add(button3);
+            pnlAddSpareToArchive.Controls.Add(btnChooseSpareFolder);
             pnlAddSpareToArchive.Controls.Add(label37);
             pnlAddSpareToArchive.Controls.Add(label38);
             pnlAddSpareToArchive.Location = new Point(37, 1);
@@ -1336,18 +1159,18 @@
             label36.TabIndex = 23;
             label36.Text = "Seçilen Yedek Dosyası:";
             // 
-            // button3
+            // btnChooseSpareFolder
             // 
-            button3.BackgroundImage = Extensions.Resources.btnSpareFolder;
-            button3.BackgroundImageLayout = ImageLayout.Stretch;
-            button3.FlatAppearance.BorderSize = 0;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Location = new Point(197, 167);
-            button3.Name = "button3";
-            button3.Size = new Size(139, 110);
-            button3.TabIndex = 24;
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            btnChooseSpareFolder.BackgroundImage = Extensions.Resources.btnSpareFolder;
+            btnChooseSpareFolder.BackgroundImageLayout = ImageLayout.Stretch;
+            btnChooseSpareFolder.FlatAppearance.BorderSize = 0;
+            btnChooseSpareFolder.FlatStyle = FlatStyle.Flat;
+            btnChooseSpareFolder.Location = new Point(197, 167);
+            btnChooseSpareFolder.Name = "btnChooseSpareFolder";
+            btnChooseSpareFolder.Size = new Size(139, 110);
+            btnChooseSpareFolder.TabIndex = 24;
+            btnChooseSpareFolder.UseVisualStyleBackColor = true;
+            btnChooseSpareFolder.Click += btnChooseSpareFolder_Click;
             // 
             // label37
             // 
@@ -1477,6 +1300,236 @@
             label29.TabIndex = 3;
             label29.Text = "Veri Tabanındaki arşivi yedeklemek için";
             // 
+            // pnlSearchPhoto
+            // 
+            pnlSearchPhoto.Controls.Add(panel1);
+            pnlSearchPhoto.Controls.Add(lblSearchArchive);
+            pnlSearchPhoto.Controls.Add(pictureBoxLoadingArchive);
+            pnlSearchPhoto.Controls.Add(btnSearchArchive);
+            pnlSearchPhoto.Controls.Add(listBoxArchive);
+            pnlSearchPhoto.Controls.Add(label39);
+            pnlSearchPhoto.Controls.Add(txtDataUpperFileName);
+            pnlSearchPhoto.Controls.Add(lblGoRecord);
+            pnlSearchPhoto.Controls.Add(btnGoRecord);
+            pnlSearchPhoto.Controls.Add(comboBoxDriversForRecord);
+            pnlSearchPhoto.Controls.Add(lblChooseDriver);
+            pnlSearchPhoto.Controls.Add(pictureBoxChosenPhoto);
+            pnlSearchPhoto.Controls.Add(dataGridRecords);
+            pnlSearchPhoto.Controls.Add(lblFoundPhoto);
+            pnlSearchPhoto.Controls.Add(lblFound);
+            pnlSearchPhoto.Controls.Add(txtFullName);
+            pnlSearchPhoto.Controls.Add(lblFullName);
+            pnlSearchPhoto.Location = new Point(5, 28);
+            pnlSearchPhoto.Margin = new Padding(2, 1, 2, 1);
+            pnlSearchPhoto.Name = "pnlSearchPhoto";
+            pnlSearchPhoto.Size = new Size(1165, 376);
+            pnlSearchPhoto.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = SystemColors.ControlDark;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(lblTotalRecord);
+            panel1.Controls.Add(label40);
+            panel1.Location = new Point(3, 279);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(347, 25);
+            panel1.TabIndex = 26;
+            // 
+            // lblTotalRecord
+            // 
+            lblTotalRecord.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTotalRecord.ForeColor = Color.Black;
+            lblTotalRecord.Location = new Point(100, 0);
+            lblTotalRecord.Name = "lblTotalRecord";
+            lblTotalRecord.Size = new Size(242, 21);
+            lblTotalRecord.TabIndex = 27;
+            lblTotalRecord.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label40.ForeColor = Color.Black;
+            label40.Location = new Point(-1, 0);
+            label40.Name = "label40";
+            label40.Size = new Size(108, 21);
+            label40.TabIndex = 26;
+            label40.Text = "Kayıt Sayısı=";
+            // 
+            // lblSearchArchive
+            // 
+            lblSearchArchive.AutoSize = true;
+            lblSearchArchive.BackColor = Color.Transparent;
+            lblSearchArchive.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSearchArchive.ForeColor = Color.Black;
+            lblSearchArchive.Location = new Point(921, 152);
+            lblSearchArchive.Name = "lblSearchArchive";
+            lblSearchArchive.Size = new Size(154, 26);
+            lblSearchArchive.TabIndex = 25;
+            lblSearchArchive.Text = "Üst Klasörü Ara";
+            // 
+            // pictureBoxLoadingArchive
+            // 
+            pictureBoxLoadingArchive.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBoxLoadingArchive.Image = Extensions.Resources.loading;
+            pictureBoxLoadingArchive.InitialImage = Extensions.Resources.loading;
+            pictureBoxLoadingArchive.Location = new Point(954, 75);
+            pictureBoxLoadingArchive.Margin = new Padding(2, 1, 2, 1);
+            pictureBoxLoadingArchive.Name = "pictureBoxLoadingArchive";
+            pictureBoxLoadingArchive.Size = new Size(89, 81);
+            pictureBoxLoadingArchive.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBoxLoadingArchive.TabIndex = 24;
+            pictureBoxLoadingArchive.TabStop = false;
+            // 
+            // btnSearchArchive
+            // 
+            btnSearchArchive.BackColor = Color.Transparent;
+            btnSearchArchive.BackgroundImage = Extensions.Resources.btnSearchFolder;
+            btnSearchArchive.BackgroundImageLayout = ImageLayout.Stretch;
+            btnSearchArchive.FlatAppearance.BorderSize = 0;
+            btnSearchArchive.FlatStyle = FlatStyle.Flat;
+            btnSearchArchive.Location = new Point(954, 85);
+            btnSearchArchive.Name = "btnSearchArchive";
+            btnSearchArchive.Size = new Size(80, 64);
+            btnSearchArchive.TabIndex = 22;
+            btnSearchArchive.UseVisualStyleBackColor = false;
+            btnSearchArchive.Click += btnSearchArchive_Click;
+            // 
+            // listBoxArchive
+            // 
+            listBoxArchive.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            listBoxArchive.FormattingEnabled = true;
+            listBoxArchive.HorizontalScrollbar = true;
+            listBoxArchive.ItemHeight = 21;
+            listBoxArchive.Location = new Point(853, 198);
+            listBoxArchive.Margin = new Padding(2, 1, 2, 1);
+            listBoxArchive.Name = "listBoxArchive";
+            listBoxArchive.Size = new Size(303, 67);
+            listBoxArchive.TabIndex = 21;
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.BackColor = Color.Gold;
+            label39.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label39.ForeColor = Color.Black;
+            label39.Location = new Point(32, 313);
+            label39.Name = "label39";
+            label39.Size = new Size(268, 21);
+            label39.TabIndex = 19;
+            label39.Text = "Seçilen Kaydın Bulunduğu Üst Klasör:";
+            // 
+            // txtDataUpperFileName
+            // 
+            txtDataUpperFileName.BackColor = SystemColors.ScrollBar;
+            txtDataUpperFileName.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtDataUpperFileName.ForeColor = SystemColors.MenuHighlight;
+            txtDataUpperFileName.Location = new Point(32, 337);
+            txtDataUpperFileName.Name = "txtDataUpperFileName";
+            txtDataUpperFileName.ReadOnly = true;
+            txtDataUpperFileName.Size = new Size(268, 33);
+            txtDataUpperFileName.TabIndex = 18;
+            // 
+            // lblGoRecord
+            // 
+            lblGoRecord.AutoSize = true;
+            lblGoRecord.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
+            lblGoRecord.ForeColor = SystemColors.ControlText;
+            lblGoRecord.Location = new Point(934, 352);
+            lblGoRecord.Name = "lblGoRecord";
+            lblGoRecord.Size = new Size(158, 22);
+            lblGoRecord.TabIndex = 15;
+            lblGoRecord.Text = "Kayıt Dosyasına Git";
+            // 
+            // btnGoRecord
+            // 
+            btnGoRecord.BackgroundImage = Extensions.Resources.btnOpenFolder;
+            btnGoRecord.BackgroundImageLayout = ImageLayout.Stretch;
+            btnGoRecord.FlatAppearance.BorderSize = 0;
+            btnGoRecord.FlatStyle = FlatStyle.Flat;
+            btnGoRecord.Location = new Point(969, 269);
+            btnGoRecord.Name = "btnGoRecord";
+            btnGoRecord.Size = new Size(80, 80);
+            btnGoRecord.TabIndex = 16;
+            btnGoRecord.UseVisualStyleBackColor = true;
+            btnGoRecord.Click += btnGoRecord_Click;
+            // 
+            // comboBoxDriversForRecord
+            // 
+            comboBoxDriversForRecord.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBoxDriversForRecord.FormattingEnabled = true;
+            comboBoxDriversForRecord.Location = new Point(930, 36);
+            comboBoxDriversForRecord.Margin = new Padding(2, 1, 2, 1);
+            comboBoxDriversForRecord.Name = "comboBoxDriversForRecord";
+            comboBoxDriversForRecord.Size = new Size(132, 33);
+            comboBoxDriversForRecord.TabIndex = 5;
+            // 
+            // lblChooseDriver
+            // 
+            lblChooseDriver.AutoSize = true;
+            lblChooseDriver.BackColor = Color.Transparent;
+            lblChooseDriver.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblChooseDriver.ForeColor = Color.Black;
+            lblChooseDriver.Location = new Point(930, 7);
+            lblChooseDriver.Name = "lblChooseDriver";
+            lblChooseDriver.Size = new Size(116, 26);
+            lblChooseDriver.TabIndex = 6;
+            lblChooseDriver.Text = "Sürücü Seç:";
+            // 
+            // pictureBoxChosenPhoto
+            // 
+            pictureBoxChosenPhoto.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBoxChosenPhoto.Location = new Point(387, 70);
+            pictureBoxChosenPhoto.Name = "pictureBoxChosenPhoto";
+            pictureBoxChosenPhoto.Size = new Size(446, 303);
+            pictureBoxChosenPhoto.TabIndex = 4;
+            pictureBoxChosenPhoto.TabStop = false;
+            // 
+            // lblFoundPhoto
+            // 
+            lblFoundPhoto.AutoSize = true;
+            lblFoundPhoto.BackColor = Color.Gold;
+            lblFoundPhoto.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblFoundPhoto.ForeColor = Color.Black;
+            lblFoundPhoto.Location = new Point(523, 46);
+            lblFoundPhoto.Name = "lblFoundPhoto";
+            lblFoundPhoto.Size = new Size(166, 21);
+            lblFoundPhoto.TabIndex = 2;
+            lblFoundPhoto.Text = "Temsili Kayıt Fotoğrafı";
+            // 
+            // lblFound
+            // 
+            lblFound.AutoSize = true;
+            lblFound.BackColor = Color.Gold;
+            lblFound.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblFound.ForeColor = Color.Black;
+            lblFound.Location = new Point(95, 45);
+            lblFound.Name = "lblFound";
+            lblFound.Size = new Size(130, 21);
+            lblFound.TabIndex = 2;
+            lblFound.Text = "Bulunan Kayıtlar:";
+            // 
+            // txtFullName
+            // 
+            txtFullName.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtFullName.Location = new Point(434, 4);
+            txtFullName.Name = "txtFullName";
+            txtFullName.Size = new Size(369, 33);
+            txtFullName.TabIndex = 1;
+            txtFullName.TextChanged += txtFullName_TextChanged;
+            // 
+            // lblFullName
+            // 
+            lblFullName.AutoSize = true;
+            lblFullName.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblFullName.ForeColor = Color.Black;
+            lblFullName.Location = new Point(8, 5);
+            lblFullName.Name = "lblFullName";
+            lblFullName.Size = new Size(389, 25);
+            lblFullName.TabIndex = 0;
+            lblFullName.Text = "Aradığınız kaydın ismini giriniz (ad soyad):";
+            // 
             // lblExplanation
             // 
             lblExplanation.BackColor = Color.Silver;
@@ -1604,16 +1657,19 @@
             flowLayoutPanelArchive.ResumeLayout(false);
             flowLayoutPanelArchive.PerformLayout();
             pnlArchiveContents.ResumeLayout(false);
-            pnlSearchPhoto.ResumeLayout(false);
-            pnlSearchPhoto.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxLoadingArchive).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxChosenPhoto).EndInit();
             pnlAddFoldersToArchive.ResumeLayout(false);
             pnlAddFoldersToArchive.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxAddFolderToArchive).EndInit();
             pnlAddSpareToArchive.ResumeLayout(false);
             pnlAddSpareToArchive.PerformLayout();
             pnlMakeSpare.ResumeLayout(false);
             pnlMakeSpare.PerformLayout();
+            pnlSearchPhoto.ResumeLayout(false);
+            pnlSearchPhoto.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLoadingArchive).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxChosenPhoto).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1713,7 +1769,7 @@
         private Label label23;
         private Button btnChooseUpperFolder;
         private Label label27;
-        private Label label28;
+        private Label lblAddFolderToArchive;
         private Button btnAddFolderToArchive;
         private Label label30;
         private Label label29;
@@ -1728,7 +1784,7 @@
         private Button button2;
         private TextBox txtLocationOfSpareFolder;
         private Label label36;
-        private Button button3;
+        private Button btnChooseSpareFolder;
         private Label label37;
         private Label label38;
         private TextBox txtDataUpperFileName;
@@ -1737,5 +1793,9 @@
         private PictureBox pictureBoxLoadingArchive;
         private Button btnSearchArchive;
         private Label lblSearchArchive;
+        private Label lblTotalRecord;
+        private Label label40;
+        private Panel panel1;
+        private PictureBox pictureBoxAddFolderToArchive;
     }
 }
