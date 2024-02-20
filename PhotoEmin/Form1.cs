@@ -3,6 +3,7 @@ using NpgsqlTypes;
 using PhotoEmin.Model;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Globalization;
 using System.Windows.Forms;
@@ -31,6 +32,7 @@ namespace PhotoEmin
                 pictureBoxLoading.Visible = false; // Başlangıçta görünmez yapın
                 pictureBoxLoadingArchive.Visible = false;
                 pictureBoxAddFolderToArchive.Visible = false;
+                pictureBoxLoadingDbToFolder.Visible = false;
                 pnlBorder.Visible = false;
             };
 
@@ -581,7 +583,7 @@ namespace PhotoEmin
             SetLoading(false, searchUpperFolderArchive);
         }
 
-        private void SetLoading(bool displayLoader, bool searchUpperFolderArchive, bool addFolderToArchive = false)
+        private void SetLoading(bool displayLoader, bool searchUpperFolderArchive, bool addFolderToArchive = false, bool addDbToFolder = false)
         {
             // this.Invoke ile UI thread üzerinde işlemler yapılır
             this.Invoke((MethodInvoker)delegate
@@ -601,6 +603,12 @@ namespace PhotoEmin
                         btnAddFoldersToArchive.Visible = false;
                         lblAddFolderToArchive.Text = "Lütfen bekleyiniz..";
                         pictureBoxAddFolderToArchive.Visible = true;
+                    }
+                    else if (addDbToFolder)
+                    {
+                        btnDBtoFolder.Visible = false;
+                        lblDbToFolder.Text = "Lütfen bekleyiniz..";
+                        pictureBoxLoadingDbToFolder.Visible = true;
                     }
                     else
                     {
@@ -625,6 +633,12 @@ namespace PhotoEmin
                         btnAddFoldersToArchive.Visible = true;
                         lblAddFolderToArchive.Text = "Arşive Ekle";
                         pictureBoxAddFolderToArchive.Visible = false;
+                    }
+                    else if (addDbToFolder)
+                    {
+                        btnDBtoFolder.Visible = true;
+                        lblDbToFolder.Text = "Arşivi Dosyaya Yedekle";
+                        pictureBoxLoadingDbToFolder.Visible = false;
                     }
                     else
                     {
@@ -923,19 +937,6 @@ namespace PhotoEmin
             }
         }
 
-        private void btnLocationForArchive_Click(object sender, EventArgs e)
-        {
-            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
-            {
-                DialogResult result = folderDialog.ShowDialog();
-
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
-                {
-                    txtLocationForArchive.Text = folderDialog.SelectedPath;
-                }
-            }
-        }
-
         private void btnChooseSpareFolder_Click(object sender, EventArgs e)
         {
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
@@ -949,142 +950,6 @@ namespace PhotoEmin
             }
         }
 
-        //private void btnAddFolderToArchive_Click(object sender, EventArgs e)
-        //{
-        //    string folderPath = txtChosenUpperFolder.Text;
-        //    Dictionary<string, byte[]?> fileDictionary = new Dictionary<string, byte[]?>();
-
-        //    if (Directory.Exists(folderPath))
-        //    {
-        //        SetLoading(true, false, true);
-        //        string[] subDirectories = Directory.GetDirectories(folderPath);
-
-        //        // İlk alt basamağın alt klasörlerini al
-        //        foreach (string subDir in subDirectories)
-        //        {
-        //            DirectoryInfo subDirInfo = new DirectoryInfo(subDir);
-
-        //            // Alt klasör adı fileDictionary'e ekle
-        //            fileDictionary.Add(subDirInfo.Name, null);
-
-        //            // Alt klasördeki ilk a.jpg veya .jpg dosyasını bul ve fileDictionary'e ekle
-        //            string[] jpgFiles = Directory.GetFiles(subDir, "a.jpg");
-        //            if (jpgFiles.Length > 0)
-        //            {
-        //                // Eğer a.jpg dosyası varsa, onu al
-        //                string aJpgFile = jpgFiles[0];
-        //                byte[] fileBytes = File.ReadAllBytes(aJpgFile);
-        //                fileDictionary[subDirInfo.Name] = fileBytes;
-        //            }
-        //            else
-        //            {
-        //                // a.jpg dosyası yoksa, *.jpg dosyasını al
-        //                string[] otherJpgFiles = Directory.GetFiles(subDir, "*.jpg");
-        //                string[] otherPngFiles = Directory.GetFiles(subDir, "*.png");
-        //                if (otherJpgFiles.Length > 0)
-        //                {
-        //                    string firstJpgFile = otherJpgFiles[0];
-        //                    byte[] fileBytes = File.ReadAllBytes(firstJpgFile);
-        //                    fileDictionary[subDirInfo.Name] = fileBytes;
-        //                }
-        //                // .jpg de yoksa, *.png dosyasını al
-        //                else if (otherPngFiles.Length > 0)
-        //                {
-        //                    string firstPngFile = otherPngFiles[0];
-        //                    byte[] fileBytes = File.ReadAllBytes(firstPngFile);
-        //                    fileDictionary[subDirInfo.Name] = fileBytes;
-        //                }
-        //                else
-        //                {
-        //                    // Ne *.jpg dosyası ne de a.jpg dosyası bulunamazsa, null değeri ile işaretle
-        //                    fileDictionary[subDirInfo.Name] = null;
-        //                }
-        //            }
-
-
-        //        }
-        //        int successfulInserts = 0;
-        //        int duplicateRecords = 0;
-        //        List<string> errorFullNames = new List<string>();
-        //        if (fileDictionary.Count > 0)
-        //        {
-        //            foreach (var entry in fileDictionary)
-        //            {
-        //                string fullName = entry.Key; // Dosya adı
-        //                byte[]? photoData = entry.Value; // Resim verisi
-
-        //                // folderPath değişkeninden sadece klasör adını alalım
-        //                string folderName = Path.GetFileName(folderPath);
-
-        //                // Veritabanına bağlan
-        //                try
-        //                {
-        //                    using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
-        //                    {
-        //                        connection.Open();
-
-        //                        // Aynı fullname ve foldername'e sahip kayıtları kontrol et
-        //                        string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
-
-        //                        using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkDuplicateQuery, connection))
-        //                        {
-        //                            checkCommand.Parameters.AddWithValue("@fullname", fullName);
-        //                            checkCommand.Parameters.AddWithValue("@foldername", folderName);
-
-        //                            int existingRecordsCount = (int)checkCommand.ExecuteScalar()!;
-
-        //                            if (existingRecordsCount == 0)
-        //                            {
-        //                                // Veritabanına ekleme sorgusu
-        //                                string insertQuery = "INSERT INTO customers (fullname, foldername, photodata) VALUES (@fullname, @foldername, @photodata)";
-
-        //                                // Sorguyu yürüt
-        //                                using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
-        //                                {
-        //                                    // Parametreleri ayarla
-        //                                    command.Parameters.AddWithValue("@fullname", NpgsqlDbType.Text, fullName);
-        //                                    command.Parameters.AddWithValue("@foldername", NpgsqlDbType.Text, folderName);
-        //                                    command.Parameters.AddWithValue("@photodata", NpgsqlDbType.Bytea, photoData!);
-
-        //                                    // Sorguyu çalıştır
-        //                                    int rowsAffected = command.ExecuteNonQuery();
-
-        //                                    if (rowsAffected > 0)
-        //                                    {
-        //                                        successfulInserts++;
-        //                                    }
-        //                                }
-        //                            }
-        //                            else
-        //                            {
-        //                                duplicateRecords++;
-        //                            }
-        //                        }
-        //                    }
-        //                }
-        //                catch (Exception ex)
-        //                {
-        //                    // Hata alınan fullname'i listeye ekle
-        //                    errorFullNames.Add($"{fullName}:{ex.Message}");
-        //                }
-
-        //            }
-        //            MessageBox.Show($"Başarılı kayıt sayısı: {successfulInserts}\nTekrar eden kayıt sayısı: {duplicateRecords}\nHata alınan kayıt sayısı: {errorFullNames.Count} ({string.Join(", ", errorFullNames)})");
-        //            //MessageBox.Show($"Başarılı kayıt sayısı: {successfulInserts}\nTekrar eden kayıt sayısı: {duplicateRecords}");
-        //        }
-
-        //        else
-        //        {
-        //            MessageBox.Show("Belirtilen üst klasörde kaydedilecek alt klasör bulunamadı!");
-        //            SetLoading(false, false, true);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Belirtilen klasör bulunamadı!");
-        //        SetLoading(false, false, true);
-        //    }
-        //}
         private void btnAddFolderToArchive_Click(object sender, EventArgs e)
         {
             SetLoading(true, false, true);
@@ -1107,7 +972,7 @@ namespace PhotoEmin
                 connection.Open();
 
                 string[] subDirectories = Directory.GetDirectories(folderPath);
-                if(subDirectories.Length == 0)
+                if (subDirectories.Length == 0)
                 {
                     MessageBox.Show("Belirtilen üst klasörde kaydedilecek alt klasör bulunamadı!");
                     SetLoading(false, false, true);
@@ -1126,18 +991,21 @@ namespace PhotoEmin
                         string[] otherPngFiles = Directory.GetFiles(subDir, "*.png");
 
                         byte[]? photoData = null;
-
+                        DateTime? creationDate = DateTime.Now.Date;
                         if (jpgFiles.Length > 0)
                         {
                             photoData = File.ReadAllBytes(jpgFiles[0]);
+                            creationDate = File.GetCreationTime(jpgFiles[0]).Date;
                         }
                         else if (otherJpgFiles.Length > 0)
                         {
                             photoData = File.ReadAllBytes(otherJpgFiles[0]);
+                            creationDate = File.GetCreationTime(otherJpgFiles[0]).Date;
                         }
                         else if (otherPngFiles.Length > 0)
                         {
                             photoData = File.ReadAllBytes(otherPngFiles[0]);
+                            creationDate = File.GetCreationTime(otherPngFiles[0]).Date;
                         }
 
                         string fullName = subDirInfo.Name;
@@ -1161,6 +1029,8 @@ namespace PhotoEmin
                                     command.Parameters.AddWithValue("@fullname", NpgsqlDbType.Text, fullName);
                                     command.Parameters.AddWithValue("@foldername", NpgsqlDbType.Text, folderName);
                                     command.Parameters.AddWithValue("@photodata", NpgsqlDbType.Bytea, photoData!);
+                                    command.Parameters.AddWithValue("@createdate", NpgsqlDbType.Date, creationDate);
+                                    command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.Date, DateTime.Now.Date);
 
                                     int rowsAffected = command.ExecuteNonQuery();
 
@@ -1338,6 +1208,109 @@ namespace PhotoEmin
         private void btnSearchArchive_Click(object sender, EventArgs e)
         {
             Search(true);
+        }
+
+        private void btnLocationForArchive_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                DialogResult result = folderDialog.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
+                {
+                    txtLocationForArchive.Text = folderDialog.SelectedPath;
+                }
+            }
+        }
+
+        private void btnDBtoFolder_Click(object sender, EventArgs e)
+        {
+            string folderPath = txtLocationForArchive.Text;
+
+            if (!Directory.Exists(folderPath))
+            {
+                MessageBox.Show("Belirtilen klasör bulunamadı!");
+                return;
+            }
+
+            try
+            {
+                SetLoading(true, false, false, true);
+                using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+                {
+                    connection.Open();
+
+                    string selectQuery = "SELECT fullname, foldername, photodata, createdate FROM customers";
+
+                    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string fullName = !reader.IsDBNull(0) ? reader.GetString(0) : string.Empty;
+                            string folderName = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty;
+                            byte[]? photoData = !reader.IsDBNull(reader.GetOrdinal("photodata")) ? (byte[])reader["photodata"] : null;
+                            DateTime createDate = !reader.IsDBNull(reader.GetOrdinal("createdate")) ? reader.GetDateTime(reader.GetOrdinal("createdate")) : DateTime.Now;
+
+
+                            string fileName = $"{fullName}_{folderName}.jpg";
+                            string filePath = Path.Combine(folderPath, fileName);
+
+                            // Veriyi JPEG dosyasına dönüştür ve kaydet
+                            SavePhotoDataAsJPEG(photoData, filePath, createDate);
+                        }
+                    }
+                }
+                SetLoading(false, false, false, true);
+                MessageBox.Show("Veritabanındaki veriler başarıyla klasöre kaydedildi!");
+            }
+            catch (Exception ex)
+            {
+                SetLoading(false, false, false, true);
+                MessageBox.Show($"Hata oluştu: {ex.Message}");
+            }
+        }
+
+        private void SavePhotoDataAsJPEG(byte[]? photoData, string filePath, DateTime createDate)
+        {
+            try
+            {
+                if (photoData != null && photoData.Length > 0)
+                {
+                    using (MemoryStream ms = new MemoryStream(photoData))
+                    using (Image image = Image.FromStream(ms))
+                    {
+                        image.Save(filePath, ImageFormat.Jpeg);
+                        File.SetCreationTime(filePath, createDate);
+                    }
+                }
+                else
+                {
+                    // Fotoğraf verisi bulunamadığında klasör oluştur
+                    string directoryPath = Path.GetDirectoryName(filePath)!;
+                    string folderName = Path.GetFileNameWithoutExtension(filePath);
+                    string newFolderPath = Path.Combine(directoryPath, folderName);
+
+                    if (!Directory.Exists(newFolderPath))
+                    {
+                        Directory.CreateDirectory(newFolderPath);
+                        Directory.SetCreationTime(newFolderPath, createDate);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // Hata durumunda klasör oluştur
+                string directoryPath = Path.GetDirectoryName(filePath)!;
+                string folderName = Path.GetFileNameWithoutExtension(filePath);
+                string newFolderPath = Path.Combine(directoryPath, folderName);
+
+                if (!Directory.Exists(newFolderPath))
+                {
+                    Directory.CreateDirectory(newFolderPath);
+                    Directory.SetCreationTime(newFolderPath, createDate);
+                }
+            }
         }
     }
 }
