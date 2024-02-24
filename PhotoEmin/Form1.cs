@@ -33,6 +33,7 @@ namespace PhotoEmin
                 pictureBoxLoadingArchive.Visible = false;
                 pictureBoxAddFolderToArchive.Visible = false;
                 pictureBoxLoadingDbToFolder.Visible = false;
+                pictureBoxLoadingSpareToArchive.Visible = false;
                 pnlBorder.Visible = false;
             };
 
@@ -583,7 +584,7 @@ namespace PhotoEmin
             SetLoading(false, searchUpperFolderArchive);
         }
 
-        private void SetLoading(bool displayLoader, bool searchUpperFolderArchive, bool addFolderToArchive = false, bool addDbToFolder = false)
+        private void SetLoading(bool displayLoader, bool searchUpperFolderArchive, bool addFolderToArchive = false, bool addDbToFolder = false, bool addSpareToArchive = false)
         {
             // this.Invoke ile UI thread üzerinde işlemler yapılır
             this.Invoke((MethodInvoker)delegate
@@ -609,6 +610,12 @@ namespace PhotoEmin
                         btnDBtoFolder.Visible = false;
                         lblDbToFolder.Text = "Lütfen bekleyiniz..";
                         pictureBoxLoadingDbToFolder.Visible = true;
+                    }
+                    else if (addSpareToArchive)
+                    {
+                        btnSpareToArchive.Visible = false;
+                        lblSpareToArchive.Text = "Lütfen bekleyiniz..";
+                        pictureBoxLoadingSpareToArchive.Visible = true;
                     }
                     else
                     {
@@ -639,6 +646,12 @@ namespace PhotoEmin
                         btnDBtoFolder.Visible = true;
                         lblDbToFolder.Text = "Arşivi Dosyaya Yedekle";
                         pictureBoxLoadingDbToFolder.Visible = false;
+                    }
+                    else if (addSpareToArchive)
+                    {
+                        btnSpareToArchive.Visible = true;
+                        lblSpareToArchive.Text = "Yedek Dosyayı Arşive Ekle";
+                        pictureBoxLoadingSpareToArchive.Visible = false;
                     }
                     else
                     {
@@ -882,12 +895,14 @@ namespace PhotoEmin
             pnlAddFoldersToArchive.Visible = false;
             pnlAddSpareToArchive.Visible = false;
             pnlMakeSpare.Visible = false;
+            listBoxArchive.Items.Clear();
             PopulateDriveComboBox();
         }
 
         private void btnAddFoldersToArchive_Click(object sender, EventArgs e)
         {
             lblEmpty.Text = btnAddFoldersToArchive.Text + " :";
+            txtChosenUpperFolder.Text = "";
             lblExplanation.Visible = true;
             lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.AddFoldersToArchive;
@@ -901,6 +916,7 @@ namespace PhotoEmin
         private void btnMakeSpare_Click(object sender, EventArgs e)
         {
             lblEmpty.Text = btnMakeSpare.Text + " :";
+            txtLocationForArchive.Text = "";
             lblExplanation.Visible = true;
             lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.MakeSpare;
@@ -914,6 +930,7 @@ namespace PhotoEmin
         private void btnAddSpareToArchive_Click(object sender, EventArgs e)
         {
             lblEmpty.Text = btnAddSpareToArchive.Text + " :";
+            txtLocationOfSpareFolder.Text = "";
             lblExplanation.Visible = true;
             lblEmpty.Visible = true;
             lblExplanation.Text = ArchiveExplanations.AddSpareToArchive;
@@ -952,7 +969,6 @@ namespace PhotoEmin
 
         private void btnAddFolderToArchive_Click(object sender, EventArgs e)
         {
-            SetLoading(true, false, true);
             string folderPath = txtChosenUpperFolder.Text;
 
             if (!Directory.Exists(folderPath))
@@ -961,6 +977,9 @@ namespace PhotoEmin
                 SetLoading(false, false, true);
                 return;
             }
+
+            SetLoading(true, false, true);
+
             List<string> errorFullNames = new();
             string errorFullName = "";
             List<string> duplicateRecords = new();
@@ -987,25 +1006,56 @@ namespace PhotoEmin
                         string folderName = Path.GetFileName(folderPath);
 
                         string[] jpgFiles = Directory.GetFiles(subDir, "a.jpg");
+                        string[] jpegFiles = Directory.GetFiles(subDir, "a.jpeg");
                         string[] otherJpgFiles = Directory.GetFiles(subDir, "*.jpg");
+                        string[] otherJpegFiles = Directory.GetFiles(subDir, "*.jpeg");
                         string[] otherPngFiles = Directory.GetFiles(subDir, "*.png");
+                        string[] otherBmpFiles = Directory.GetFiles(subDir, "*.bmp");
+                        string[] otherGifFiles = Directory.GetFiles(subDir, "*.gif");
 
                         byte[]? photoData = null;
                         DateTime? creationDate = DateTime.Now.Date;
                         if (jpgFiles.Length > 0)
                         {
-                            photoData = File.ReadAllBytes(jpgFiles[0]);
+                            //photoData = File.ReadAllBytes(jpgFiles[0]);
+                            photoData = ResizeImage(jpgFiles[0], 118, 118);
                             creationDate = File.GetCreationTime(jpgFiles[0]).Date;
+                        }
+                        else if (jpegFiles.Length > 0)
+                        {
+                            //photoData = File.ReadAllBytes(otherJpgFiles[0]);
+                            photoData = ResizeImage(jpegFiles[0], 118, 118);
+                            creationDate = File.GetCreationTime(jpegFiles[0]).Date;
                         }
                         else if (otherJpgFiles.Length > 0)
                         {
-                            photoData = File.ReadAllBytes(otherJpgFiles[0]);
+                            //photoData = File.ReadAllBytes(otherJpgFiles[0]);
+                            photoData = ResizeImage(otherJpgFiles[0], 118, 118);
                             creationDate = File.GetCreationTime(otherJpgFiles[0]).Date;
+                        }
+                        else if (otherJpegFiles.Length > 0)
+                        {
+                            //photoData = File.ReadAllBytes(otherJpgFiles[0]);
+                            photoData = ResizeImage(otherJpegFiles[0], 118, 118);
+                            creationDate = File.GetCreationTime(otherJpegFiles[0]).Date;
                         }
                         else if (otherPngFiles.Length > 0)
                         {
-                            photoData = File.ReadAllBytes(otherPngFiles[0]);
+                            //photoData = File.ReadAllBytes(otherPngFiles[0]);
+                            photoData = ResizeImage(otherPngFiles[0], 118, 118);
                             creationDate = File.GetCreationTime(otherPngFiles[0]).Date;
+                        }
+                        else if (otherBmpFiles.Length > 0)
+                        {
+                            //photoData = File.ReadAllBytes(otherPngFiles[0]);
+                            photoData = ResizeImage(otherBmpFiles[0], 118, 118);
+                            creationDate = File.GetCreationTime(otherBmpFiles[0]).Date;
+                        }
+                        else if (otherGifFiles.Length > 0)
+                        {
+                            //photoData = File.ReadAllBytes(otherPngFiles[0]);
+                            photoData = ResizeImage(otherGifFiles[0], 118, 118);
+                            creationDate = File.GetCreationTime(otherGifFiles[0]).Date;
                         }
 
                         string fullName = subDirInfo.Name;
@@ -1022,13 +1072,13 @@ namespace PhotoEmin
 
                             if (existingRecordsCount == 0)
                             {
-                                string insertQuery = "INSERT INTO customers (fullname, foldername, photodata) VALUES (@fullname, @foldername, @photodata)";
+                                string insertQuery = "INSERT INTO customers (fullname, foldername, photodata, createdate, insertdate) VALUES (@fullname, @foldername, @photodata, @createdate, @insertdate)";
 
                                 using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
                                 {
                                     command.Parameters.AddWithValue("@fullname", NpgsqlDbType.Text, fullName);
                                     command.Parameters.AddWithValue("@foldername", NpgsqlDbType.Text, folderName);
-                                    command.Parameters.AddWithValue("@photodata", NpgsqlDbType.Bytea, photoData!);
+                                    command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
                                     command.Parameters.AddWithValue("@createdate", NpgsqlDbType.Date, creationDate);
                                     command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.Date, DateTime.Now.Date);
 
@@ -1058,6 +1108,42 @@ namespace PhotoEmin
             MessageBox.Show($"Toplam kayıt sayısı: {totalInserts}\nBaşarılı kayıt sayısı: {successfulInserts}\nTekrar eden kayıt sayısı: {duplicateRecords.Count} {string.Join(", ", duplicateRecords)}\nHata alınan kayıt sayısı: {errorFullNames.Count} {string.Join(", ", errorFullNames)}");
         }
 
+        public byte[] ResizeImage(string imagePath, int targetWidth, int targetHeight)
+        {
+            using (Image image = Image.FromFile(imagePath))
+            {
+                // Resmin mevcut boyutları
+                int originalWidth = image.Width;
+                int originalHeight = image.Height;
+
+                // Eğer resmin boyutu istenen boyuttan küçükse işlem yapmayın
+                if (originalWidth <= targetWidth && originalHeight <= targetHeight)
+                {
+                    // Resmi byte dizisine dönüştürerek geri döndürün
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        image.Save(ms, image.RawFormat);
+                        return ms.ToArray();
+                    }
+                }
+
+                // Resmi yeniden boyutlandır
+                using (Bitmap resizedImage = new Bitmap(targetWidth, targetHeight))
+                {
+                    using (Graphics graphics = Graphics.FromImage(resizedImage))
+                    {
+                        graphics.DrawImage(image, 0, 0, targetWidth, targetHeight);
+                    }
+
+                    // Yeniden boyutlandırılmış resmi byte dizisine dönüştürerek geri döndürün
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        resizedImage.Save(ms, image.RawFormat);
+                        return ms.ToArray();
+                    }
+                }
+            }
+        }
         private void txtFullName_TextChanged(object sender, EventArgs e)
         {
             string searchText = txtFullName.Text.Trim().ToLower(); // Küçük harfe dönüştür
@@ -1311,6 +1397,126 @@ namespace PhotoEmin
                     Directory.SetCreationTime(newFolderPath, createDate);
                 }
             }
+        }
+
+        private void btnSpareToArchive_Click(object sender, EventArgs e)
+        {
+            string folderPath = txtLocationOfSpareFolder.Text;
+
+            if (!Directory.Exists(folderPath))
+            {
+                MessageBox.Show("Belirtilen klasör bulunamadı!");
+                return;
+            }
+
+            List<string> errorFullNames = new();
+            string errorFullName = "";
+            List<string> wrongFormatRecords = new List<string>();
+            List<string> notImages = new List<string>();
+            int successfulInserts = 0;
+            int totalInserts = 0;
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                string[] filesAndFolders = Directory.GetFileSystemEntries(folderPath);
+
+                foreach (string fileOrFolder in filesAndFolders)
+                {
+                    totalInserts++;
+                    string fullName = "";
+                    string folderName = "";
+                    string[] nameParts;
+                    byte[]? photoData = null;
+                    DateTime creationDate = DateTime.Now.Date;
+                    DateTime insertdate = DateTime.Now.Date;
+
+
+                    if (Directory.Exists(fileOrFolder))
+                    {
+                        // Klasör işlemleri
+                        folderName = Path.GetFileName(fileOrFolder);
+                        if (!folderName.Contains("_"))
+                        {
+                            wrongFormatRecords.Add(folderName);
+                            continue;
+                        }
+                        notImages.Add(folderName);
+
+                        nameParts = folderName.Split('_');
+                        errorFullName = errorFullName = string.Join("_", nameParts);
+                        fullName = nameParts[0];
+                        folderName = nameParts[1];
+                        creationDate = Directory.GetCreationTime(fileOrFolder).Date;
+                    }
+                    else if (File.Exists(fileOrFolder))
+                    {
+                        //Dosya işlemleri
+                        string fileName = Path.GetFileNameWithoutExtension(fileOrFolder);
+
+                        // Dosya adının uygun formatta olup olmadığını kontrol et
+                        if (!fileName.Contains("_"))
+                        {
+                            wrongFormatRecords.Add(fileName);
+                            continue;
+                        }
+
+                        nameParts = fileName.Split('_');
+                        errorFullName = errorFullName = string.Join("_", nameParts);
+                        fullName = nameParts[0];
+                        folderName = nameParts[1];
+                        creationDate = File.GetCreationTime(fileOrFolder).Date;
+
+                        string fileExtension = Path.GetExtension(fileOrFolder);
+
+                        if (IsImageFile(fileExtension))
+                        {
+                            photoData = File.ReadAllBytes(fileOrFolder);
+                        }
+                        else
+                        {
+                            notImages.Add(fileName);
+                            continue;
+                        }
+
+                    }
+                    try
+                    {
+                        // Veritabanına kaydet
+                        string insertQuery = "INSERT INTO customers (fullname, foldername, photodata, createdate, insertdate) VALUES (@fullname, @foldername, @photodata, @createdate, @insertdate)";
+
+                        using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
+                        {
+                            command.Parameters.AddWithValue("@fullname", NpgsqlDbType.Text, fullName);
+                            command.Parameters.AddWithValue("@foldername", NpgsqlDbType.Text, folderName);
+                            command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
+                            command.Parameters.AddWithValue("@createdate", NpgsqlDbType.Date, creationDate);
+                            command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.Date, DateTime.Now.Date);
+
+                            int rowsAffected = command.ExecuteNonQuery();
+
+                            if (rowsAffected > 0)
+                            {
+                                successfulInserts++;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Hata alınan fullname'i listeye ekle
+                        errorFullNames.Add($"{errorFullName}: {ex.Message}");
+                    }
+                }
+            }
+
+            MessageBox.Show($"Toplam kayıt sayısı: {totalInserts}\nBaşarılı kayıt sayısı: {successfulInserts}\nİsmi uygun olmayan kayıt sayısı: {wrongFormatRecords.Count} {string.Join(", ", wrongFormatRecords)}\nResim olmayan kayıt sayısı: {notImages.Count} {string.Join(", ", notImages)}\nVeritabanına kayıt esnasında hata alınan kayıt sayısı: {errorFullNames.Count} {string.Join(", ", errorFullNames)}");
+
+        }
+        private bool IsImageFile(string extension)
+        {
+            extension = extension.ToLower();
+            return extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".bmp" || extension == ".gif";
         }
     }
 }
