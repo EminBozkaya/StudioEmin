@@ -143,6 +143,26 @@ namespace PhotoEmin.Extensions {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap btnDeleteRecord {
+            get {
+                object obj = ResourceManager.GetObject("btnDeleteRecord", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnEmptyFolder {
+            get {
+                object obj = ResourceManager.GetObject("btnEmptyFolder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btnFindFolder {
             get {
                 object obj = ResourceManager.GetObject("btnFindFolder", resourceCulture);
@@ -266,6 +286,36 @@ namespace PhotoEmin.Extensions {
         internal static System.Drawing.Bitmap btnTrash {
             get {
                 object obj = ResourceManager.GetObject("btnTrash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnUpdateRecord {
+            get {
+                object obj = ResourceManager.GetObject("btnUpdateRecord", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnUpperArchiveFolders {
+            get {
+                object obj = ResourceManager.GetObject("btnUpperArchiveFolders", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnUpperFolder {
+            get {
+                object obj = ResourceManager.GetObject("btnUpperFolder", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

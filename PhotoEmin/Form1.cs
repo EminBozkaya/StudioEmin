@@ -6,14 +6,13 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Globalization;
-using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace PhotoEmin
 {
     public partial class Form1 : Form
     {
-        private const string ConnectionString = "Server=localhost;Port=5432;Database=dbPhoto;User Id=postgres;Password=postgres;";
+        private const string ConnectionString = "Server=localhost;Port=5432;Database=dbPhoto;User Id=postgres;Password=postgres;Encoding=UTF8;";
+        private bool isUpperArchiveBtn = false;
         private Receipt newReceipt = new();
         public Form1()
         {
@@ -35,6 +34,8 @@ namespace PhotoEmin
                 pictureBoxLoadingDbToFolder.Visible = false;
                 pictureBoxLoadingSpareToArchive.Visible = false;
                 pnlBorder.Visible = false;
+
+
             };
 
             // Form üzerinde herhangi bir yere tıklandığında
@@ -365,61 +366,44 @@ namespace PhotoEmin
 
         bool SaveProcess(bool isSaveAndPrint = false)
         {
-            string name = txtName.Text.Trim();
-            if (String.IsNullOrEmpty(name))
-            {
-                MessageBox.Show("Ad-Soyad alanı boş olamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
             if (String.IsNullOrEmpty(textBoxFileLocation.Text))
             {
                 MessageBox.Show("Lütfen kayıt için konum seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            name = name.ToUpper(new CultureInfo("tr-TR"));
-            string dimensions = txtDimensions.Text.Trim(); ;
-            decimal quantity = numQty.Value;
-            decimal totalAmount = 0;
-            decimal receivedAmount = 0;
-            decimal remainingAmount = 0;
-            CultureInfo turkishCulture = new CultureInfo("tr-TR");
-            if (decimal.TryParse(txtTotalAmount.Text, turkishCulture, out totalAmount)) { }
-            if (decimal.TryParse(txtReceivedAmount.Text, turkishCulture, out receivedAmount)) { }
-            if (decimal.TryParse(txtRemainingAmount.Text, turkishCulture, out remainingAmount)) { }
-            string deliveryDate = txtDeliveryDate.Text.Trim();
-            string note = txtBoxNotes.Text.Trim();
 
-            if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(textBoxFileLocation.Text))
+            CreateReceipt();
+
+            if (!string.IsNullOrWhiteSpace(newReceipt.Name))
             {
                 try
                 {
                     // Klasör oluştur
-                    string folderName = $"{name}";
+                    string folderName = $"{newReceipt.Name}";
                     string folderPath = Path.Combine(textBoxFileLocation.Text, folderName);
                     // Eğer klasör zaten varsa, farklı bir isim belirle
                     int count = 1;
                     while (Directory.Exists(folderPath))
                     {
-                        folderName = $"{name}-{count}";
+                        folderName = $"{newReceipt.Name}-{count}";
                         folderPath = Path.Combine(textBoxFileLocation.Text, folderName);
                         count++;
                     }
                     Directory.CreateDirectory(folderPath);
 
                     // Dosya oluştur ve içine verileri yaz
-                    string fileName = $"{DateTime.Now:yyyyMMdd-HHmmss}.txt";
+                    string fileName = $"{DateTime.UtcNow:yyyyMMdd-HHmmss}.txt";
                     string filePath = Path.Combine(folderPath, fileName);
                     using (StreamWriter writer = new StreamWriter(filePath))
                     {
-                        writer.WriteLine($"Ad-Soyad: {name}");
-                        writer.WriteLine($"Ebat: {dimensions}");
-                        writer.WriteLine($"Adet: {quantity}");
-                        writer.WriteLine($"Toplam Tutar: {totalAmount}");
-                        writer.WriteLine($"Alınan Tutar: {receivedAmount}");
-                        writer.WriteLine($"Kalan Tutar: {remainingAmount}");
-                        writer.WriteLine($"Teslim Tarihi: {deliveryDate}");
-                        writer.WriteLine($"Not: {note}");
+                        writer.WriteLine($"Ad-Soyad: {newReceipt.Name}");
+                        writer.WriteLine($"Ebat: {newReceipt.Dimensions}");
+                        writer.WriteLine($"Adet: {newReceipt.Quantity}");
+                        writer.WriteLine($"Toplam Tutar: {newReceipt.TotalAmount}");
+                        writer.WriteLine($"Alınan Tutar: {newReceipt.ReceivedAmount}");
+                        writer.WriteLine($"Kalan Tutar: {newReceipt.RemainingAmount}");
+                        writer.WriteLine($"Teslim Tarihi: {newReceipt.DeliveryDate}");
+                        writer.WriteLine($"Not: {newReceipt.Note}");
                     }
                     lblReceiptName.Text = fileName;
                     lblFileLocation.Text = folderName;
@@ -434,15 +418,6 @@ namespace PhotoEmin
 
                     setVisibleAfterSaveProcess(false);
 
-                    newReceipt.Name = name;
-                    newReceipt.Dimensions = dimensions;
-                    newReceipt.Quantity = quantity;
-                    newReceipt.TotalAmount = totalAmount;
-                    newReceipt.ReceivedAmount = receivedAmount;
-                    newReceipt.RemainingAmount = remainingAmount;
-                    newReceipt.DeliveryDate = deliveryDate;
-                    newReceipt.Note = note;
-
                     return true;
                 }
                 catch (Exception ex)
@@ -453,8 +428,38 @@ namespace PhotoEmin
             }
             else
             {
-                MessageBox.Show("Lütfen Ad-Soyad girin ve bir klasör seçin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Lütfen Ad Soyad girin", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
+            }
+        }
+
+        void CreateReceipt()
+        {
+            string name = txtName.Text.Trim();
+            if (!String.IsNullOrEmpty(name))
+            {
+                name = name.ToUpper(new CultureInfo("tr-TR"));
+                string dimensions = txtDimensions.Text.Trim(); ;
+                decimal quantity = numQty.Value;
+                decimal totalAmount = 0;
+                decimal receivedAmount = 0;
+                decimal remainingAmount = 0;
+                CultureInfo turkishCulture = new CultureInfo("tr-TR");
+                if (decimal.TryParse(txtTotalAmount.Text, turkishCulture, out totalAmount)) { }
+                if (decimal.TryParse(txtReceivedAmount.Text, turkishCulture, out receivedAmount)) { }
+                if (decimal.TryParse(txtRemainingAmount.Text, turkishCulture, out remainingAmount)) { }
+                string deliveryDate = txtDeliveryDate.Text.Trim();
+                string note = txtBoxNotes.Text.Trim();
+
+
+                newReceipt.Name = name;
+                newReceipt.Dimensions = dimensions;
+                newReceipt.Quantity = quantity;
+                newReceipt.TotalAmount = totalAmount;
+                newReceipt.ReceivedAmount = receivedAmount;
+                newReceipt.RemainingAmount = remainingAmount;
+                newReceipt.DeliveryDate = deliveryDate;
+                newReceipt.Note = note;
             }
         }
 
@@ -468,23 +473,21 @@ namespace PhotoEmin
 
         void PrintProcess()
         {
-            if (!string.IsNullOrWhiteSpace(lblReceiptName.Text))
+            CreateReceipt();
+            if (!String.IsNullOrEmpty(newReceipt.Name))
             {
-                //string fullPath = Path.Combine(textBoxFileLocation.Text, lblReceiptName.Text);
-                //printDocument1.DocumentName = lblReceiptName.Text;
-                //stringToPrint = File.ReadAllText(fullPath);
                 printDocument1.DocumentName = "Makbuz";
                 printPreviewDialog1.Document = printDocument1;
+                if (printPreviewDialog1.Visible)
+                {
+                    printPreviewDialog1.Close();
+                }
                 printPreviewDialog1.ShowDialog();
             }
             else
             {
-                MessageBox.Show("Yazdırmak için kayıtlı bir makbuz bulunamadı!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Lütfen Ad Soyad girin", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-            //printDocument1.DocumentName = "Makbuz";
-            //printPreviewDialog1.Document = printDocument1;
-            //printPreviewDialog1.ShowDialog();
         }
 
         private void btnSaveAndPrint_Click(object sender, EventArgs e)
@@ -601,7 +604,7 @@ namespace PhotoEmin
                     }
                     else if (addFolderToArchive)
                     {
-                        btnAddFoldersToArchive.Visible = false;
+                        btnAddFolderToArchive.Visible = false;
                         lblAddFolderToArchive.Text = "Lütfen bekleyiniz..";
                         pictureBoxAddFolderToArchive.Visible = true;
                     }
@@ -637,7 +640,7 @@ namespace PhotoEmin
                     }
                     else if (addFolderToArchive)
                     {
-                        btnAddFoldersToArchive.Visible = true;
+                        btnAddFolderToArchive.Visible = true;
                         lblAddFolderToArchive.Text = "Arşive Ekle";
                         pictureBoxAddFolderToArchive.Visible = false;
                     }
@@ -950,6 +953,7 @@ namespace PhotoEmin
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
                 {
                     txtChosenUpperFolder.Text = folderDialog.SelectedPath;
+                    isUpperArchiveBtn = false;
                 }
             }
         }
@@ -967,37 +971,61 @@ namespace PhotoEmin
             }
         }
 
-        private void btnAddFolderToArchive_Click(object sender, EventArgs e)
+        private async void btnAddFolderToArchive_Click(object sender, EventArgs e)
         {
             string folderPath = txtChosenUpperFolder.Text;
 
             if (!Directory.Exists(folderPath))
             {
                 MessageBox.Show("Belirtilen klasör bulunamadı!");
-                SetLoading(false, false, true);
                 return;
             }
-
+            string[] subDirectories = Directory.GetDirectories(folderPath);
+            if (subDirectories.Length == 0)
+            {
+                MessageBox.Show("Belirtilen üst klasörde kaydedilecek alt klasör bulunamadı!");
+                return;
+            }
             SetLoading(true, false, true);
+            await Task.Delay(2000);
 
-            List<string> errorFullNames = new();
+            RecordStatus recordStatus = new RecordStatus();
+            if (!isUpperArchiveBtn)
+            {
+                recordStatus = RecordToDB(folderPath, subDirectories);
+            }
+            else
+            {
+                foreach (string subDirectory in subDirectories)
+                {
+                    DirectoryInfo subDirInfo = new DirectoryInfo(subDirectory);
+                    string subDirInfoName = subDirInfo.Name;
+                    string subFolderPath = Path.Combine(folderPath, subDirInfoName);
+                    string[] subDirs = Directory.GetDirectories(subFolderPath);
+                    if (subDirs.Length > 0)
+                    {
+                        var subStatus = RecordToDB(subFolderPath, subDirs);
+                        recordStatus.totalInserts += subStatus.totalInserts;
+                        recordStatus.successfulInserts += subStatus.successfulInserts;
+                        recordStatus.duplicateRecords.AddRange(subStatus.duplicateRecords);
+                        recordStatus.errorFullNames.AddRange(subStatus.errorFullNames);
+                    }
+                }
+            }
+
+            SetLoading(false, false, true);
+            MessageBox.Show($"Toplam kayıt sayısı: {recordStatus.totalInserts}\nBaşarılı kayıt sayısı: {recordStatus.successfulInserts}\nTekrar eden kayıt sayısı: {recordStatus.duplicateRecords!.Count} {string.Join(", ", recordStatus.duplicateRecords)}\nHata alınan kayıt sayısı: {recordStatus.errorFullNames.Count} {string.Join(", ", recordStatus.errorFullNames)}");
+        }
+
+        private RecordStatus RecordToDB(string folderPath, string[] subDirectories)
+        {
             string errorFullName = "";
-            List<string> duplicateRecords = new();
-            int successfulInserts = 0;
-            int totalInserts = 0;
+            RecordStatus recordStatus = new RecordStatus();
+            recordStatus.totalInserts = subDirectories.Length;
 
             using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
             {
                 connection.Open();
-
-                string[] subDirectories = Directory.GetDirectories(folderPath);
-                if (subDirectories.Length == 0)
-                {
-                    MessageBox.Show("Belirtilen üst klasörde kaydedilecek alt klasör bulunamadı!");
-                    SetLoading(false, false, true);
-                    return;
-                }
-                totalInserts = subDirectories.Length;
                 foreach (string subDir in subDirectories)
                 {
                     try
@@ -1014,48 +1042,48 @@ namespace PhotoEmin
                         string[] otherGifFiles = Directory.GetFiles(subDir, "*.gif");
 
                         byte[]? photoData = null;
-                        DateTime? creationDate = DateTime.Now.Date;
+                        DateTime? creationDate = DateTime.UtcNow;
                         if (jpgFiles.Length > 0)
                         {
                             //photoData = File.ReadAllBytes(jpgFiles[0]);
                             photoData = ResizeImage(jpgFiles[0], 118, 118);
-                            creationDate = File.GetCreationTime(jpgFiles[0]).Date;
+                            creationDate = File.GetCreationTimeUtc(jpgFiles[0]);
                         }
                         else if (jpegFiles.Length > 0)
                         {
                             //photoData = File.ReadAllBytes(otherJpgFiles[0]);
                             photoData = ResizeImage(jpegFiles[0], 118, 118);
-                            creationDate = File.GetCreationTime(jpegFiles[0]).Date;
+                            creationDate = File.GetCreationTimeUtc(jpegFiles[0]);
                         }
                         else if (otherJpgFiles.Length > 0)
                         {
                             //photoData = File.ReadAllBytes(otherJpgFiles[0]);
                             photoData = ResizeImage(otherJpgFiles[0], 118, 118);
-                            creationDate = File.GetCreationTime(otherJpgFiles[0]).Date;
+                            creationDate = File.GetCreationTimeUtc(otherJpgFiles[0]);
                         }
                         else if (otherJpegFiles.Length > 0)
                         {
                             //photoData = File.ReadAllBytes(otherJpgFiles[0]);
                             photoData = ResizeImage(otherJpegFiles[0], 118, 118);
-                            creationDate = File.GetCreationTime(otherJpegFiles[0]).Date;
+                            creationDate = File.GetCreationTimeUtc(otherJpegFiles[0]);
                         }
                         else if (otherPngFiles.Length > 0)
                         {
                             //photoData = File.ReadAllBytes(otherPngFiles[0]);
                             photoData = ResizeImage(otherPngFiles[0], 118, 118);
-                            creationDate = File.GetCreationTime(otherPngFiles[0]).Date;
+                            creationDate = File.GetCreationTimeUtc(otherPngFiles[0]);
                         }
                         else if (otherBmpFiles.Length > 0)
                         {
                             //photoData = File.ReadAllBytes(otherPngFiles[0]);
                             photoData = ResizeImage(otherBmpFiles[0], 118, 118);
-                            creationDate = File.GetCreationTime(otherBmpFiles[0]).Date;
+                            creationDate = File.GetCreationTimeUtc(otherBmpFiles[0]);
                         }
                         else if (otherGifFiles.Length > 0)
                         {
                             //photoData = File.ReadAllBytes(otherPngFiles[0]);
                             photoData = ResizeImage(otherGifFiles[0], 118, 118);
-                            creationDate = File.GetCreationTime(otherGifFiles[0]).Date;
+                            creationDate = File.GetCreationTimeUtc(otherGifFiles[0]);
                         }
 
                         string fullName = subDirInfo.Name;
@@ -1079,33 +1107,33 @@ namespace PhotoEmin
                                     command.Parameters.AddWithValue("@fullname", NpgsqlDbType.Text, fullName);
                                     command.Parameters.AddWithValue("@foldername", NpgsqlDbType.Text, folderName);
                                     command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
-                                    command.Parameters.AddWithValue("@createdate", NpgsqlDbType.Date, creationDate);
-                                    command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.Date, DateTime.Now.Date);
+                                    command.Parameters.AddWithValue("@createdate", NpgsqlDbType.TimestampTz, creationDate);
+                                    command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.TimestampTz, DateTime.UtcNow);
+
+
 
                                     int rowsAffected = command.ExecuteNonQuery();
 
                                     if (rowsAffected > 0)
                                     {
-                                        successfulInserts++;
+                                        recordStatus.successfulInserts++;
                                     }
                                 }
                             }
                             else
                             {
-                                duplicateRecords.Add(fullName);
+                                recordStatus.duplicateRecords.Add(fullName);
                             }
                         }
                     }
                     catch (Exception ex)
                     {
                         // Hata alınan fullname'i listeye ekle
-                        errorFullNames.Add($"{errorFullName}: {ex.Message}");
+                        recordStatus.errorFullNames.Add($"{errorFullName}: {ex.Message}");
                     }
-
                 }
             }
-            SetLoading(false, false, true);
-            MessageBox.Show($"Toplam kayıt sayısı: {totalInserts}\nBaşarılı kayıt sayısı: {successfulInserts}\nTekrar eden kayıt sayısı: {duplicateRecords.Count} {string.Join(", ", duplicateRecords)}\nHata alınan kayıt sayısı: {errorFullNames.Count} {string.Join(", ", errorFullNames)}");
+            return recordStatus;
         }
 
         public byte[] ResizeImage(string imagePath, int targetWidth, int targetHeight)
@@ -1144,8 +1172,10 @@ namespace PhotoEmin
                 }
             }
         }
+
         private void txtFullName_TextChanged(object sender, EventArgs e)
         {
+
             string searchText = txtFullName.Text.Trim().ToLower(); // Küçük harfe dönüştür
 
             using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
@@ -1287,7 +1317,7 @@ namespace PhotoEmin
             }
             else
             {
-                MessageBox.Show("Lütfen Ad-Soyad tablosundan bir kayıt seçin");
+                MessageBox.Show("Lütfen Ad Soyad tablosundan bir kayıt seçin");
             }
         }
 
@@ -1309,7 +1339,7 @@ namespace PhotoEmin
             }
         }
 
-        private void btnDBtoFolder_Click(object sender, EventArgs e)
+        private async void btnDBtoFolder_Click(object sender, EventArgs e)
         {
             string folderPath = txtLocationForArchive.Text;
 
@@ -1322,6 +1352,7 @@ namespace PhotoEmin
             try
             {
                 SetLoading(true, false, false, true);
+                await Task.Delay(2000);
                 using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
                 {
                     connection.Open();
@@ -1336,7 +1367,7 @@ namespace PhotoEmin
                             string fullName = !reader.IsDBNull(0) ? reader.GetString(0) : string.Empty;
                             string folderName = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty;
                             byte[]? photoData = !reader.IsDBNull(reader.GetOrdinal("photodata")) ? (byte[])reader["photodata"] : null;
-                            DateTime createDate = !reader.IsDBNull(reader.GetOrdinal("createdate")) ? reader.GetDateTime(reader.GetOrdinal("createdate")) : DateTime.Now;
+                            DateTime createDate = !reader.IsDBNull(reader.GetOrdinal("createdate")) ? reader.GetDateTime(reader.GetOrdinal("createdate")) : DateTime.UtcNow;
 
 
                             string fileName = $"{fullName}_{folderName}.jpg";
@@ -1399,7 +1430,7 @@ namespace PhotoEmin
             }
         }
 
-        private void btnSpareToArchive_Click(object sender, EventArgs e)
+        private async void btnSpareToArchive_Click(object sender, EventArgs e)
         {
             string folderPath = txtLocationOfSpareFolder.Text;
 
@@ -1408,8 +1439,10 @@ namespace PhotoEmin
                 MessageBox.Show("Belirtilen klasör bulunamadı!");
                 return;
             }
-
+            SetLoading(true, false, false, false, true);
+            await Task.Delay(2000);
             List<string> errorFullNames = new();
+            List<string> duplicateRecords = new();
             string errorFullName = "";
             List<string> wrongFormatRecords = new List<string>();
             List<string> notImages = new List<string>();
@@ -1429,8 +1462,8 @@ namespace PhotoEmin
                     string folderName = "";
                     string[] nameParts;
                     byte[]? photoData = null;
-                    DateTime creationDate = DateTime.Now.Date;
-                    DateTime insertdate = DateTime.Now.Date;
+                    DateTime creationDate = DateTime.UtcNow;
+                    DateTime insertdate = DateTime.UtcNow;
 
 
                     if (Directory.Exists(fileOrFolder))
@@ -1448,7 +1481,7 @@ namespace PhotoEmin
                         errorFullName = errorFullName = string.Join("_", nameParts);
                         fullName = nameParts[0];
                         folderName = nameParts[1];
-                        creationDate = Directory.GetCreationTime(fileOrFolder).Date;
+                        creationDate = Directory.GetCreationTimeUtc(fileOrFolder).Date;
                     }
                     else if (File.Exists(fileOrFolder))
                     {
@@ -1466,7 +1499,7 @@ namespace PhotoEmin
                         errorFullName = errorFullName = string.Join("_", nameParts);
                         fullName = nameParts[0];
                         folderName = nameParts[1];
-                        creationDate = File.GetCreationTime(fileOrFolder).Date;
+                        creationDate = File.GetCreationTimeUtc(fileOrFolder);
 
                         string fileExtension = Path.GetExtension(fileOrFolder);
 
@@ -1483,24 +1516,45 @@ namespace PhotoEmin
                     }
                     try
                     {
-                        // Veritabanına kaydet
-                        string insertQuery = "INSERT INTO customers (fullname, foldername, photodata, createdate, insertdate) VALUES (@fullname, @foldername, @photodata, @createdate, @insertdate)";
-
-                        using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
+                        //Kayıt öncesi veriyi kontrol et:
+                        string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
+                        using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkDuplicateQuery, connection))
                         {
-                            command.Parameters.AddWithValue("@fullname", NpgsqlDbType.Text, fullName);
-                            command.Parameters.AddWithValue("@foldername", NpgsqlDbType.Text, folderName);
-                            command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
-                            command.Parameters.AddWithValue("@createdate", NpgsqlDbType.Date, creationDate);
-                            command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.Date, DateTime.Now.Date);
+                            checkCommand.Parameters.AddWithValue("@fullname", fullName);
+                            checkCommand.Parameters.AddWithValue("@foldername", folderName);
 
-                            int rowsAffected = command.ExecuteNonQuery();
+                            long existingRecordsCount = (long)checkCommand.ExecuteScalar()!;
 
-                            if (rowsAffected > 0)
+                            if (existingRecordsCount == 0)
                             {
-                                successfulInserts++;
+                                // Veritabanına kaydet
+                                string insertQuery = "INSERT INTO customers (fullname, foldername, photodata, createdate, insertdate) VALUES (@fullname, @foldername, @photodata, @createdate, @insertdate)";
+
+                                using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
+                                {
+                                    command.Parameters.AddWithValue("@fullname", NpgsqlDbType.Text, fullName);
+                                    command.Parameters.AddWithValue("@foldername", NpgsqlDbType.Text, folderName);
+                                    command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
+                                    command.Parameters.AddWithValue("@createdate", NpgsqlDbType.TimestampTz, creationDate);
+                                    command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.TimestampTz, DateTime.UtcNow);
+
+                                    int rowsAffected = command.ExecuteNonQuery();
+
+                                    if (rowsAffected > 0)
+                                    {
+                                        successfulInserts++;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                duplicateRecords.Add(fullName);
                             }
                         }
+
+
+
+
                     }
                     catch (Exception ex)
                     {
@@ -1509,14 +1563,117 @@ namespace PhotoEmin
                     }
                 }
             }
-
-            MessageBox.Show($"Toplam kayıt sayısı: {totalInserts}\nBaşarılı kayıt sayısı: {successfulInserts}\nİsmi uygun olmayan kayıt sayısı: {wrongFormatRecords.Count} {string.Join(", ", wrongFormatRecords)}\nResim olmayan kayıt sayısı: {notImages.Count} {string.Join(", ", notImages)}\nVeritabanına kayıt esnasında hata alınan kayıt sayısı: {errorFullNames.Count} {string.Join(", ", errorFullNames)}");
+            SetLoading(false, false, false, false, true);
+            MessageBox.Show($"Toplam kayıt sayısı: {totalInserts}\nBaşarılı kayıt sayısı: {successfulInserts}\nTekrar eden kayıt sayısı: {duplicateRecords!.Count} {string.Join(", ", duplicateRecords)}\nİsmi uygun olmayan kayıt sayısı: {wrongFormatRecords.Count} {string.Join(", ", wrongFormatRecords)}\nResim olmayan kayıt sayısı: {notImages.Count} {string.Join(", ", notImages)}\nVeritabanına kayıt esnasında hata alınan kayıt sayısı: {errorFullNames.Count} {string.Join(", ", errorFullNames)}");
 
         }
+
         private bool IsImageFile(string extension)
         {
             extension = extension.ToLower();
             return extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".bmp" || extension == ".gif";
+        }
+
+        private void btnUpperArchiveFoldersToDB_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                DialogResult result = folderDialog.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
+                {
+                    txtChosenUpperFolder.Text = folderDialog.SelectedPath;
+                    isUpperArchiveBtn = true;
+                }
+            }
+        }
+
+        private void btnUpdateRecord_Click(object sender, EventArgs e)
+        {
+            int selectedRowId;
+            if (dataGridRecords.CurrentRow != null && dataGridRecords.CurrentRow.Cells["id"].Value != null)
+            {
+                if (int.TryParse(dataGridRecords.CurrentRow.Cells["id"].Value.ToString(), out selectedRowId))
+                {
+                    object fullNameObject = dataGridRecords.CurrentRow.Cells["Ad Soyad"].Value;
+                    string selectedFullName = fullNameObject != null ? fullNameObject.ToString()! : string.Empty;
+                    if (string.IsNullOrEmpty(selectedFullName))
+                    {
+                        MessageBox.Show("Lütfen Ad Soyad girin", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    selectedFullName = selectedFullName.Trim();
+                    DialogResult result = MessageBox.Show("Kaydı güncellemek istediğinize emin misiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+                            {
+                                connection.Open();
+                                string updateSql = "UPDATE customers SET fullname = @fullname WHERE id = @id";
+                                using (NpgsqlCommand command = new NpgsqlCommand(updateSql, connection))
+                                {
+                                    command.Parameters.AddWithValue("@fullname", selectedFullName);
+                                    command.Parameters.AddWithValue("@id", selectedRowId);
+
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+                            MessageBox.Show("Kayıt başarıyla güncellendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Kayıt güncellenirken hata oluştu! {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+
+
+
+
+        }
+
+        private void btnDeleteRecord_Click(object sender, EventArgs e)
+        {
+            int selectedRowId;
+            if (dataGridRecords.CurrentRow != null && dataGridRecords.CurrentRow.Cells["id"].Value != null)
+            {
+                if (int.TryParse(dataGridRecords.CurrentRow.Cells["id"].Value.ToString(), out selectedRowId))
+                {
+                    DialogResult result = MessageBox.Show("Kaydı silmek istediğinize emin misiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+                            {
+                                connection.Open();
+
+                                string deleteSql = "DELETE FROM customers WHERE id = @id";
+
+                                using (NpgsqlCommand command = new NpgsqlCommand(deleteSql, connection))
+                                {
+                                    command.Parameters.AddWithValue("@id", selectedRowId);
+
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+                            MessageBox.Show("Kayıt başarıyla silindi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Kayıt silme işleminde hata oluştu! {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        }
+                    }
+                }
+            }
+
+
         }
     }
 }
