@@ -1176,7 +1176,7 @@ namespace PhotoEmin
         private void txtFullName_TextChanged(object sender, EventArgs e)
         {
 
-            string searchText = txtFullName.Text.Trim().ToLower(); // Küçük harfe dönüştür
+            string searchText = txtFullName.Text.Trim().ToLowerInvariant(); // Küçük harfe dönüştür
 
             using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
             {
@@ -1570,7 +1570,7 @@ namespace PhotoEmin
 
         private bool IsImageFile(string extension)
         {
-            extension = extension.ToLower();
+            extension = extension.ToLowerInvariant();
             return extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".bmp" || extension == ".gif";
         }
 
