@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             dataGridRecords = new DataGridView();
             btnFindFolder = new Button();
@@ -169,6 +169,8 @@
             btnAddSpareToArchive = new Button();
             btnMakeSpare = new Button();
             btnAddFoldersToArchive = new Button();
+            label50 = new Label();
+            btnDB = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridRecords).BeginInit();
             pnlReceipt.SuspendLayout();
             pnlReceiptInputs.SuspendLayout();
@@ -197,23 +199,23 @@
             dataGridRecords.AllowUserToAddRows = false;
             dataGridRecords.AllowUserToOrderColumns = true;
             dataGridRecords.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridRecords.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dataGridRecords.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dataGridRecords.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dataGridRecords.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Window;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dataGridRecords.DefaultCellStyle = dataGridViewCellStyle6;
             dataGridRecords.Location = new Point(3, 70);
             dataGridRecords.Name = "dataGridRecords";
             dataGridRecords.RowHeadersVisible = false;
@@ -229,9 +231,9 @@
             btnFindFolder.BackgroundImageLayout = ImageLayout.Stretch;
             btnFindFolder.FlatAppearance.BorderSize = 0;
             btnFindFolder.FlatStyle = FlatStyle.Flat;
-            btnFindFolder.Location = new Point(35, 160);
+            btnFindFolder.Location = new Point(35, 132);
             btnFindFolder.Name = "btnFindFolder";
-            btnFindFolder.Size = new Size(100, 100);
+            btnFindFolder.Size = new Size(70, 70);
             btnFindFolder.TabIndex = 0;
             btnFindFolder.UseVisualStyleBackColor = false;
             btnFindFolder.Click += btnFindFolder_Click;
@@ -243,9 +245,9 @@
             btnCreateReceipt.BackgroundImageLayout = ImageLayout.Stretch;
             btnCreateReceipt.FlatAppearance.BorderSize = 0;
             btnCreateReceipt.FlatStyle = FlatStyle.Flat;
-            btnCreateReceipt.Location = new Point(35, 298);
+            btnCreateReceipt.Location = new Point(35, 245);
             btnCreateReceipt.Name = "btnCreateReceipt";
-            btnCreateReceipt.Size = new Size(100, 100);
+            btnCreateReceipt.Size = new Size(70, 70);
             btnCreateReceipt.TabIndex = 0;
             btnCreateReceipt.UseVisualStyleBackColor = false;
             btnCreateReceipt.Click += btnCreateReceipt_Click;
@@ -275,9 +277,9 @@
             pnlReceipt.Controls.Add(btnSave);
             pnlReceipt.Controls.Add(btnGoReceipt);
             pnlReceipt.Controls.Add(btnGoTheFolder);
-            pnlReceipt.Location = new Point(69, 14);
+            pnlReceipt.Location = new Point(69, 9);
             pnlReceipt.Name = "pnlReceipt";
-            pnlReceipt.Size = new Size(1282, 635);
+            pnlReceipt.Size = new Size(1265, 640);
             pnlReceipt.TabIndex = 1;
             // 
             // textBoxFileLocation
@@ -823,7 +825,7 @@
             label9.BackColor = Color.Transparent;
             label9.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label9.ForeColor = SystemColors.ButtonFace;
-            label9.Location = new Point(35, 398);
+            label9.Location = new Point(19, 323);
             label9.Name = "label9";
             label9.Size = new Size(103, 22);
             label9.TabIndex = 2;
@@ -854,7 +856,7 @@
             label21.BackColor = Color.Transparent;
             label21.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label21.ForeColor = SystemColors.ButtonFace;
-            label21.Location = new Point(35, 265);
+            label21.Location = new Point(25, 203);
             label21.Name = "label21";
             label21.Size = new Size(88, 22);
             label21.TabIndex = 2;
@@ -866,7 +868,7 @@
             label22.BackColor = Color.Transparent;
             label22.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label22.ForeColor = SystemColors.ButtonFace;
-            label22.Location = new Point(35, 131);
+            label22.Location = new Point(19, 95);
             label22.Name = "label22";
             label22.Size = new Size(104, 22);
             label22.TabIndex = 2;
@@ -881,7 +883,7 @@
             btnMyComputer.FlatStyle = FlatStyle.Flat;
             btnMyComputer.Location = new Point(35, 28);
             btnMyComputer.Name = "btnMyComputer";
-            btnMyComputer.Size = new Size(100, 100);
+            btnMyComputer.Size = new Size(70, 70);
             btnMyComputer.TabIndex = 0;
             btnMyComputer.UseVisualStyleBackColor = false;
             btnMyComputer.Click += btnMyComputer_Click;
@@ -893,9 +895,9 @@
             button1.BackgroundImageLayout = ImageLayout.Stretch;
             button1.FlatAppearance.BorderSize = 0;
             button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(35, 440);
+            button1.Location = new Point(35, 368);
             button1.Name = "button1";
-            button1.Size = new Size(100, 100);
+            button1.Size = new Size(70, 70);
             button1.TabIndex = 0;
             button1.UseVisualStyleBackColor = false;
             button1.Click += flowLayoutPanelArchive_Click;
@@ -906,7 +908,7 @@
             label1.BackColor = Color.Transparent;
             label1.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ButtonFace;
-            label1.Location = new Point(59, 543);
+            label1.Location = new Point(46, 444);
             label1.Name = "label1";
             label1.Size = new Size(50, 22);
             label1.TabIndex = 2;
@@ -936,9 +938,9 @@
             // 
             pnlBorder.Anchor = AnchorStyles.Top;
             pnlBorder.BackColor = Color.Silver;
+            pnlBorder.Controls.Add(pnlReceipt);
             pnlBorder.Controls.Add(flowLayoutPanelArchive);
             pnlBorder.Controls.Add(pnlFindFolder);
-            pnlBorder.Controls.Add(pnlReceipt);
             pnlBorder.Location = new Point(214, 71);
             pnlBorder.Name = "pnlBorder";
             pnlBorder.Size = new Size(1365, 657);
@@ -1870,6 +1872,31 @@
             btnAddFoldersToArchive.UseVisualStyleBackColor = false;
             btnAddFoldersToArchive.Click += btnAddFoldersToArchive_Click;
             // 
+            // label50
+            // 
+            label50.AutoSize = true;
+            label50.BackColor = Color.Transparent;
+            label50.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label50.ForeColor = SystemColors.ButtonFace;
+            label50.Location = new Point(24, 559);
+            label50.Name = "label50";
+            label50.Size = new Size(96, 22);
+            label50.TabIndex = 20;
+            label50.Text = "Veri Tabanı";
+            // 
+            // btnDB
+            // 
+            btnDB.BackColor = Color.Transparent;
+            btnDB.BackgroundImage = Extensions.Resources.archiveDB;
+            btnDB.BackgroundImageLayout = ImageLayout.Stretch;
+            btnDB.FlatAppearance.BorderSize = 0;
+            btnDB.FlatStyle = FlatStyle.Flat;
+            btnDB.Location = new Point(35, 481);
+            btnDB.Name = "btnDB";
+            btnDB.Size = new Size(70, 70);
+            btnDB.TabIndex = 19;
+            btnDB.UseVisualStyleBackColor = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1877,6 +1904,8 @@
             BackgroundImage = Extensions.Resources.ArkaFon;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1732, 752);
+            Controls.Add(label50);
+            Controls.Add(btnDB);
             Controls.Add(label1);
             Controls.Add(label9);
             Controls.Add(label21);
@@ -2067,5 +2096,7 @@
         private Label label49;
         private Label label48;
         private Label label47;
+        private Label label50;
+        private Button btnDB;
     }
 }

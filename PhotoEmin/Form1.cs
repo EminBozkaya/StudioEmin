@@ -12,11 +12,11 @@ namespace PhotoEmin
 {
     public partial class Form1 : Form
     {
-        //postgre
-        //private const string ConnectionString = "Server=localhost;Port=5432;Database=dbPhoto;User Id=postgres;Password=postgres;Encoding=UTF8;";
+        //postgresql
+        private const string ConnectionString = "Server=localhost;Port=5432;Database=dbPhoto;User Id=postgres;Password=postgres;Encoding=UTF8;";
 
-        //mssql
-        private const string ConnectionString = "Server=localhost;Database=dbPhoto;User Id=postgres;Password=postgres;";
+        //msSql
+        //private const string ConnectionString = "Server=localhost;Database=dbPhoto;User Id=postgres;Password=postgres;";
 
         private bool isUpperArchiveBtn = false;
         private Receipt newReceipt = new();
@@ -234,42 +234,49 @@ namespace PhotoEmin
 
             // Logo eklemek
             Bitmap logo = Extensions.Resources.makbuzResim;
-            int logoWidth = 500;
-            int logoHeight = 180;
+            int logoWidth = 240;
+            int logoHeight = 75;
             e.Graphics!.DrawImage(logo, new Rectangle((e.PageBounds.Width - logoWidth) / 2, 50, logoWidth, logoHeight));
 
             // Başlık eklemek
-            Font titleFont = new Font("Arial", 16, FontStyle.Bold);
+            Font titleFont = new Font("Arial", 10, FontStyle.Bold);
             string titleText = "www.studyoemin.com";
             SizeF titleSize = e.Graphics.MeasureString(titleText, titleFont);
-            e.Graphics.DrawString(titleText, titleFont, Brushes.Black, new PointF((e.PageBounds.Width - titleSize.Width) / 2, 50 + logoHeight + 10));
+            e.Graphics.DrawString(titleText, titleFont, Brushes.Black, new PointF((e.PageBounds.Width - titleSize.Width) / 2, 50 + logoHeight));
 
             // İkinci metin eklemek
-            Font titleFont2 = new Font("Arial", 14, FontStyle.Regular);
-            string titleText2 = "Adres: Camicedit Mahallesi Cumhuriyet Caddesi";
+            Font titleFont2 = new Font("Arial", 8, FontStyle.Regular);
+            string titleText2 = "Adres: Camicedit Mah. Cumhuriyet Cad.";
             SizeF titleSize2 = e.Graphics.MeasureString(titleText2, titleFont2);
-            float currentY = 50 + logoHeight; // currentY'yi tanımla ve başlangıç değerini ayarla
-            currentY += (int)titleSize.Height + 10; // Önceki metinden sonra bir boşluk bırakmak için
+            float currentY = 43 + logoHeight; // currentY'yi tanımla ve başlangıç değerini ayarla
+            currentY += (int)titleSize.Height + 6; // Önceki metinden sonra bir boşluk bırakmak için
             e.Graphics.DrawString(titleText2, titleFont2, Brushes.Black, new PointF((e.PageBounds.Width - titleSize2.Width) / 2, currentY));
 
+            // İkinciye devam metin eklemek
+            Font titleFont2_2 = new Font("Arial", 8, FontStyle.Regular);
+            string titleText2_2 = "No:119/A - Merzifon/Amasya";
+            SizeF titleSize2_2 = e.Graphics.MeasureString(titleText2_2, titleFont2_2);
+            currentY += (int)titleSize2.Height; // Önceki metinden sonra bir boşluk bırakmak için
+            e.Graphics.DrawString(titleText2_2, titleFont2_2, Brushes.Black, new PointF((e.PageBounds.Width - titleSize2_2.Width) / 2, currentY));
+
             // Üçüncü metin eklemek
-            Font titleFont3 = new Font("Arial", 14, FontStyle.Regular);
-            string titleText3 = "No : 119/A - Merzifon/Amasya";
+            Font titleFont3 = new Font("Arial", 8, FontStyle.Regular);
+            string titleText3 = "0358 514 33 11 / info@studyoemin.com";
             SizeF titleSize3 = e.Graphics.MeasureString(titleText3, titleFont3);
             currentY += (int)titleSize2.Height; // Önceki metinden sonra bir boşluk bırakmak için
             e.Graphics.DrawString(titleText3, titleFont3, Brushes.Black, new PointF((e.PageBounds.Width - titleSize3.Width) / 2, currentY));
 
-            // Dördüncü metin eklemek
-            Font titleFont4 = new Font("Arial", 14, FontStyle.Regular);
-            string titleText4 = "Telefon: +90 (358) 514 33 11  /  E-Posta: info@studyoemin.com";
-            SizeF titleSize4 = e.Graphics.MeasureString(titleText4, titleFont4);
-            currentY += (int)titleSize2.Height; // Önceki metinden sonra bir boşluk bırakmak için
-            e.Graphics.DrawString(titleText4, titleFont4, Brushes.Black, new PointF((e.PageBounds.Width - titleSize4.Width) / 2, currentY));
+            //// Dördüncü metin eklemek
+            //Font titleFont4 = new Font("Arial", 10, FontStyle.Regular);
+            //string titleText4 = "  /  ";
+            //SizeF titleSize4 = e.Graphics.MeasureString(titleText4, titleFont4);
+            //currentY += (int)titleSize2.Height; // Önceki metinden sonra bir boşluk bırakmak için
+            //e.Graphics.DrawString(titleText4, titleFont4, Brushes.Black, new PointF((e.PageBounds.Width - titleSize4.Width) / 2, currentY));
 
             // Tabloyu oluşturmak
             DataTable table = new DataTable();
-            Font tableCapitalFont = new Font("Arial", 15, FontStyle.Bold);
-            Font tableFont = new Font("Arial", 15, FontStyle.Regular);
+            Font tableCapitalFont = new Font("Arial", 8, FontStyle.Bold);
+            Font tableFont = new Font("Arial", 8, FontStyle.Regular);
             table.Columns.Add("Özellik", typeof(string));
             table.Columns.Add("Değer", typeof(string));
 
@@ -289,14 +296,14 @@ namespace PhotoEmin
             table.Rows.Add($"Not: {note}");
 
             // Tablonun boyutları ve hücre boyutları
-            int tableWidth = 600;
+            int tableWidth = 240;
             //int cellPadding = 10;
             //int cellWidth = (tableWidth - 2 * cellPadding) / table.Columns.Count;  // Hesaplanan hücre genişliği
-            int cellWidth = 300;  // Hesaplanan hücre genişliği
-            int cellHeight = 50;
+            int cellWidth = 120;  // Hesaplanan hücre genişliği
+            int cellHeight = 27;
 
             // Tablo başlıkları
-            currentY += (int)titleSize3.Height + 20; // Önceki metinden sonra bir boşluk bırakmak için
+            currentY += (int)titleSize3.Height + 1; // Önceki metinden sonra bir boşluk bırakmak için
             float currentYlast = 0;
             int tableStartX = (e.PageBounds.Width - tableWidth) / 2;
 
@@ -314,16 +321,18 @@ namespace PhotoEmin
                         string[] rowItems = SplitAndReturn(table.Rows[row][0].ToString()!);
 
                         e.Graphics.DrawString(rowItems[0], tableCapitalFont, Brushes.Black, new RectangleF(tableStartX, (int)currentY, tableWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
-                        e.Graphics.DrawString(rowItems[1], tableFont, Brushes.Black, new RectangleF(tableStartX + (rowItems[0].Length * 12), (int)currentY, tableWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                        e.Graphics.DrawString(rowItems[1], tableFont, Brushes.Black, new RectangleF(tableStartX + (rowItems[0].Length * 8), (int)currentY, tableWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
                     }
                     else
                     {
-                        int noteCellHeight = 30;
-                        Font noteCapitalFont = new Font("Arial", 14, FontStyle.Bold);
-                        Font noteFont = new Font("Arial", 13, FontStyle.Regular);
+                        int noteCellHeight = 20;
+                        int noteLinesCellHeight = 20;
+                        Font noteCapitalFont = new Font("Arial", 8, FontStyle.Bold);
+                        Font noteFont = new Font("Arial", 7, FontStyle.Regular);
                         string yourString = table.Rows[row][0].ToString()!;
                         string[] lines = yourString.Split("\n");
-                        int noteHeight = lines.Length < 7 ? 280 : noteCellHeight * lines.Length;
+                        //int noteHeight = lines.Length < 7 ? 30 : noteCellHeight * lines.Length;
+                        int noteHeight = lines.Length < 2 ? 20 : noteCellHeight * lines.Length;
                         for (int i = 0; i < lines.Length; i++)
                         {
                             if (i == 0)
@@ -332,23 +341,33 @@ namespace PhotoEmin
 
                                 e.Graphics.FillRectangle(Brushes.White, new Rectangle(tableStartX, (int)currentY, tableWidth, noteCellHeight));
                                 e.Graphics.DrawRectangle(Pens.Black, new Rectangle(tableStartX, (int)currentY, tableWidth, noteHeight));
-                                e.Graphics.DrawString(lineItems[0], noteCapitalFont, Brushes.Black, new RectangleF(tableStartX, (int)currentY, tableWidth, noteCellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
-                                e.Graphics.DrawString(lineItems[1], noteFont, Brushes.Black, new RectangleF(tableStartX + (lineItems[0].Length * 10), (int)currentY, tableWidth, noteCellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                                e.Graphics.DrawString(lineItems[0], noteCapitalFont, Brushes.Black, new RectangleF(tableStartX, (int)currentY, tableWidth, noteLinesCellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                                e.Graphics.DrawString(lineItems[1], noteFont, Brushes.Black, new RectangleF(tableStartX + (lineItems[0].Length * 8), (int)currentY, tableWidth, noteLinesCellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
                                 currentYlast = currentY + noteHeight;
                             }
                             else
                             {
                                 //e.Graphics.FillRectangle(Brushes.White, new Rectangle(tableStartX, (int)currentY, tableWidth, cellHeight));
                                 //e.Graphics.DrawRectangle(Pens.Black, new Rectangle(tableStartX, (int)currentY, tableWidth, row == table.Rows.Count - 1 ? 5 * cellHeight : cellHeight));
-                                e.Graphics.DrawString(lines[i], noteFont, Brushes.Black, new RectangleF(tableStartX, (int)currentY, tableWidth, noteCellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                                e.Graphics.DrawString(lines[i], noteFont, Brushes.Black, new RectangleF(tableStartX, (int)currentY, tableWidth, noteLinesCellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
                             }
-                            currentY += noteCellHeight;
+                            currentY += noteLinesCellHeight;
                         }
                     }
                 }
                 else
                 {
                     // Diğer satırlar için
+                    //for (int i = 0; i < table.Columns.Count; i++)
+                    //{
+                    //    e.Graphics.FillRectangle(Brushes.White, new Rectangle(tableStartX + i * cellWidth, (int)currentY, cellWidth, cellHeight));
+                    //    e.Graphics.DrawRectangle(Pens.Black, new Rectangle(tableStartX + i * cellWidth, (int)currentY, cellWidth, cellHeight));
+
+                    //    string[] columnItems = SplitAndReturn(table.Rows[row][i].ToString()!);
+
+                    //    e.Graphics.DrawString(columnItems[0], tableCapitalFont, Brushes.Black, new RectangleF(tableStartX + i * cellWidth, (int)currentY, cellWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                    //    e.Graphics.DrawString(columnItems[1], tableFont, Brushes.Black, new RectangleF(columnItems[0].Length > 8 ? (tableStartX + i * cellWidth + (float)(columnItems[0].Length * 3)) : (tableStartX + i * cellWidth + (float)(columnItems[0].Length * 6)), (int)currentY, cellWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                    //}
                     for (int i = 0; i < table.Columns.Count; i++)
                     {
                         e.Graphics.FillRectangle(Brushes.White, new Rectangle(tableStartX + i * cellWidth, (int)currentY, cellWidth, cellHeight));
@@ -356,18 +375,30 @@ namespace PhotoEmin
 
                         string[] columnItems = SplitAndReturn(table.Rows[row][i].ToString()!);
 
-                        e.Graphics.DrawString(columnItems[0], tableCapitalFont, Brushes.Black, new RectangleF(tableStartX + i * cellWidth, (int)currentY, cellWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
-                        e.Graphics.DrawString(columnItems[1], tableFont, Brushes.Black, new RectangleF(tableStartX + i * cellWidth + (float)(columnItems[0].Length * 10), (int)currentY, cellWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                        if (row == 3 && i == table.Columns.Count - 1) // Son sütun ise
+                        {
+                            // İlk satır
+                            e.Graphics.DrawString(columnItems[0], tableCapitalFont, Brushes.Black, new RectangleF(tableStartX + i * cellWidth, (int)currentY, cellWidth, cellHeight / 2), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+
+                            // İkinci satır
+                            e.Graphics.DrawString(columnItems[1], tableFont, Brushes.Black, new RectangleF(tableStartX + i * cellWidth, (int)currentY + cellHeight / 2, cellWidth, cellHeight / 2), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                        }
+                        else
+                        {
+                            e.Graphics.DrawString(columnItems[0], tableCapitalFont, Brushes.Black, new RectangleF(tableStartX + i * cellWidth, (int)currentY, cellWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                            e.Graphics.DrawString(columnItems[1], tableFont, Brushes.Black, new RectangleF(columnItems[0].Length > 8 ? (tableStartX + i * cellWidth + (float)(columnItems[0].Length * 2)) : (tableStartX + i * cellWidth + (float)(columnItems[0].Length * 6)), (int)currentY, cellWidth, cellHeight), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                        }
                     }
+
                 }
 
                 currentY += cellHeight;
             }
             // Footer metin eklemek
-            Font titleFont5 = new Font("Arial", 11, FontStyle.Regular);
-            string titleText5 = "1) Makbuzsuz fotoğraf verilmez. 2) 1 ay içerisinde alınmayan fotoğraftan mesul değiliz. 3) Özel çekimleriniz için lütfen randevu alınız. 4) Çekimleri tarafımızca yapılan bütün işler 5846 sayılı fikir ve sanat eserleri yasasıyla koruma altındadır. 5) Çekimleri tarafımızca yapılmış olan bütün işlerin telif ve mülkiyet hakkı firmamıza aittir. Çekim öncesi özel bir anlaşma yapılmadı ise; dijital, negatif, orijinal görüntü ve çalışmalar müşteriye teslim edilmez. Kullanım hakkının ihlâli, yasal olmayan kopyalama, çoğaltma, yasa uyarınca suç teşkil etmektedir.";
+            Font titleFont5 = new Font("Arial", 6, FontStyle.Regular);
+            string titleText5 = "1) Makbuzsuz fotoğraf verilmez.\n2) 1 ay içerisinde alınmayan fotoğraftan mesul değiliz.\n3) Özel çekimleriniz için lütfen randevu alınız.\n4) Çekimleri tarafımızca yapılan bütün işler 5846 sayılı fikir ve sanat eserleri yasasıyla koruma altındadır.\n5) Çekimleri tarafımızca yapılmış olan bütün işlerin telif ve mülkiyet hakkı firmamıza aittir. Çekim öncesi özel bir anlaşma yapılmadı ise; dijital, negatif, orijinal görüntü ve çalışmalar müşteriye teslim edilmez. Kullanım hakkının ihlâli, yasal olmayan kopyalama, çoğaltma, yasa uyarınca suç teşkil etmektedir.";
             //currentYlast += 200; // Önceki metinden sonra bir boşluk bırakmak için
-            e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(120, (int)currentYlast, 600, 160), new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(295, (int)currentYlast + 2, 235, 103), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
         }
 
         bool SaveProcess(bool isSaveAndPrint = false)
@@ -1143,116 +1174,116 @@ namespace PhotoEmin
             #endregion
 
             #region msSql
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                foreach (string subDir in subDirectories)
-                {
-                    try
-                    {
-                        DirectoryInfo subDirInfo = new DirectoryInfo(subDir);
-                        string folderName = Path.GetFileName(folderPath);
+            //using (SqlConnection connection = new SqlConnection(ConnectionString))
+            //{
+            //    connection.Open();
+            //    foreach (string subDir in subDirectories)
+            //    {
+            //        try
+            //        {
+            //            DirectoryInfo subDirInfo = new DirectoryInfo(subDir);
+            //            string folderName = Path.GetFileName(folderPath);
 
-                        string[] jpgFiles = Directory.GetFiles(subDir, "a.jpg");
-                        string[] jpegFiles = Directory.GetFiles(subDir, "a.jpeg");
-                        string[] otherJpgFiles = Directory.GetFiles(subDir, "*.jpg");
-                        string[] otherJpegFiles = Directory.GetFiles(subDir, "*.jpeg");
-                        string[] otherPngFiles = Directory.GetFiles(subDir, "*.png");
-                        string[] otherBmpFiles = Directory.GetFiles(subDir, "*.bmp");
-                        string[] otherGifFiles = Directory.GetFiles(subDir, "*.gif");
+            //            string[] jpgFiles = Directory.GetFiles(subDir, "a.jpg");
+            //            string[] jpegFiles = Directory.GetFiles(subDir, "a.jpeg");
+            //            string[] otherJpgFiles = Directory.GetFiles(subDir, "*.jpg");
+            //            string[] otherJpegFiles = Directory.GetFiles(subDir, "*.jpeg");
+            //            string[] otherPngFiles = Directory.GetFiles(subDir, "*.png");
+            //            string[] otherBmpFiles = Directory.GetFiles(subDir, "*.bmp");
+            //            string[] otherGifFiles = Directory.GetFiles(subDir, "*.gif");
 
-                        byte[]? photoData = null;
-                        DateTime? creationDate = DateTime.UtcNow;
-                        if (jpgFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(jpgFiles[0]);
-                            photoData = ResizeImage(jpgFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(jpgFiles[0]);
-                        }
-                        else if (jpegFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(otherJpgFiles[0]);
-                            photoData = ResizeImage(jpegFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(jpegFiles[0]);
-                        }
-                        else if (otherJpgFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(otherJpgFiles[0]);
-                            photoData = ResizeImage(otherJpgFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(otherJpgFiles[0]);
-                        }
-                        else if (otherJpegFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(otherJpgFiles[0]);
-                            photoData = ResizeImage(otherJpegFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(otherJpegFiles[0]);
-                        }
-                        else if (otherPngFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(otherPngFiles[0]);
-                            photoData = ResizeImage(otherPngFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(otherPngFiles[0]);
-                        }
-                        else if (otherBmpFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(otherPngFiles[0]);
-                            photoData = ResizeImage(otherBmpFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(otherBmpFiles[0]);
-                        }
-                        else if (otherGifFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(otherPngFiles[0]);
-                            photoData = ResizeImage(otherGifFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(otherGifFiles[0]);
-                        }
+            //            byte[]? photoData = null;
+            //            DateTime? creationDate = DateTime.UtcNow;
+            //            if (jpgFiles.Length > 0)
+            //            {
+            //                //photoData = File.ReadAllBytes(jpgFiles[0]);
+            //                photoData = ResizeImage(jpgFiles[0], 118, 118);
+            //                creationDate = File.GetCreationTimeUtc(jpgFiles[0]);
+            //            }
+            //            else if (jpegFiles.Length > 0)
+            //            {
+            //                //photoData = File.ReadAllBytes(otherJpgFiles[0]);
+            //                photoData = ResizeImage(jpegFiles[0], 118, 118);
+            //                creationDate = File.GetCreationTimeUtc(jpegFiles[0]);
+            //            }
+            //            else if (otherJpgFiles.Length > 0)
+            //            {
+            //                //photoData = File.ReadAllBytes(otherJpgFiles[0]);
+            //                photoData = ResizeImage(otherJpgFiles[0], 118, 118);
+            //                creationDate = File.GetCreationTimeUtc(otherJpgFiles[0]);
+            //            }
+            //            else if (otherJpegFiles.Length > 0)
+            //            {
+            //                //photoData = File.ReadAllBytes(otherJpgFiles[0]);
+            //                photoData = ResizeImage(otherJpegFiles[0], 118, 118);
+            //                creationDate = File.GetCreationTimeUtc(otherJpegFiles[0]);
+            //            }
+            //            else if (otherPngFiles.Length > 0)
+            //            {
+            //                //photoData = File.ReadAllBytes(otherPngFiles[0]);
+            //                photoData = ResizeImage(otherPngFiles[0], 118, 118);
+            //                creationDate = File.GetCreationTimeUtc(otherPngFiles[0]);
+            //            }
+            //            else if (otherBmpFiles.Length > 0)
+            //            {
+            //                //photoData = File.ReadAllBytes(otherPngFiles[0]);
+            //                photoData = ResizeImage(otherBmpFiles[0], 118, 118);
+            //                creationDate = File.GetCreationTimeUtc(otherBmpFiles[0]);
+            //            }
+            //            else if (otherGifFiles.Length > 0)
+            //            {
+            //                //photoData = File.ReadAllBytes(otherPngFiles[0]);
+            //                photoData = ResizeImage(otherGifFiles[0], 118, 118);
+            //                creationDate = File.GetCreationTimeUtc(otherGifFiles[0]);
+            //            }
 
-                        string fullName = subDirInfo.Name;
-                        errorFullName = subDirInfo.Name;
+            //            string fullName = subDirInfo.Name;
+            //            errorFullName = subDirInfo.Name;
 
-                        string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
+            //            string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
 
-                        using (SqlCommand checkCommand = new SqlCommand(checkDuplicateQuery, connection))
-                        {
-                            checkCommand.Parameters.AddWithValue("@fullname", fullName);
-                            checkCommand.Parameters.AddWithValue("@foldername", folderName);
+            //            using (SqlCommand checkCommand = new SqlCommand(checkDuplicateQuery, connection))
+            //            {
+            //                checkCommand.Parameters.AddWithValue("@fullname", fullName);
+            //                checkCommand.Parameters.AddWithValue("@foldername", folderName);
 
-                            long existingRecordsCount = (long)checkCommand.ExecuteScalar()!;
+            //                long existingRecordsCount = (long)checkCommand.ExecuteScalar()!;
 
-                            if (existingRecordsCount == 0)
-                            {
-                                string insertQuery = "INSERT INTO customers (fullname, foldername, photodata, createdate, insertdate) VALUES (@fullname, @foldername, @photodata, @createdate, @insertdate)";
+            //                if (existingRecordsCount == 0)
+            //                {
+            //                    string insertQuery = "INSERT INTO customers (fullname, foldername, photodata, createdate, insertdate) VALUES (@fullname, @foldername, @photodata, @createdate, @insertdate)";
 
-                                using (SqlCommand command = new SqlCommand(insertQuery, connection))
-                                {
-                                    command.Parameters.AddWithValue("@fullname", fullName);
-                                    command.Parameters.AddWithValue("@foldername", folderName);
-                                    command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
-                                    command.Parameters.AddWithValue("@createdate", creationDate);
-                                    command.Parameters.AddWithValue("@insertdate", DateTime.UtcNow);
+            //                    using (SqlCommand command = new SqlCommand(insertQuery, connection))
+            //                    {
+            //                        command.Parameters.AddWithValue("@fullname", fullName);
+            //                        command.Parameters.AddWithValue("@foldername", folderName);
+            //                        command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
+            //                        command.Parameters.AddWithValue("@createdate", creationDate);
+            //                        command.Parameters.AddWithValue("@insertdate", DateTime.UtcNow);
 
 
 
-                                    int rowsAffected = command.ExecuteNonQuery();
+            //                        int rowsAffected = command.ExecuteNonQuery();
 
-                                    if (rowsAffected > 0)
-                                    {
-                                        recordStatus.successfulInserts++;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                recordStatus.duplicateRecords.Add(fullName);
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // Hata alınan fullname'i listeye ekle
-                        recordStatus.errorFullNames.Add($"{errorFullName}: {ex.Message}");
-                    }
-                }
-            }
+            //                        if (rowsAffected > 0)
+            //                        {
+            //                            recordStatus.successfulInserts++;
+            //                        }
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    recordStatus.duplicateRecords.Add(fullName);
+            //                }
+            //            }
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            // Hata alınan fullname'i listeye ekle
+            //            recordStatus.errorFullNames.Add($"{errorFullName}: {ex.Message}");
+            //        }
+            //    }
+            //}
             #endregion
 
 
@@ -1302,51 +1333,17 @@ namespace PhotoEmin
             string searchText = txtFullName.Text.Trim().ToLowerInvariant(); // Küçük harfe dönüştür
 
             #region postgresql
-            //using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
-            //{
-            //    connection.Open();
-
-            //    string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText";
-
-            //    using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
-            //    {
-            //        command.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
-
-            //        using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
-            //        {
-            //            DataTable dataTable = new DataTable();
-            //            adapter.Fill(dataTable);
-
-            //            // Bind the DataTable to the DataGridView
-            //            dataGridRecords.DataSource = dataTable;
-
-            //            // Hide the id column
-            //            dataGridRecords.Columns["id"].Visible = false;
-
-            //            // Set the header text of the fullname column
-            //            dataGridRecords.Columns["Ad Soyad"].HeaderText = "Ad Soyad:";
-            //            lblTotalRecord.Text = dataGridRecords.RowCount.ToString();
-            //            if (dataGridRecords.RowCount == 0)
-            //            {
-            //                pictureBoxChosenPhoto.Image = null;
-            //            }
-            //        }
-            //    }
-            //}
-            #endregion
-
-            #region msSql
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
             {
                 connection.Open();
 
                 string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText";
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
 
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
                     {
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
@@ -1368,6 +1365,40 @@ namespace PhotoEmin
                 }
             }
             #endregion
+
+            #region msSql
+            //using (SqlConnection connection = new SqlConnection(ConnectionString))
+            //{
+            //    connection.Open();
+
+            //    string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText";
+
+            //    using (SqlCommand command = new SqlCommand(sql, connection))
+            //    {
+            //        command.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
+
+            //        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+            //        {
+            //            DataTable dataTable = new DataTable();
+            //            adapter.Fill(dataTable);
+
+            //            // Bind the DataTable to the DataGridView
+            //            dataGridRecords.DataSource = dataTable;
+
+            //            // Hide the id column
+            //            dataGridRecords.Columns["id"].Visible = false;
+
+            //            // Set the header text of the fullname column
+            //            dataGridRecords.Columns["Ad Soyad"].HeaderText = "Ad Soyad:";
+            //            lblTotalRecord.Text = dataGridRecords.RowCount.ToString();
+            //            if (dataGridRecords.RowCount == 0)
+            //            {
+            //                pictureBoxChosenPhoto.Image = null;
+            //            }
+            //        }
+            //    }
+            //}
+            #endregion
         }
 
         private void dataGridRecords_SelectionChanged(object sender, EventArgs e)
@@ -1378,67 +1409,17 @@ namespace PhotoEmin
                 if (int.TryParse(dataGridRecords.CurrentRow.Cells["id"].Value.ToString(), out selectedId))
                 {
                     #region postgresql
-                    //using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
-                    //{
-                    //    connection.Open();
-
-                    //    string sql = "SELECT foldername, photodata FROM customers WHERE id = @id";
-
-                    //    using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
-                    //    {
-                    //        command.Parameters.AddWithValue("@id", selectedId);
-
-                    //        using (NpgsqlDataReader reader = command.ExecuteReader())
-                    //        {
-                    //            if (reader.Read())
-                    //            {
-                    //                txtDataUpperFileName.Text = reader["foldername"].ToString();
-
-                    //                // Check if photodata is not null
-                    //                if (!reader.IsDBNull(reader.GetOrdinal("photodata")))
-                    //                {
-                    //                    byte[] imageData = (byte[])reader["photodata"];
-                    //                    Image image;
-                    //                    using (var ms = new System.IO.MemoryStream(imageData))
-                    //                    {
-                    //                        try
-                    //                        {
-                    //                            image = Image.FromStream(ms);
-                    //                            pictureBoxChosenPhoto.SizeMode = PictureBoxSizeMode.Zoom; // PictureBox'ın SizeMode özelliğini "Zoom" olarak ayarla
-                    //                            pictureBoxChosenPhoto.Image = image;
-                    //                        }
-                    //                        catch (Exception)
-                    //                        {
-                    //                            pictureBoxChosenPhoto.Image = null;
-                    //                        }
-                    //                    }
-                    //                }
-                    //                else
-                    //                {
-                    //                    pictureBoxChosenPhoto.Image = null;
-                    //                }
-                    //            }
-                    //            else
-                    //            {
-                    //                pictureBoxChosenPhoto.Image = null;
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                    #endregion
-
-                    #region msSql
-                    using (SqlConnection connection = new SqlConnection(ConnectionString))
+                    using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
                     {
                         connection.Open();
 
                         string sql = "SELECT foldername, photodata FROM customers WHERE id = @id";
 
-                        using (SqlCommand command = new SqlCommand(sql, connection))
+                        using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
                         {
                             command.Parameters.AddWithValue("@id", selectedId);
 
-                            using (SqlDataReader reader = command.ExecuteReader())
+                            using (NpgsqlDataReader reader = command.ExecuteReader())
                             {
                                 if (reader.Read())
                                 {
@@ -1475,6 +1456,56 @@ namespace PhotoEmin
                             }
                         }
                     }
+                    #endregion
+
+                    #region msSql
+                    //using (SqlConnection connection = new SqlConnection(ConnectionString))
+                    //{
+                    //    connection.Open();
+
+                    //    string sql = "SELECT foldername, photodata FROM customers WHERE id = @id";
+
+                    //    using (SqlCommand command = new SqlCommand(sql, connection))
+                    //    {
+                    //        command.Parameters.AddWithValue("@id", selectedId);
+
+                    //        using (SqlDataReader reader = command.ExecuteReader())
+                    //        {
+                    //            if (reader.Read())
+                    //            {
+                    //                txtDataUpperFileName.Text = reader["foldername"].ToString();
+
+                    //                // Check if photodata is not null
+                    //                if (!reader.IsDBNull(reader.GetOrdinal("photodata")))
+                    //                {
+                    //                    byte[] imageData = (byte[])reader["photodata"];
+                    //                    Image image;
+                    //                    using (var ms = new System.IO.MemoryStream(imageData))
+                    //                    {
+                    //                        try
+                    //                        {
+                    //                            image = Image.FromStream(ms);
+                    //                            pictureBoxChosenPhoto.SizeMode = PictureBoxSizeMode.Zoom; // PictureBox'ın SizeMode özelliğini "Zoom" olarak ayarla
+                    //                            pictureBoxChosenPhoto.Image = image;
+                    //                        }
+                    //                        catch (Exception)
+                    //                        {
+                    //                            pictureBoxChosenPhoto.Image = null;
+                    //                        }
+                    //                    }
+                    //                }
+                    //                else
+                    //                {
+                    //                    pictureBoxChosenPhoto.Image = null;
+                    //                }
+                    //            }
+                    //            else
+                    //            {
+                    //                pictureBoxChosenPhoto.Image = null;
+                    //            }
+                    //        }
+                    //    }
+                    //}
                     #endregion
                 }
                 else
@@ -1566,42 +1597,14 @@ namespace PhotoEmin
                 await Task.Delay(2000);
 
                 #region postgresql
-                //using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
-                //{
-                //    connection.Open();
-
-                //    string selectQuery = "SELECT fullname, foldername, photodata, createdate FROM customers";
-
-                //    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
-                //    using (NpgsqlDataReader reader = command.ExecuteReader())
-                //    {
-                //        while (reader.Read())
-                //        {
-                //            string fullName = !reader.IsDBNull(0) ? reader.GetString(0) : string.Empty;
-                //            string folderName = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty;
-                //            byte[]? photoData = !reader.IsDBNull(reader.GetOrdinal("photodata")) ? (byte[])reader["photodata"] : null;
-                //            DateTime createDate = !reader.IsDBNull(reader.GetOrdinal("createdate")) ? reader.GetDateTime(reader.GetOrdinal("createdate")) : DateTime.UtcNow;
-
-
-                //            string fileName = $"{fullName}_{folderName}.jpg";
-                //            string filePath = Path.Combine(folderPath, fileName);
-
-                //            // Veriyi JPEG dosyasına dönüştür ve kaydet
-                //            SavePhotoDataAsJPEG(photoData, filePath, createDate);
-                //        }
-                //    }
-                //}
-                #endregion
-
-                #region msSql
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
                 {
                     connection.Open();
 
                     string selectQuery = "SELECT fullname, foldername, photodata, createdate FROM customers";
 
-                    using (SqlCommand command = new SqlCommand(selectQuery, connection))
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -1619,6 +1622,34 @@ namespace PhotoEmin
                         }
                     }
                 }
+                #endregion
+
+                #region msSql
+                //using (SqlConnection connection = new SqlConnection(ConnectionString))
+                //{
+                //    connection.Open();
+
+                //    string selectQuery = "SELECT fullname, foldername, photodata, createdate FROM customers";
+
+                //    using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                //    using (SqlDataReader reader = command.ExecuteReader())
+                //    {
+                //        while (reader.Read())
+                //        {
+                //            string fullName = !reader.IsDBNull(0) ? reader.GetString(0) : string.Empty;
+                //            string folderName = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty;
+                //            byte[]? photoData = !reader.IsDBNull(reader.GetOrdinal("photodata")) ? (byte[])reader["photodata"] : null;
+                //            DateTime createDate = !reader.IsDBNull(reader.GetOrdinal("createdate")) ? reader.GetDateTime(reader.GetOrdinal("createdate")) : DateTime.UtcNow;
+
+
+                //            string fileName = $"{fullName}_{folderName}.jpg";
+                //            string filePath = Path.Combine(folderPath, fileName);
+
+                //            // Veriyi JPEG dosyasına dönüştür ve kaydet
+                //            SavePhotoDataAsJPEG(photoData, filePath, createDate);
+                //        }
+                //    }
+                //}
                 #endregion
 
                 SetLoading(false, false, false, true);
@@ -1692,125 +1723,8 @@ namespace PhotoEmin
             int successfulInserts = 0;
             int totalInserts = 0;
 
-            #region postgres
-            //using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
-            //{
-            //    connection.Open();
-
-            //    string[] filesAndFolders = Directory.GetFileSystemEntries(folderPath);
-
-            //    foreach (string fileOrFolder in filesAndFolders)
-            //    {
-            //        totalInserts++;
-            //        string fullName = "";
-            //        string folderName = "";
-            //        string[] nameParts;
-            //        byte[]? photoData = null;
-            //        DateTime creationDate = DateTime.UtcNow;
-            //        DateTime insertdate = DateTime.UtcNow;
-
-
-            //        if (Directory.Exists(fileOrFolder))
-            //        {
-            //            // Klasör işlemleri
-            //            folderName = Path.GetFileName(fileOrFolder);
-            //            if (!folderName.Contains("_"))
-            //            {
-            //                wrongFormatRecords.Add(folderName);
-            //                continue;
-            //            }
-            //            notImages.Add(folderName);
-
-            //            nameParts = folderName.Split('_');
-            //            errorFullName = errorFullName = string.Join("_", nameParts);
-            //            fullName = nameParts[0];
-            //            folderName = nameParts[1];
-            //            creationDate = Directory.GetCreationTimeUtc(fileOrFolder).Date;
-            //        }
-            //        else if (File.Exists(fileOrFolder))
-            //        {
-            //            //Dosya işlemleri
-            //            string fileName = Path.GetFileNameWithoutExtension(fileOrFolder);
-
-            //            // Dosya adının uygun formatta olup olmadığını kontrol et
-            //            if (!fileName.Contains("_"))
-            //            {
-            //                wrongFormatRecords.Add(fileName);
-            //                continue;
-            //            }
-
-            //            nameParts = fileName.Split('_');
-            //            errorFullName = errorFullName = string.Join("_", nameParts);
-            //            fullName = nameParts[0];
-            //            folderName = nameParts[1];
-            //            creationDate = File.GetCreationTimeUtc(fileOrFolder);
-
-            //            string fileExtension = Path.GetExtension(fileOrFolder);
-
-            //            if (IsImageFile(fileExtension))
-            //            {
-            //                photoData = File.ReadAllBytes(fileOrFolder);
-            //            }
-            //            else
-            //            {
-            //                notImages.Add(fileName);
-            //                continue;
-            //            }
-
-            //        }
-            //        try
-            //        {
-            //            //Kayıt öncesi veriyi kontrol et:
-            //            string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
-            //            using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkDuplicateQuery, connection))
-            //            {
-            //                checkCommand.Parameters.AddWithValue("@fullname", fullName);
-            //                checkCommand.Parameters.AddWithValue("@foldername", folderName);
-
-            //                long existingRecordsCount = (long)checkCommand.ExecuteScalar()!;
-
-            //                if (existingRecordsCount == 0)
-            //                {
-            //                    // Veritabanına kaydet
-            //                    string insertQuery = "INSERT INTO customers (fullname, foldername, photodata, createdate, insertdate) VALUES (@fullname, @foldername, @photodata, @createdate, @insertdate)";
-
-            //                    using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
-            //                    {
-            //                        command.Parameters.AddWithValue("@fullname", NpgsqlDbType.Text, fullName);
-            //                        command.Parameters.AddWithValue("@foldername", NpgsqlDbType.Text, folderName);
-            //                        command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
-            //                        command.Parameters.AddWithValue("@createdate", NpgsqlDbType.TimestampTz, creationDate);
-            //                        command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.TimestampTz, DateTime.UtcNow);
-
-            //                        int rowsAffected = command.ExecuteNonQuery();
-
-            //                        if (rowsAffected > 0)
-            //                        {
-            //                            successfulInserts++;
-            //                        }
-            //                    }
-            //                }
-            //                else
-            //                {
-            //                    duplicateRecords.Add(fullName);
-            //                }
-            //            }
-
-
-
-
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            // Hata alınan fullname'i listeye ekle
-            //            errorFullNames.Add($"{errorFullName}: {ex.Message}");
-            //        }
-            //    }
-            //} 
-            #endregion
-
-            #region msSql
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            #region postgresql
+            using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
             {
                 connection.Open();
 
@@ -1879,7 +1793,7 @@ namespace PhotoEmin
                     {
                         //Kayıt öncesi veriyi kontrol et:
                         string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
-                        using (SqlCommand checkCommand = new SqlCommand(checkDuplicateQuery, connection))
+                        using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkDuplicateQuery, connection))
                         {
                             checkCommand.Parameters.AddWithValue("@fullname", fullName);
                             checkCommand.Parameters.AddWithValue("@foldername", folderName);
@@ -1891,13 +1805,13 @@ namespace PhotoEmin
                                 // Veritabanına kaydet
                                 string insertQuery = "INSERT INTO customers (fullname, foldername, photodata, createdate, insertdate) VALUES (@fullname, @foldername, @photodata, @createdate, @insertdate)";
 
-                                using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                                using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
                                 {
-                                    command.Parameters.AddWithValue("@fullname", fullName);
-                                    command.Parameters.AddWithValue("@foldername", folderName);
+                                    command.Parameters.AddWithValue("@fullname", NpgsqlDbType.Text, fullName);
+                                    command.Parameters.AddWithValue("@foldername", NpgsqlDbType.Text, folderName);
                                     command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
-                                    command.Parameters.AddWithValue("@createdate", creationDate);
-                                    command.Parameters.AddWithValue("@insertdate", insertdate);
+                                    command.Parameters.AddWithValue("@createdate", NpgsqlDbType.TimestampTz, creationDate);
+                                    command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.TimestampTz, DateTime.UtcNow);
 
                                     int rowsAffected = command.ExecuteNonQuery();
 
@@ -1924,6 +1838,123 @@ namespace PhotoEmin
                     }
                 }
             }
+            #endregion
+
+            #region msSql
+            //using (SqlConnection connection = new SqlConnection(ConnectionString))
+            //{
+            //    connection.Open();
+
+            //    string[] filesAndFolders = Directory.GetFileSystemEntries(folderPath);
+
+            //    foreach (string fileOrFolder in filesAndFolders)
+            //    {
+            //        totalInserts++;
+            //        string fullName = "";
+            //        string folderName = "";
+            //        string[] nameParts;
+            //        byte[]? photoData = null;
+            //        DateTime creationDate = DateTime.UtcNow;
+            //        DateTime insertdate = DateTime.UtcNow;
+
+
+            //        if (Directory.Exists(fileOrFolder))
+            //        {
+            //            // Klasör işlemleri
+            //            folderName = Path.GetFileName(fileOrFolder);
+            //            if (!folderName.Contains("_"))
+            //            {
+            //                wrongFormatRecords.Add(folderName);
+            //                continue;
+            //            }
+            //            notImages.Add(folderName);
+
+            //            nameParts = folderName.Split('_');
+            //            errorFullName = errorFullName = string.Join("_", nameParts);
+            //            fullName = nameParts[0];
+            //            folderName = nameParts[1];
+            //            creationDate = Directory.GetCreationTimeUtc(fileOrFolder).Date;
+            //        }
+            //        else if (File.Exists(fileOrFolder))
+            //        {
+            //            //Dosya işlemleri
+            //            string fileName = Path.GetFileNameWithoutExtension(fileOrFolder);
+
+            //            // Dosya adının uygun formatta olup olmadığını kontrol et
+            //            if (!fileName.Contains("_"))
+            //            {
+            //                wrongFormatRecords.Add(fileName);
+            //                continue;
+            //            }
+
+            //            nameParts = fileName.Split('_');
+            //            errorFullName = errorFullName = string.Join("_", nameParts);
+            //            fullName = nameParts[0];
+            //            folderName = nameParts[1];
+            //            creationDate = File.GetCreationTimeUtc(fileOrFolder);
+
+            //            string fileExtension = Path.GetExtension(fileOrFolder);
+
+            //            if (IsImageFile(fileExtension))
+            //            {
+            //                photoData = File.ReadAllBytes(fileOrFolder);
+            //            }
+            //            else
+            //            {
+            //                notImages.Add(fileName);
+            //                continue;
+            //            }
+
+            //        }
+            //        try
+            //        {
+            //            //Kayıt öncesi veriyi kontrol et:
+            //            string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
+            //            using (SqlCommand checkCommand = new SqlCommand(checkDuplicateQuery, connection))
+            //            {
+            //                checkCommand.Parameters.AddWithValue("@fullname", fullName);
+            //                checkCommand.Parameters.AddWithValue("@foldername", folderName);
+
+            //                long existingRecordsCount = (long)checkCommand.ExecuteScalar()!;
+
+            //                if (existingRecordsCount == 0)
+            //                {
+            //                    // Veritabanına kaydet
+            //                    string insertQuery = "INSERT INTO customers (fullname, foldername, photodata, createdate, insertdate) VALUES (@fullname, @foldername, @photodata, @createdate, @insertdate)";
+
+            //                    using (SqlCommand command = new SqlCommand(insertQuery, connection))
+            //                    {
+            //                        command.Parameters.AddWithValue("@fullname", fullName);
+            //                        command.Parameters.AddWithValue("@foldername", folderName);
+            //                        command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
+            //                        command.Parameters.AddWithValue("@createdate", creationDate);
+            //                        command.Parameters.AddWithValue("@insertdate", insertdate);
+
+            //                        int rowsAffected = command.ExecuteNonQuery();
+
+            //                        if (rowsAffected > 0)
+            //                        {
+            //                            successfulInserts++;
+            //                        }
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    duplicateRecords.Add(fullName);
+            //                }
+            //            }
+
+
+
+
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            // Hata alınan fullname'i listeye ekle
+            //            errorFullNames.Add($"{errorFullName}: {ex.Message}");
+            //        }
+            //    }
+            //}
             #endregion
 
             SetLoading(false, false, false, false, true);
@@ -1973,34 +2004,34 @@ namespace PhotoEmin
                         try
                         {
 
-                            #region postgres
-                            //using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
-                            //{
-                            //    connection.Open();
-                            //    string updateSql = "UPDATE customers SET fullname = @fullname WHERE id = @id";
-                            //    using (NpgsqlCommand command = new NpgsqlCommand(updateSql, connection))
-                            //    {
-                            //        command.Parameters.AddWithValue("@fullname", selectedFullName);
-                            //        command.Parameters.AddWithValue("@id", selectedRowId);
-
-                            //        command.ExecuteNonQuery();
-                            //    }
-                            //}
-                            #endregion
-
-                            #region msSql
-                            using (SqlConnection connection = new SqlConnection(ConnectionString))
+                            #region postgresql
+                            using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
                             {
                                 connection.Open();
                                 string updateSql = "UPDATE customers SET fullname = @fullname WHERE id = @id";
-                                using (SqlCommand command = new SqlCommand(updateSql, connection))
+                                using (NpgsqlCommand command = new NpgsqlCommand(updateSql, connection))
                                 {
                                     command.Parameters.AddWithValue("@fullname", selectedFullName);
                                     command.Parameters.AddWithValue("@id", selectedRowId);
 
                                     command.ExecuteNonQuery();
                                 }
-                            } 
+                            }
+                            #endregion
+
+                            #region msSql
+                            //using (SqlConnection connection = new SqlConnection(ConnectionString))
+                            //{
+                            //    connection.Open();
+                            //    string updateSql = "UPDATE customers SET fullname = @fullname WHERE id = @id";
+                            //    using (SqlCommand command = new SqlCommand(updateSql, connection))
+                            //    {
+                            //        command.Parameters.AddWithValue("@fullname", selectedFullName);
+                            //        command.Parameters.AddWithValue("@id", selectedRowId);
+
+                            //        command.ExecuteNonQuery();
+                            //    }
+                            //} 
                             #endregion
 
                             MessageBox.Show("Kayıt başarıyla güncellendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -2032,35 +2063,35 @@ namespace PhotoEmin
                         try
                         {
                             #region postgresql
-                            //using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+                            using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+                            {
+                                connection.Open();
+
+                                string deleteSql = "DELETE FROM customers WHERE id = @id";
+
+                                using (NpgsqlCommand command = new NpgsqlCommand(deleteSql, connection))
+                                {
+                                    command.Parameters.AddWithValue("@id", selectedRowId);
+
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+                            #endregion
+
+                            #region msSql
+                            //using (SqlConnection connection = new SqlConnection(ConnectionString))
                             //{
                             //    connection.Open();
 
                             //    string deleteSql = "DELETE FROM customers WHERE id = @id";
 
-                            //    using (NpgsqlCommand command = new NpgsqlCommand(deleteSql, connection))
+                            //    using (SqlCommand command = new SqlCommand(deleteSql, connection))
                             //    {
                             //        command.Parameters.AddWithValue("@id", selectedRowId);
 
                             //        command.ExecuteNonQuery();
                             //    }
                             //} 
-                            #endregion
-
-                            #region msSql
-                            using (SqlConnection connection = new SqlConnection(ConnectionString))
-                            {
-                                connection.Open();
-
-                                string deleteSql = "DELETE FROM customers WHERE id = @id";
-
-                                using (SqlCommand command = new SqlCommand(deleteSql, connection))
-                                {
-                                    command.Parameters.AddWithValue("@id", selectedRowId);
-
-                                    command.ExecuteNonQuery();
-                                }
-                            } 
                             #endregion
 
                             MessageBox.Show("Kayıt başarıyla silindi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
