@@ -123,6 +123,26 @@ namespace PhotoEmin.Extensions {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap btnClearDB {
+            get {
+                object obj = ResourceManager.GetObject("btnClearDB", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnCreateDB {
+            get {
+                object obj = ResourceManager.GetObject("btnCreateDB", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btnDB {
             get {
                 object obj = ResourceManager.GetObject("btnDB", resourceCulture);
@@ -146,6 +166,16 @@ namespace PhotoEmin.Extensions {
         internal static System.Drawing.Bitmap btnDeleteRecord {
             get {
                 object obj = ResourceManager.GetObject("btnDeleteRecord", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnDownloadDB {
+            get {
+                object obj = ResourceManager.GetObject("btnDownloadDB", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -293,9 +323,29 @@ namespace PhotoEmin.Extensions {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap btnUpdateDB {
+            get {
+                object obj = ResourceManager.GetObject("btnUpdateDB", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btnUpdateRecord {
             get {
                 object obj = ResourceManager.GetObject("btnUpdateRecord", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnUploadDB {
+            get {
+                object obj = ResourceManager.GetObject("btnUploadDB", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

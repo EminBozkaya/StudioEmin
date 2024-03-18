@@ -217,4 +217,19 @@
   <data name="btnUpperFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btnUpperFolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btnClearDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnClearDB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnCreateDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnCreateDB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnUpdateDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnUpdateDB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnDownloadDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnDownloadDB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnUploadDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnUploadDB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

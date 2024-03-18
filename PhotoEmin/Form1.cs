@@ -1124,7 +1124,7 @@ namespace PhotoEmin
                             creationDate = File.GetCreationTimeUtc(otherGifFiles[0]);
                         }
 
-                        string fullName = subDirInfo.Name;
+                        string fullName = subDirInfo.Name.ToUpper(new CultureInfo("tr-TR"));
                         errorFullName = subDirInfo.Name;
 
                         string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
@@ -1237,7 +1237,7 @@ namespace PhotoEmin
             //                creationDate = File.GetCreationTimeUtc(otherGifFiles[0]);
             //            }
 
-            //            string fullName = subDirInfo.Name;
+            //            string fullName = subDirInfo.Name.ToUpper(new CultureInfo("tr-TR"));
             //            errorFullName = subDirInfo.Name;
 
             //            string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
@@ -1330,7 +1330,7 @@ namespace PhotoEmin
         private void txtFullName_TextChanged(object sender, EventArgs e)
         {
 
-            string searchText = txtFullName.Text.Trim().ToLowerInvariant(); // Küçük harfe dönüştür
+            string searchText = txtFullName.Text.Trim().ToUpper(new CultureInfo("tr-TR")); // Küçük harfe dönüştür
 
             #region postgresql
             using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
@@ -1754,7 +1754,7 @@ namespace PhotoEmin
 
                         nameParts = folderName.Split('_');
                         errorFullName = errorFullName = string.Join("_", nameParts);
-                        fullName = nameParts[0];
+                        fullName = nameParts[0].ToUpper(new CultureInfo("tr-TR"));
                         folderName = nameParts[1];
                         creationDate = Directory.GetCreationTimeUtc(fileOrFolder).Date;
                     }
@@ -1772,7 +1772,7 @@ namespace PhotoEmin
 
                         nameParts = fileName.Split('_');
                         errorFullName = errorFullName = string.Join("_", nameParts);
-                        fullName = nameParts[0];
+                        fullName = nameParts[0].ToUpper(new CultureInfo("tr-TR"));
                         folderName = nameParts[1];
                         creationDate = File.GetCreationTimeUtc(fileOrFolder);
 
@@ -1871,7 +1871,7 @@ namespace PhotoEmin
 
             //            nameParts = folderName.Split('_');
             //            errorFullName = errorFullName = string.Join("_", nameParts);
-            //            fullName = nameParts[0];
+            //            fullName = nameParts[0].ToUpper(new CultureInfo("tr-TR"));
             //            folderName = nameParts[1];
             //            creationDate = Directory.GetCreationTimeUtc(fileOrFolder).Date;
             //        }
@@ -1889,7 +1889,7 @@ namespace PhotoEmin
 
             //            nameParts = fileName.Split('_');
             //            errorFullName = errorFullName = string.Join("_", nameParts);
-            //            fullName = nameParts[0];
+            //            fullName = nameParts[0].ToUpper(new CultureInfo("tr-TR"));
             //            folderName = nameParts[1];
             //            creationDate = File.GetCreationTimeUtc(fileOrFolder);
 

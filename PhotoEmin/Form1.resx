@@ -153,4 +153,12 @@
         /wD///8A
 </value>
   </data>
+  <data name="richTextBox4.Text" xml:space="preserve">
+    <value>- Bu işlem mevcut veri tabanını ve içindeki dataları GERİ GETİRİLEMEYECEK ŞEKİLDE sistemden SİLECEKTİR!!!!!
+- Bu işlemden sonra programı kullanabilmek için tekrar "Veri Tabanını Oluştur" işlemini gerçekleştirmelisiniz ve varsa yedeğinizi "Yedekten Veri Tabanını Oluştur" işlemiyle yükleyebilirsiniz!</value>
+  </data>
+  <data name="richTextBox3.Text" xml:space="preserve">
+    <value>Bu işlem için, daha öncesinden bir yedek olşturmuş ve bu yedeği seçmiş olmamız gerekmektedir.
+**&gt;&gt;&gt;&gt;Bu işem dikkatli yapılmalıdır, çünkü mevcut veri tabanı silinip, seçilmiş olan yedek datalar veri tabanına aktarılacaktır.</value>
+  </data>
 </root>
