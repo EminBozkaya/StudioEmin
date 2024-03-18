@@ -123,6 +123,14 @@
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>36</value>
   </metadata>
+  <data name="richTextBox4.Text" xml:space="preserve">
+    <value>- Bu işlem mevcut veri tabanını ve içindeki dataları GERİ GETİRİLEMEYECEK ŞEKİLDE sistemden SİLECEKTİR!!!!!
+- Bu işlemden sonra programı kullanabilmek için tekrar "Veri Tabanını Oluştur" işlemini gerçekleştirmelisiniz ve varsa yedeğinizi "Yedekten Veri Tabanını Oluştur" işlemiyle yükleyebilirsiniz!</value>
+  </data>
+  <data name="richTextBox3.Text" xml:space="preserve">
+    <value>Bu işlem için, daha öncesinden bir yedek olşturmuş ve bu yedeği seçmiş olmamız gerekmektedir.
+**&gt;&gt;&gt;&gt;Bu işem dikkatli yapılmalıdır, çünkü mevcut veri tabanı silinip, seçilmiş olan yedek datalar veri tabanına aktarılacaktır.</value>
+  </data>
   <metadata name="printDocument1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>177, 17</value>
   </metadata>
@@ -152,13 +160,5 @@
         /wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP//
         /wD///8A
 </value>
-  </data>
-  <data name="richTextBox4.Text" xml:space="preserve">
-    <value>- Bu işlem mevcut veri tabanını ve içindeki dataları GERİ GETİRİLEMEYECEK ŞEKİLDE sistemden SİLECEKTİR!!!!!
-- Bu işlemden sonra programı kullanabilmek için tekrar "Veri Tabanını Oluştur" işlemini gerçekleştirmelisiniz ve varsa yedeğinizi "Yedekten Veri Tabanını Oluştur" işlemiyle yükleyebilirsiniz!</value>
-  </data>
-  <data name="richTextBox3.Text" xml:space="preserve">
-    <value>Bu işlem için, daha öncesinden bir yedek olşturmuş ve bu yedeği seçmiş olmamız gerekmektedir.
-**&gt;&gt;&gt;&gt;Bu işem dikkatli yapılmalıdır, çünkü mevcut veri tabanı silinip, seçilmiş olan yedek datalar veri tabanına aktarılacaktır.</value>
   </data>
 </root>

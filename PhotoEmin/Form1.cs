@@ -13,10 +13,10 @@ namespace PhotoEmin
     public partial class Form1 : Form
     {
         //postgresql
-        private const string ConnectionString = "Server=localhost;Port=5432;Database=dbPhoto;User Id=postgres;Password=postgres;Encoding=UTF8;";
+        private const string ConnectionString = "Server=localhost;Port=5432;Database=dbphoto;User Id=postgres;Password=postgres;Encoding=UTF8;";
 
         //msSql
-        //private const string ConnectionString = "Server=localhost;Database=dbPhoto;User Id=postgres;Password=postgres;";
+        //private const string ConnectionString = "Server=localhost;Database=dbphoto;User Id=postgres;Password=postgres;";
 
         private bool isUpperArchiveBtn = false;
         private Receipt newReceipt = new();
@@ -79,6 +79,7 @@ namespace PhotoEmin
             pnlReceipt.Visible = true;
             pnlFindFolder.Visible = false;
             flowLayoutPanelArchive.Visible = false;
+            pnlDBprocess.Visible = false;
         }
 
         private void flowLayoutPanelArchive_Click(object sender, EventArgs e)
@@ -90,6 +91,7 @@ namespace PhotoEmin
             pnlArchiveContents.Visible = false;
             lblExplanation.Visible = false;
             lblEmpty.Visible = false;
+            pnlDBprocess.Visible = false;
         }
 
         private void btnGoTheFolder_Click(object sender, EventArgs e)
@@ -541,6 +543,7 @@ namespace PhotoEmin
             pnlReceipt.Visible = false;
             pnlFindFolder.Visible = true;
             flowLayoutPanelArchive.Visible = false;
+            pnlDBprocess.Visible = false;
 
             //pnlReceipt.SendToBack();
             //pnlFindFolder.BringToFront();
@@ -936,6 +939,7 @@ namespace PhotoEmin
             pnlAddSpareToArchive.Visible = false;
             pnlMakeSpare.Visible = false;
             listBoxArchive.Items.Clear();
+            pnlDBprocess.Visible = false;
             PopulateDriveComboBox();
         }
 
@@ -951,6 +955,7 @@ namespace PhotoEmin
             pnlAddFoldersToArchive.Visible = true;
             pnlAddSpareToArchive.Visible = false;
             pnlMakeSpare.Visible = false;
+            pnlDBprocess.Visible = false;
         }
 
         private void btnMakeSpare_Click(object sender, EventArgs e)
@@ -965,6 +970,7 @@ namespace PhotoEmin
             pnlAddFoldersToArchive.Visible = false;
             pnlAddSpareToArchive.Visible = false;
             pnlMakeSpare.Visible = true;
+            pnlDBprocess.Visible = false;
         }
 
         private void btnAddSpareToArchive_Click(object sender, EventArgs e)
@@ -979,6 +985,7 @@ namespace PhotoEmin
             pnlAddFoldersToArchive.Visible = false;
             pnlAddSpareToArchive.Visible = true;
             pnlMakeSpare.Visible = false;
+            pnlDBprocess.Visible = false;
         }
 
         private void btnChooseUpperFolder_Click(object sender, EventArgs e)
@@ -2106,6 +2113,180 @@ namespace PhotoEmin
             }
 
 
+        }
+
+        private void btnDB_Click(object sender, EventArgs e)
+        {
+            pnlBorder.Visible = true;
+            pnlReceipt.Visible = false;
+            pnlFindFolder.Visible = false;
+            flowLayoutPanelArchive.Visible = false;
+            pnlDBprocess.Visible = true;
+        }
+
+        private void btnCreateDB_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Check if the database exists
+                if (CheckDatabaseExists())
+                {
+                    MessageBox.Show("Veri tabanı zaten mevcut", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    // Create the database
+                    CreateDatabase();
+                    // Create table
+                    CreateTable();
+                    MessageBox.Show("Veri tabanı başarıyla oluşturuldu", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception)
+            {
+                //MessageBox.Show($"Veri tabanı oluşturulurken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private bool CheckDatabaseExists()
+        {
+            using (var conn = new NpgsqlConnection("Server=localhost;Port=5432;User Id=postgres;Password=postgres;"))
+            {
+                try
+                {
+                    conn.Open();
+                    var cmd = new NpgsqlCommand("SELECT datname FROM pg_catalog.pg_database WHERE datname = 'dbphoto';", conn);
+                    var result = cmd.ExecuteScalar();
+
+                    // Sonucu yazdırın
+                    Debug.WriteLine($"Sonuç: {result}");
+
+                    return result != null;
+                }
+                catch (NpgsqlException ex)
+                {
+                    Console.WriteLine($"Bağlantı hatası: {ex.Message}");
+                    return false;
+                }
+            }
+        }
+
+        private void CreateDatabase()
+        {
+            using (var conn = new NpgsqlConnection("Server=localhost;Port=5432;User Id=postgres;Password=postgres;"))
+            {
+                try
+                {
+                    conn.Open();
+                    var cmd = new NpgsqlCommand("CREATE DATABASE dbphoto WITH OWNER = postgres ENCODING = 'UTF8';", conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (NpgsqlException ex)
+                {
+                    MessageBox.Show($"Veri tabanı oluşturulurken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void CreateTable()
+        {
+            using (var conn = new NpgsqlConnection(ConnectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    var cmd = new NpgsqlCommand("CREATE TABLE customers (id BIGSERIAL PRIMARY KEY, fullname TEXT NOT NULL, foldername TEXT, photodata BYTEA, createdate TIMESTAMP WITH TIME ZONE, insertdate TIMESTAMP WITH TIME ZONE);", conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (NpgsqlException ex)
+                {
+                    MessageBox.Show($"Tablo oluşturulurken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnRemoveDB_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (CheckDatabaseExists())
+                {
+                    RemoveDatabase();
+                    MessageBox.Show("Veri tabanı başarıyla kaldırıldı", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Veri tabanı sistemde mevcut değil", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Veri tabanı kaldırılırken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void RemoveDatabase()
+        {
+            var connectionStringBuilder = new NpgsqlConnectionStringBuilder("Server=localhost;Port=5432;User Id=postgres;Password=postgres;");
+            connectionStringBuilder.Database = "postgres"; // Yönetici veritabanı
+
+            using (var conn = new NpgsqlConnection(connectionStringBuilder.ConnectionString))
+            {
+                conn.Open();
+                var cmd = new NpgsqlCommand("DROP DATABASE IF EXISTS dbphoto;", conn);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        private void btnDownloadDB_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtDownloadDBLocation.Text))
+                {
+                    MessageBox.Show("Lütfen yedeğinizi oluşturmak için bir dosya yolu seçin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string backupFileName = $"backup_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.tar";
+                string backupFilePath = Path.Combine(txtDownloadDBLocation.Text, backupFileName);
+                string backupCommand = $"pg_dump -h localhost -p 5432 -U postgres -F t -f \"{backupFilePath}\" dbphoto";
+
+                using (var process = new Process())
+                {
+                    process.StartInfo.FileName = "cmd.exe";
+                    process.StartInfo.RedirectStandardInput = true;
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.CreateNoWindow = true;
+                    process.StartInfo.UseShellExecute = false;
+
+                    process.Start();
+
+                    process.StandardInput.WriteLine(backupCommand);
+                    process.StandardInput.Flush();
+                    process.StandardInput.Close();
+
+                    process.WaitForExit();
+                }
+
+                MessageBox.Show("Veritabanı yedekleme işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Veritabanı yedekleme işleminde bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnDownloadDBLocation_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new FolderBrowserDialog())
+            {
+                DialogResult result = dialog.ShowDialog();
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+                {
+                    txtDownloadDBLocation.Text = dialog.SelectedPath;
+                }
+            }
         }
     }
 }
