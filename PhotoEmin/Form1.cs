@@ -2233,8 +2233,18 @@ namespace PhotoEmin
             using (var conn = new NpgsqlConnection(connectionStringBuilder.ConnectionString))
             {
                 conn.Open();
-                var cmd = new NpgsqlCommand("DROP DATABASE IF EXISTS dbphoto;", conn);
-                cmd.ExecuteNonQuery();
+
+                // Bağlı tüm işlemleri sonlandır
+                using (var cmdTerminate = new NpgsqlCommand("SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'dbphoto' AND pid <> pg_backend_pid();", conn))
+                {
+                    cmdTerminate.ExecuteNonQuery();
+                }
+
+                // Veritabanını sil
+                using (var cmdDropDB = new NpgsqlCommand("DROP DATABASE IF EXISTS dbphoto;", conn))
+                {
+                    cmdDropDB.ExecuteNonQuery();
+                }
             }
         }
 
@@ -2250,26 +2260,37 @@ namespace PhotoEmin
 
                 string backupFileName = $"backup_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.tar";
                 string backupFilePath = Path.Combine(txtDownloadDBLocation.Text, backupFileName);
-                string backupCommand = $"pg_dump -h localhost -p 5432 -U postgres -F t -f \"{backupFilePath}\" dbphoto";
 
-                using (var process = new Process())
+                string postgreSQLPath = @"C:\Program Files\PostgreSQL";
+
+                // PostgreSQL dizinindeki alt dizinleri kontrol ederek PostgreSQL sürümünü bulun
+                string[] postgreSQLVersions = Directory.GetDirectories(postgreSQLPath);
+                string postgreSQLVersion = "";
+                if (postgreSQLVersions.Any())
                 {
-                    process.StartInfo.FileName = "cmd.exe";
-                    process.StartInfo.RedirectStandardInput = true;
-                    process.StartInfo.RedirectStandardOutput = true;
-                    process.StartInfo.CreateNoWindow = true;
-                    process.StartInfo.UseShellExecute = false;
-
-                    process.Start();
-
-                    process.StandardInput.WriteLine(backupCommand);
-                    process.StandardInput.Flush();
-                    process.StandardInput.Close();
-
-                    process.WaitForExit();
+                    postgreSQLVersion = Path.GetFileName(postgreSQLVersions[0]);
                 }
 
-                MessageBox.Show("Veritabanı yedekleme işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // PostgreSQL sürümüne göre pg_dump dosyasının tam yolunu oluşturun
+                string pgDumpPath = Path.Combine(postgreSQLPath, postgreSQLVersion, "bin", "pg_dump");
+
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = pgDumpPath,
+                    Arguments = $"-h localhost -p 5432 -U postgres -F t -f \"{backupFilePath}\" dbphoto",
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (var process = Process.Start(psi))
+                {
+                    process!.Exited += (s, args) =>
+                    {
+                        
+                    };
+                    MessageBox.Show("Veritabanı yedekleme işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {
