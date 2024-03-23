@@ -25,6 +25,7 @@ namespace PhotoEmin
             InitializeComponent();
             this.Load += (s, e) =>
             {
+
                 // Formun genişlik ve yüksekliğini belirleyin (örneğin, 800x600)
                 this.Width = 1720;
                 this.Height = 975;
@@ -238,19 +239,19 @@ namespace PhotoEmin
             Bitmap logo = Extensions.Resources.makbuzResim;
             int logoWidth = 240;
             int logoHeight = 75;
-            e.Graphics!.DrawImage(logo, new Rectangle((e.PageBounds.Width - logoWidth) / 2, 50, logoWidth, logoHeight));
+            e.Graphics!.DrawImage(logo, new Rectangle((e.PageBounds.Width - logoWidth) / 2, 5, logoWidth, logoHeight));
 
             // Başlık eklemek
             Font titleFont = new Font("Arial", 10, FontStyle.Bold);
             string titleText = "www.studyoemin.com";
             SizeF titleSize = e.Graphics.MeasureString(titleText, titleFont);
-            e.Graphics.DrawString(titleText, titleFont, Brushes.Black, new PointF((e.PageBounds.Width - titleSize.Width) / 2, 50 + logoHeight));
+            e.Graphics.DrawString(titleText, titleFont, Brushes.Black, new PointF((e.PageBounds.Width - titleSize.Width) / 2, 5 + logoHeight));
 
             // İkinci metin eklemek
             Font titleFont2 = new Font("Arial", 8, FontStyle.Regular);
             string titleText2 = "Adres: Camicedit Mah. Cumhuriyet Cad.";
             SizeF titleSize2 = e.Graphics.MeasureString(titleText2, titleFont2);
-            float currentY = 43 + logoHeight; // currentY'yi tanımla ve başlangıç değerini ayarla
+            float currentY = 1 + logoHeight; // currentY'yi tanımla ve başlangıç değerini ayarla
             currentY += (int)titleSize.Height + 6; // Önceki metinden sonra bir boşluk bırakmak için
             e.Graphics.DrawString(titleText2, titleFont2, Brushes.Black, new PointF((e.PageBounds.Width - titleSize2.Width) / 2, currentY));
 
@@ -400,7 +401,7 @@ namespace PhotoEmin
             Font titleFont5 = new Font("Arial", 6, FontStyle.Regular);
             string titleText5 = "1) Makbuzsuz fotoğraf verilmez.\n2) 1 ay içerisinde alınmayan fotoğraftan mesul değiliz.\n3) Özel çekimleriniz için lütfen randevu alınız.\n4) Çekimleri tarafımızca yapılan bütün işler 5846 sayılı fikir ve sanat eserleri yasasıyla koruma altındadır.\n5) Çekimleri tarafımızca yapılmış olan bütün işlerin telif ve mülkiyet hakkı firmamıza aittir. Çekim öncesi özel bir anlaşma yapılmadı ise; dijital, negatif, orijinal görüntü ve çalışmalar müşteriye teslim edilmez. Kullanım hakkının ihlâli, yasal olmayan kopyalama, çoğaltma, yasa uyarınca suç teşkil etmektedir.";
             //currentYlast += 200; // Önceki metinden sonra bir boşluk bırakmak için
-            e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(295, (int)currentYlast + 2, 235, 103), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
+            e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(20, (int)currentYlast + 2, 235, 103), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
         }
 
         bool SaveProcess(bool isSaveAndPrint = false)
@@ -1336,76 +1337,89 @@ namespace PhotoEmin
 
         private void txtFullName_TextChanged(object sender, EventArgs e)
         {
+            txtDataUpperFileName.Text = "";
+            listBoxArchive.Items.Clear();
+            string searchText = txtFullName.Text.Trim();
 
-            string searchText = txtFullName.Text.Trim().ToUpper(new CultureInfo("tr-TR")); // Küçük harfe dönüştür
-
-            #region postgresql
-            using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+            try
             {
-                connection.Open();
-
-                string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText";
-
-                using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
+                #region postgresql
+                using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
                 {
-                    command.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
+                    connection.Open();
 
-                    using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
+                    string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText";
+
+                    using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
                     {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
+                        command.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
 
-                        // Bind the DataTable to the DataGridView
-                        dataGridRecords.DataSource = dataTable;
-
-                        // Hide the id column
-                        dataGridRecords.Columns["id"].Visible = false;
-
-                        // Set the header text of the fullname column
-                        dataGridRecords.Columns["Ad Soyad"].HeaderText = "Ad Soyad:";
-                        lblTotalRecord.Text = dataGridRecords.RowCount.ToString();
-                        if (dataGridRecords.RowCount == 0)
+                        using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
                         {
-                            pictureBoxChosenPhoto.Image = null;
+                            DataTable dataTable = new DataTable();
+                            adapter.Fill(dataTable);
+
+                            // Bind the DataTable to the DataGridView
+                            dataGridRecords.DataSource = dataTable;
+
+                            // Hide the id column
+                            dataGridRecords.Columns["id"].Visible = false;
+
+                            // Set the header text of the fullname column
+                            dataGridRecords.Columns["Ad Soyad"].HeaderText = "Ad Soyad:";
+                            lblTotalRecord.Text = dataGridRecords.RowCount.ToString();
+                            if (dataGridRecords.RowCount == 0)
+                            {
+                                pictureBoxChosenPhoto.Image = null;
+                                txtDataUpperFileName.Text = "";
+                                listBoxArchive.Items.Clear();
+                            }
                         }
                     }
                 }
+                #endregion
+
+                #region msSql
+                //using (SqlConnection connection = new SqlConnection(ConnectionString))
+                //{
+                //    connection.Open();
+
+                //    string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText";
+
+                //    using (SqlCommand command = new SqlCommand(sql, connection))
+                //    {
+                //        command.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
+
+                //        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                //        {
+                //            DataTable dataTable = new DataTable();
+                //            adapter.Fill(dataTable);
+
+                //            // Bind the DataTable to the DataGridView
+                //            dataGridRecords.DataSource = dataTable;
+
+                //            // Hide the id column
+                //            dataGridRecords.Columns["id"].Visible = false;
+
+                //            // Set the header text of the fullname column
+                //            dataGridRecords.Columns["Ad Soyad"].HeaderText = "Ad Soyad:";
+                //            lblTotalRecord.Text = dataGridRecords.RowCount.ToString();
+                //            if (dataGridRecords.RowCount == 0)
+                //            {
+                //                pictureBoxChosenPhoto.Image = null;
+                //            }
+                //        }
+                //    }
+                //}
+                #endregion
             }
-            #endregion
-
-            #region msSql
-            //using (SqlConnection connection = new SqlConnection(ConnectionString))
-            //{
-            //    connection.Open();
-
-            //    string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText";
-
-            //    using (SqlCommand command = new SqlCommand(sql, connection))
-            //    {
-            //        command.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
-
-            //        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-            //        {
-            //            DataTable dataTable = new DataTable();
-            //            adapter.Fill(dataTable);
-
-            //            // Bind the DataTable to the DataGridView
-            //            dataGridRecords.DataSource = dataTable;
-
-            //            // Hide the id column
-            //            dataGridRecords.Columns["id"].Visible = false;
-
-            //            // Set the header text of the fullname column
-            //            dataGridRecords.Columns["Ad Soyad"].HeaderText = "Ad Soyad:";
-            //            lblTotalRecord.Text = dataGridRecords.RowCount.ToString();
-            //            if (dataGridRecords.RowCount == 0)
-            //            {
-            //                pictureBoxChosenPhoto.Image = null;
-            //            }
-            //        }
-            //    }
-            //}
-            #endregion
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("3D000"))
+                    MessageBox.Show($"Veri tabanı oluşturulmamış, Lütfen 'Veri Tabanı' işlemi menüsünde, veri tabanı oluşturunuz ve kayıtlarınızı ekleyiniz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
+                    MessageBox.Show($"Kayıt ararken hata oluştu! {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void dataGridRecords_SelectionChanged(object sender, EventArgs e)
@@ -1528,7 +1542,7 @@ namespace PhotoEmin
 
         private void btnGoRecord_Click(object sender, EventArgs e)
         {
-            if (dataGridRecords.CurrentRow.Cells["Ad Soyad"] != null && dataGridRecords.CurrentRow.Cells["Ad Soyad"].Value != null)
+            if (dataGridRecords.CurrentRow != null && dataGridRecords.CurrentRow.Cells["Ad Soyad"] != null && dataGridRecords.CurrentRow.Cells["Ad Soyad"].Value != null)
             {
                 // txtDataUpperFileName ve comboBoxDriversForRecord boş olmamalıdır
                 if (string.IsNullOrEmpty(txtDataUpperFileName.Text) || comboBoxDriversForRecord.SelectedItem == null)
@@ -1566,7 +1580,7 @@ namespace PhotoEmin
             }
             else
             {
-                MessageBox.Show("Lütfen Ad Soyad tablosundan bir kayıt seçin");
+                MessageBox.Show("Lütfen Ad Soyad tablosundan bir kayıt seçin!", "Eksik Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -2042,6 +2056,7 @@ namespace PhotoEmin
                             #endregion
 
                             MessageBox.Show("Kayıt başarıyla güncellendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            txtFullName_TextChanged(sender, e);
                         }
                         catch (Exception ex)
                         {
@@ -2056,9 +2071,10 @@ namespace PhotoEmin
 
         }
 
-        private void btnDeleteRecord_Click(object sender, EventArgs e)
+        private async void btnDeleteRecord_Click(object sender, EventArgs e)
         {
             int selectedRowId;
+
             if (dataGridRecords.CurrentRow != null && dataGridRecords.CurrentRow.Cells["id"].Value != null)
             {
                 if (int.TryParse(dataGridRecords.CurrentRow.Cells["id"].Value.ToString(), out selectedRowId))
@@ -2069,6 +2085,56 @@ namespace PhotoEmin
                     {
                         try
                         {
+                            while (true)
+                            {
+                                Form passwordPromptDialog = new Form();
+
+                                passwordPromptDialog.Text = "Şifre Girişi";
+                                passwordPromptDialog.Size = new Size(300, 150);
+                                passwordPromptDialog.StartPosition = FormStartPosition.CenterParent;
+
+                                Label label = new Label();
+                                label.Text = "Lütfen şifreyi giriniz:";
+                                label.Location = new Point(10, 20);
+                                label.AutoSize = true;
+
+                                TextBox textBox = new TextBox();
+                                textBox.PasswordChar = '*';
+                                textBox.Location = new Point(10, 50);
+                                textBox.Size = new Size(200, 20);
+
+                                Button confirmButton = new Button();
+                                confirmButton.Text = "Onayla";
+                                confirmButton.DialogResult = DialogResult.OK;
+                                confirmButton.Location = new Point(10, 80);
+                                confirmButton.Size = new Size(75, 23);
+
+                                Button cancelButton = new Button();
+                                cancelButton.Text = "İptal";
+                                cancelButton.DialogResult = DialogResult.Cancel;
+                                cancelButton.Location = new Point(90, 80);
+                                cancelButton.Size = new Size(75, 23);
+
+                                passwordPromptDialog.Controls.Clear();
+                                passwordPromptDialog.Controls.Add(label);
+                                passwordPromptDialog.Controls.Add(textBox);
+                                passwordPromptDialog.Controls.Add(confirmButton);
+                                passwordPromptDialog.Controls.Add(cancelButton);
+
+                                DialogResult passwordResult = await Task.Run(() => passwordPromptDialog.ShowDialog());
+
+                                if (passwordResult != DialogResult.OK)
+                                    return;
+
+                                string passwordInput = passwordPromptDialog.Controls[1].Text;
+
+                                if (passwordInput == "emin")
+                                    break;
+
+                                MessageBox.Show("Yanlış şifre girdiniz. Lütfen tekrar deneyin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                await Task.Delay(304);
+                            }
+
                             #region postgresql
                             using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
                             {
@@ -2079,7 +2145,6 @@ namespace PhotoEmin
                                 using (NpgsqlCommand command = new NpgsqlCommand(deleteSql, connection))
                                 {
                                     command.Parameters.AddWithValue("@id", selectedRowId);
-
                                     command.ExecuteNonQuery();
                                 }
                             }
@@ -2095,24 +2160,21 @@ namespace PhotoEmin
                             //    using (SqlCommand command = new SqlCommand(deleteSql, connection))
                             //    {
                             //        command.Parameters.AddWithValue("@id", selectedRowId);
-
                             //        command.ExecuteNonQuery();
                             //    }
-                            //} 
+                            //}
                             #endregion
 
                             MessageBox.Show("Kayıt başarıyla silindi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            txtFullName_TextChanged(sender, e);
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show($"Kayıt silme işleminde hata oluştu! {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                         }
                     }
                 }
             }
-
-
         }
 
         private void btnDB_Click(object sender, EventArgs e)
@@ -2205,23 +2267,83 @@ namespace PhotoEmin
             }
         }
 
-        private void btnRemoveDB_Click(object sender, EventArgs e)
+        private async void btnRemoveDB_Click(object sender, EventArgs e)
         {
-            try
+            if (CheckDatabaseExists())
             {
-                if (CheckDatabaseExists())
+                DialogResult result = MessageBox.Show("Veri tabanınızı !!!Geri Getiremeyecek Şekilde!!! silmek istediğinize emin misiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
                 {
-                    RemoveDatabase();
-                    MessageBox.Show("Veri tabanı başarıyla kaldırıldı", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Veri tabanı sistemde mevcut değil", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    try
+                    {
+                        while (true)
+                        {
+                            Form passwordPromptDialog = new Form();
+
+                            passwordPromptDialog.Text = "Şifre Girişi";
+                            passwordPromptDialog.Size = new Size(300, 150);
+                            passwordPromptDialog.StartPosition = FormStartPosition.CenterParent;
+
+                            Label label = new Label();
+                            label.Text = "Lütfen şifreyi giriniz:";
+                            label.Location = new Point(10, 20);
+                            label.AutoSize = true;
+
+                            TextBox textBox = new TextBox();
+                            textBox.PasswordChar = '*';
+                            textBox.Location = new Point(10, 50);
+                            textBox.Size = new Size(200, 20);
+
+                            Button confirmButton = new Button();
+                            confirmButton.Text = "Onayla";
+                            confirmButton.DialogResult = DialogResult.OK;
+                            confirmButton.Location = new Point(10, 80);
+                            confirmButton.Size = new Size(75, 23);
+
+                            Button cancelButton = new Button();
+                            cancelButton.Text = "İptal";
+                            cancelButton.DialogResult = DialogResult.Cancel;
+                            cancelButton.Location = new Point(90, 80);
+                            cancelButton.Size = new Size(75, 23);
+
+                            passwordPromptDialog.Controls.Clear();
+                            passwordPromptDialog.Controls.Add(label);
+                            passwordPromptDialog.Controls.Add(textBox);
+                            passwordPromptDialog.Controls.Add(confirmButton);
+                            passwordPromptDialog.Controls.Add(cancelButton);
+
+                            DialogResult passwordResult = await Task.Run(() => passwordPromptDialog.ShowDialog());
+
+                            if (passwordResult != DialogResult.OK)
+                                return;
+
+                            string passwordInput = passwordPromptDialog.Controls[1].Text;
+
+                            if (passwordInput == "emin")
+                            {
+                                DialogResult resultLast = MessageBox.Show("Veri tabanınız tamamen kaldırılacak, onaylıyor musunuz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (resultLast == DialogResult.Yes)
+                                {
+                                    break;
+                                }
+                                else return;
+                            }
+
+                            MessageBox.Show("Yanlış şifre girdiniz. Lütfen tekrar deneyin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            await Task.Delay(304);
+                        }
+                        RemoveDatabase();
+                        MessageBox.Show("Veri tabanı başarıyla kaldırıldı", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Veri tabanı kaldırılırken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Veri tabanı kaldırılırken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Veri tabanı sistemde mevcut değil", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -2250,52 +2372,36 @@ namespace PhotoEmin
 
         private void btnDownloadDB_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(txtDownloadDBLocation.Text))
-                {
-                    MessageBox.Show("Lütfen yedeğinizi oluşturmak için bir dosya yolu seçin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+            //try
+            //{
+            //    string postgreSQLPath = @"C:\Program Files\PostgreSQL";
 
-                string backupFileName = $"backup_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.tar";
-                string backupFilePath = Path.Combine(txtDownloadDBLocation.Text, backupFileName);
+            //    // PostgreSQL dizinindeki alt dizinleri kontrol ederek PostgreSQL sürümünü bulun
+            //    string[] postgreSQLVersions = Directory.GetDirectories(postgreSQLPath);
+            //    string postgreSQLVersion = "";
+            //    if (postgreSQLVersions.Any())
+            //    {
+            //        postgreSQLVersion = Path.GetFileName(postgreSQLVersions[0]);
+            //    }
 
-                string postgreSQLPath = @"C:\Program Files\PostgreSQL";
+            //    // pg_dump dosyasının tam yolunu oluşturun
+            //    string pgDumpPath = Path.Combine(postgreSQLPath, postgreSQLVersion, "bin", "pg_dump");
 
-                // PostgreSQL dizinindeki alt dizinleri kontrol ederek PostgreSQL sürümünü bulun
-                string[] postgreSQLVersions = Directory.GetDirectories(postgreSQLPath);
-                string postgreSQLVersion = "";
-                if (postgreSQLVersions.Any())
-                {
-                    postgreSQLVersion = Path.GetFileName(postgreSQLVersions[0]);
-                }
-
-                // PostgreSQL sürümüne göre pg_dump dosyasının tam yolunu oluşturun
-                string pgDumpPath = Path.Combine(postgreSQLPath, postgreSQLVersion, "bin", "pg_dump");
-
-                ProcessStartInfo psi = new ProcessStartInfo
-                {
-                    FileName = pgDumpPath,
-                    Arguments = $"-h localhost -p 5432 -U postgres -F t -f \"{backupFilePath}\" dbphoto",
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-
-                using (var process = Process.Start(psi))
-                {
-                    process!.Exited += (s, args) =>
-                    {
-                        
-                    };
-                    MessageBox.Show("Veritabanı yedekleme işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Veritabanı yedekleme işleminde bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //    Process process = new Process();
+            //    ProcessStartInfo startInfo = new ProcessStartInfo();
+            //    startInfo.FileName = pgDumpPath;
+            //    startInfo.Arguments = $"-h localhost -p 5432 -U postgres -F d -f \"{localDatabasePath}\" {databaseName}"; // -F d için directory formatı
+            //    startInfo.CreateNoWindow = true;
+            //    startInfo.UseShellExecute = false;
+            //    process.StartInfo = startInfo;
+            //    process.Start();
+            //    process.WaitForExit();
+            //    process.Close();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"Veritabanı yedekleme işleminde bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private void btnDownloadDBLocation_Click(object sender, EventArgs e)
@@ -2309,5 +2415,67 @@ namespace PhotoEmin
                 }
             }
         }
+
+        private void btnUploadDBLocation_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "PostgreSQL Backup Files (*.tar)|*.tar";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                txtUploadDBLocation.Text = openFileDialog.FileName;
+            }
+        }
+
+        private void btnUploadDB_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtUploadDBLocation.Text))
+                {
+                    MessageBox.Show("Lütfen geri yüklemek için bir dosya seçin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string backupFilePath = txtUploadDBLocation.Text;
+
+                string postgreSQLPath = @"C:\Program Files\PostgreSQL";
+
+                // PostgreSQL dizinindeki alt dizinleri kontrol ederek PostgreSQL sürümünü bulun
+                string[] postgreSQLVersions = Directory.GetDirectories(postgreSQLPath);
+                string postgreSQLVersion = "";
+                if (postgreSQLVersions.Any())
+                {
+                    postgreSQLVersion = Path.GetFileName(postgreSQLVersions[0]);
+                }
+
+                // PostgreSQL sürümüne göre pg_restore dosyasının tam yolunu oluşturun
+                string pgRestorePath = Path.Combine(postgreSQLPath, postgreSQLVersion, "bin", "pg_restore");
+
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = pgRestorePath,
+                    Arguments = $"-h localhost -p 5432 -U postgres -d dbphoto \"{backupFilePath}\"",
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (var process = Process.Start(psi))
+                {
+                    process!.Exited += (s, args) =>
+                    {
+                    };
+                }
+                MessageBox.Show("Veritabanı geri yükleme işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Veritabanı geri yükleme işleminde bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }
