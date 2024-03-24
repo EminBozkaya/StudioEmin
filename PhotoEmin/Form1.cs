@@ -478,7 +478,7 @@ namespace PhotoEmin
             string name = txtName.Text.Trim();
             if (!String.IsNullOrEmpty(name))
             {
-                name = name.ToUpper(new CultureInfo("tr-TR"));
+                //name = name.ToUpper(new CultureInfo("tr-TR"));
                 string dimensions = txtDimensions.Text.Trim(); ;
                 decimal quantity = numQty.Value;
                 decimal totalAmount = 0;
@@ -1132,7 +1132,8 @@ namespace PhotoEmin
                             creationDate = File.GetCreationTimeUtc(otherGifFiles[0]);
                         }
 
-                        string fullName = subDirInfo.Name.ToUpper(new CultureInfo("tr-TR"));
+                        string fullName = subDirInfo.Name;
+                        //string fullName = subDirInfo.Name.ToUpper(new CultureInfo("tr-TR"));
                         errorFullName = subDirInfo.Name;
 
                         string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
@@ -1245,7 +1246,8 @@ namespace PhotoEmin
             //                creationDate = File.GetCreationTimeUtc(otherGifFiles[0]);
             //            }
 
-            //            string fullName = subDirInfo.Name.ToUpper(new CultureInfo("tr-TR"));
+            //            string fullName = subDirInfo.Name;
+            //            //string fullName = subDirInfo.Name.ToUpper(new CultureInfo("tr-TR"));
             //            errorFullName = subDirInfo.Name;
 
             //            string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
@@ -1339,7 +1341,7 @@ namespace PhotoEmin
         {
             txtDataUpperFileName.Text = "";
             listBoxArchive.Items.Clear();
-            string searchText = txtFullName.Text.Trim();
+            string searchText = txtFullName.Text.Trim().ToUpper(new CultureInfo("tr-TR"));
 
             try
             {
@@ -1347,9 +1349,11 @@ namespace PhotoEmin
                 using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
                 {
                     connection.Open();
-
-                    string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText";
-
+                    string sql = $"SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE UPPER(REPLACE(fullname, 'i', 'İ')) LIKE @searchText";
+                    //string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText";
+                    //string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText COLLATE tr_TR.UTF-8";
+                    //string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE UPPER(fullname COLLATE tr_TR.UTF-8) LIKE @searchText";
+                    //string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE UPPER(fullname COLLATE COALESCE((SELECT collation_name FROM information_schema.collations WHERE collation_name = 'turkish_ci_ai' AND schema_name = 'public'), 'default')) LIKE @searchText";
                     using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
@@ -1775,7 +1779,8 @@ namespace PhotoEmin
 
                         nameParts = folderName.Split('_');
                         errorFullName = errorFullName = string.Join("_", nameParts);
-                        fullName = nameParts[0].ToUpper(new CultureInfo("tr-TR"));
+                        fullName = nameParts[0];
+                        //fullName = nameParts[0].ToUpper(new CultureInfo("tr-TR"));
                         folderName = nameParts[1];
                         creationDate = Directory.GetCreationTimeUtc(fileOrFolder).Date;
                     }
@@ -1793,7 +1798,8 @@ namespace PhotoEmin
 
                         nameParts = fileName.Split('_');
                         errorFullName = errorFullName = string.Join("_", nameParts);
-                        fullName = nameParts[0].ToUpper(new CultureInfo("tr-TR"));
+                        fullName = nameParts[0];
+                        //fullName = nameParts[0].ToUpper(new CultureInfo("tr-TR"));
                         folderName = nameParts[1];
                         creationDate = File.GetCreationTimeUtc(fileOrFolder);
 
@@ -1892,7 +1898,8 @@ namespace PhotoEmin
 
             //            nameParts = folderName.Split('_');
             //            errorFullName = errorFullName = string.Join("_", nameParts);
-            //            fullName = nameParts[0].ToUpper(new CultureInfo("tr-TR"));
+            //            fullName = nameParts[0];
+            //            //fullName = nameParts[0].ToUpper(new CultureInfo("tr-TR"));
             //            folderName = nameParts[1];
             //            creationDate = Directory.GetCreationTimeUtc(fileOrFolder).Date;
             //        }
@@ -1910,6 +1917,7 @@ namespace PhotoEmin
 
             //            nameParts = fileName.Split('_');
             //            errorFullName = errorFullName = string.Join("_", nameParts);
+            //            fullName = nameParts[0];
             //            fullName = nameParts[0].ToUpper(new CultureInfo("tr-TR"));
             //            folderName = nameParts[1];
             //            creationDate = File.GetCreationTimeUtc(fileOrFolder);
@@ -2207,6 +2215,7 @@ namespace PhotoEmin
             catch (Exception)
             {
                 //MessageBox.Show($"Veri tabanı oluşturulurken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Veri tabanı oluşturulurken bir hata oluştu", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -2242,6 +2251,52 @@ namespace PhotoEmin
                     conn.Open();
                     var cmd = new NpgsqlCommand("CREATE DATABASE dbphoto WITH OWNER = postgres ENCODING = 'UTF8';", conn);
                     cmd.ExecuteNonQuery();
+
+                    #region eklenirken hata alınıyor??
+
+                    ////var cmd = new NpgsqlCommand("CREATE COLLATION turkish_tr_template FROM turkish;", conn);
+                    ////cmd.ExecuteNonQuery();
+
+                    ////cmd = new NpgsqlCommand("CREATE COLLATION turkish_ci_ai (LC_COLLATE = 'tr_TR.UTF-8', LC_CTYPE = 'tr_TR.UTF-8') SERVER COLLATION turkish_tr_template;", conn);
+                    ////cmd.ExecuteNonQuery();
+
+
+
+                    //// Check if pg_catalog schema exists
+                    //var cmd = new NpgsqlCommand("SELECT COUNT(*) FROM information_schema.schemata WHERE schema_name = 'pg_catalog';", conn);
+                    //long existsCount = (long)cmd.ExecuteScalar()!;
+                    //if (existsCount == 0)
+                    //{
+                    //    // Create pg_catalog schema if it doesn't exist
+                    //    cmd = new NpgsqlCommand("CREATE SCHEMA pg_catalog;", conn);
+                    //    cmd.ExecuteNonQuery();
+                    //}
+
+                    //// Check if turkish_ci_ai collation exists
+                    ////cmd = new NpgsqlCommand("SELECT COUNT(*) FROM information_schema.collations WHERE collation_name = 'turkish_ci_ai' and collation_schema = 'pg_catalog';", conn);
+                    //cmd = new NpgsqlCommand("SELECT COUNT(*) FROM information_schema.collations WHERE collation_name = 'turkish_ci_ai';", conn);
+                    //long existsCollationCount = (long)cmd.ExecuteScalar()!;
+
+                    //if (existsCollationCount > 0)
+                    //{
+                    //    // Drop turkish_ci_ai collation if it already exists
+                    //    cmd = new NpgsqlCommand("DROP COLLATION IF EXISTS turkish_ci_ai;", conn);
+                    //    cmd.ExecuteNonQuery();
+                    //}
+
+                    //// Create turkish_ci_ai collation even if it already exists
+                    ////cmd = new NpgsqlCommand("CREATE COLLATION turkish_ci_ai (LC_COLLATE = 'tr_TR.UTF-8', LC_CTYPE = 'tr_TR.UTF-8');", conn);
+                    //cmd = new NpgsqlCommand("CREATE COLLATION turkish_ci_ai (LC_COLLATE = 'Turkish_Turkey.1254', LC_CTYPE = 'Turkish_Turkey.1254');", conn);
+                    //cmd.ExecuteNonQuery();
+
+
+                    //// Create database
+                    ////cmd = new NpgsqlCommand("CREATE DATABASE dbphoto WITH OWNER = postgres LC_COLLATE = \"tr_TR.UTF-8\" LC_CTYPE = \"tr_TR.UTF-8\";", conn);
+                    //cmd = new NpgsqlCommand("CREATE DATABASE dbphoto WITH OWNER = postgres LC_COLLATE = \"Turkish_Turkey.1254\" LC_CTYPE = \"Turkish_Turkey.1254\";", conn);
+                    //cmd.ExecuteNonQuery(); 
+                    #endregion
+
+
                 }
                 catch (NpgsqlException ex)
                 {
@@ -2258,7 +2313,14 @@ namespace PhotoEmin
                 {
                     conn.Open();
                     var cmd = new NpgsqlCommand("CREATE TABLE customers (id BIGSERIAL PRIMARY KEY, fullname TEXT NOT NULL, foldername TEXT, photodata BYTEA, createdate TIMESTAMP WITH TIME ZONE, insertdate TIMESTAMP WITH TIME ZONE);", conn);
+
+                    //var cmd = new NpgsqlCommand("CREATE TABLE customers (id BIGSERIAL PRIMARY KEY, fullname TEXT COLLATE \"turkish_ci_ai\" NOT NULL, foldername TEXT COLLATE \"turkish_ci_ai\", photodata BYTEA, createdate TIMESTAMP WITH TIME ZONE, insertdate TIMESTAMP WITH TIME ZONE);", conn);
+
+                    //var cmd = new NpgsqlCommand("CREATE TABLE customers (id BIGSERIAL PRIMARY KEY, fullname TEXT COLLATE \"Turkish_Turkey.1254\" NOT NULL, foldername TEXT COLLATE \"Turkish_Turkey.1254\", photodata BYTEA, createdate TIMESTAMP WITH TIME ZONE, insertdate TIMESTAMP WITH TIME ZONE);", conn);
+
+                    //var cmd = new NpgsqlCommand("CREATE TABLE customers (id BIGSERIAL PRIMARY KEY, fullname TEXT COLLATE \"Turkish_Turkey.1254\" NOT NULL, foldername TEXT COLLATE \"Turkish_Turkey.1254\", photodata BYTEA, createdate TIMESTAMP WITH TIME ZONE, insertdate TIMESTAMP WITH TIME ZONE);", conn);
                     cmd.ExecuteNonQuery();
+
                 }
                 catch (NpgsqlException ex)
                 {
@@ -2372,36 +2434,119 @@ namespace PhotoEmin
 
         private void btnDownloadDB_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    string postgreSQLPath = @"C:\Program Files\PostgreSQL";
+            try
+            {
+                string localDatabasePath = txtDownloadDBLocation.Text;
+                //string databaseName = DateTime.Now.ToString("ddMMyyyyHHmmss");
+                string databaseName = "dbphoto";
+                if (!string.IsNullOrEmpty(localDatabasePath))
+                {
+                    //using (var connection = new NpgsqlConnection(ConnectionString))
+                    //{
+                    //    connection.Open();
 
-            //    // PostgreSQL dizinindeki alt dizinleri kontrol ederek PostgreSQL sürümünü bulun
-            //    string[] postgreSQLVersions = Directory.GetDirectories(postgreSQLPath);
-            //    string postgreSQLVersion = "";
-            //    if (postgreSQLVersions.Any())
-            //    {
-            //        postgreSQLVersion = Path.GetFileName(postgreSQLVersions[0]);
-            //    }
+                    //    // pg_dumpall komutunu çalıştır
+                    //    string commandText = $"pg_dump -h localhost -p 5432 -U postgres -W -f {localDatabasePath}\\{databaseName}.dbphoto postgres dbphoto";
+                    //    using (var command = new NpgsqlCommand(commandText, connection))
+                    //    {
+                    //        command.ExecuteNonQuery();
+                    //    }
+                    //}
 
-            //    // pg_dump dosyasının tam yolunu oluşturun
-            //    string pgDumpPath = Path.Combine(postgreSQLPath, postgreSQLVersion, "bin", "pg_dump");
+                    //----------------------------------
+                    string pgDumpPath = @"C:\Program Files\PostgreSQL\16\bin\pg_dump.exe";
 
-            //    Process process = new Process();
-            //    ProcessStartInfo startInfo = new ProcessStartInfo();
-            //    startInfo.FileName = pgDumpPath;
-            //    startInfo.Arguments = $"-h localhost -p 5432 -U postgres -F d -f \"{localDatabasePath}\" {databaseName}"; // -F d için directory formatı
-            //    startInfo.CreateNoWindow = true;
-            //    startInfo.UseShellExecute = false;
-            //    process.StartInfo = startInfo;
-            //    process.Start();
-            //    process.WaitForExit();
-            //    process.Close();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Veritabanı yedekleme işleminde bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+
+                    string commandText = $"-h localhost -p 5432 -U postgres -F d -f \"{localDatabasePath}\" \"{databaseName}\"";
+                    using (var process = new Process())
+                    {
+                        var startInfo = new ProcessStartInfo
+                        {
+                            FileName = pgDumpPath,
+                            Arguments = commandText,
+                            RedirectStandardOutput = true,
+                            UseShellExecute = false,
+                            CreateNoWindow = true,
+                        };
+
+                        process.StartInfo = startInfo;
+                        process.Start();
+
+                        process.OutputDataReceived += (s, args) =>
+                        {
+                            if (args.Data != null)
+                            {
+                                MessageBox.Show(args.Data, "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        };
+
+                        process.BeginOutputReadLine();
+                        process.WaitForExit();
+
+                        MessageBox.Show("Yedek alma işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+
+
+
+                    //--------------------------
+
+                    //string commandText = $"pg_dump -h localhost -p 5432 -U postgres -W -F p -f {localDatabasePath}\\{databaseName}.sql postgres dbphoto";
+                    //using (var process = new Process
+                    //{
+                    //    StartInfo = new ProcessStartInfo
+                    //    {
+                    //        FileName = "cmd.exe",
+                    //        Arguments = $"/c {commandText}",
+                    //        RedirectStandardOutput = true,
+                    //        UseShellExecute = false,
+                    //        CreateNoWindow = true,
+                    //    },
+                    //})
+                    //{
+                    //    process.Start();
+                    //    process.WaitForExit();
+                    //}
+                    //-----------------
+
+                    //string postgreSQLPath = @"C:\Program Files\PostgreSQL";
+
+                    //// PostgreSQL dizinindeki alt dizinleri kontrol ederek PostgreSQL sürümünü bulun
+                    //string[] postgreSQLVersions = Directory.GetDirectories(postgreSQLPath);
+                    //string postgreSQLVersion = "";
+                    //if (postgreSQLVersions.Any())
+                    //{
+                    //    postgreSQLVersion = Path.GetFileName(postgreSQLVersions[0]);
+                    //}
+
+                    //// pg_dump dosyasının tam yolunu oluşturun
+                    //string pgDumpPath = Path.Combine(postgreSQLPath, postgreSQLVersion, "bin", "pg_dump");
+                    //// Yedek alma işlemini başlat
+                    //Process process = new Process();
+                    //ProcessStartInfo startInfo = new ProcessStartInfo();
+                    //startInfo.FileName = pgDumpPath;
+                    //startInfo.Arguments = $"-h localhost -p 5432 -U postgres -F d -f \"{localDatabasePath}\" {databaseName}"; // -F d için directory formatı
+                    //startInfo.CreateNoWindow = true;
+                    //startInfo.UseShellExecute = false;
+
+                    //// İşlem tamamlandığında olayı dinleyin
+                    //process.EnableRaisingEvents = true;
+                    //process.Exited += (s, args) =>
+                    //{
+                    //    MessageBox.Show("Yedek alma işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //};
+
+                    //// İşlemi başlat
+                    //process.Start();
+                }
+                else 
+                    MessageBox.Show($"Veritabanı yedekleme işlemi için, önce bir bir konum seçmelisiniz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Veritabanı yedekleme işleminde bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnDownloadDBLocation_Click(object sender, EventArgs e)
