@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Globalization;
+using System.Text;
 
 namespace PhotoEmin
 {
@@ -42,7 +43,25 @@ namespace PhotoEmin
                 pictureBoxLoadingSpareToArchive.Visible = false;
                 pnlBorder.Visible = false;
 
+                //Auto backup:
+                try
+                {
+                    if (CheckDatabaseExists())
+                    {
+                        BackupManager.RunBackup("");
+                    }
+                    else
+                    {
+                        CreateDatabase();
+                        CreateTable();
+                    }
+                }
+                catch (Exception)
+                {
 
+                    throw;
+                }
+                
             };
 
             // Form üzerinde herhangi bir yere tıklandığında
@@ -1349,7 +1368,9 @@ namespace PhotoEmin
                 using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
                 {
                     connection.Open();
-                    string sql = $"SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE UPPER(REPLACE(fullname, 'i', 'İ')) LIKE @searchText";
+                    string sql = $"SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE UPPER(REPLACE(REPLACE(fullname, 'i', 'İ'), 'ı', 'I')) LIKE @searchText";
+
+                    //string sql = $"SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE UPPER(REPLACE(fullname, 'i', 'İ')) LIKE @searchText";
                     //string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText";
                     //string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText COLLATE tr_TR.UTF-8";
                     //string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE UPPER(fullname COLLATE tr_TR.UTF-8) LIKE @searchText";
@@ -2301,6 +2322,7 @@ namespace PhotoEmin
                 catch (NpgsqlException ex)
                 {
                     MessageBox.Show($"Veri tabanı oluşturulurken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
         }
@@ -2325,6 +2347,7 @@ namespace PhotoEmin
                 catch (NpgsqlException ex)
                 {
                     MessageBox.Show($"Tablo oluşturulurken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
         }
@@ -2437,115 +2460,80 @@ namespace PhotoEmin
             try
             {
                 string localDatabasePath = txtDownloadDBLocation.Text;
-                //string databaseName = DateTime.Now.ToString("ddMMyyyyHHmmss");
-                string databaseName = "dbphoto";
-                if (!string.IsNullOrEmpty(localDatabasePath))
+
+                if (string.IsNullOrEmpty(localDatabasePath))
                 {
-                    //using (var connection = new NpgsqlConnection(ConnectionString))
-                    //{
-                    //    connection.Open();
-
-                    //    // pg_dumpall komutunu çalıştır
-                    //    string commandText = $"pg_dump -h localhost -p 5432 -U postgres -W -f {localDatabasePath}\\{databaseName}.dbphoto postgres dbphoto";
-                    //    using (var command = new NpgsqlCommand(commandText, connection))
-                    //    {
-                    //        command.ExecuteNonQuery();
-                    //    }
-                    //}
-
-                    //----------------------------------
-                    string pgDumpPath = @"C:\Program Files\PostgreSQL\16\bin\pg_dump.exe";
-
-
-                    string commandText = $"-h localhost -p 5432 -U postgres -F d -f \"{localDatabasePath}\" \"{databaseName}\"";
-                    using (var process = new Process())
-                    {
-                        var startInfo = new ProcessStartInfo
-                        {
-                            FileName = pgDumpPath,
-                            Arguments = commandText,
-                            RedirectStandardOutput = true,
-                            UseShellExecute = false,
-                            CreateNoWindow = true,
-                        };
-
-                        process.StartInfo = startInfo;
-                        process.Start();
-
-                        process.OutputDataReceived += (s, args) =>
-                        {
-                            if (args.Data != null)
-                            {
-                                MessageBox.Show(args.Data, "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        };
-
-                        process.BeginOutputReadLine();
-                        process.WaitForExit();
-
-                        MessageBox.Show("Yedek alma işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-
-
-
-
-                    //--------------------------
-
-                    //string commandText = $"pg_dump -h localhost -p 5432 -U postgres -W -F p -f {localDatabasePath}\\{databaseName}.sql postgres dbphoto";
-                    //using (var process = new Process
-                    //{
-                    //    StartInfo = new ProcessStartInfo
-                    //    {
-                    //        FileName = "cmd.exe",
-                    //        Arguments = $"/c {commandText}",
-                    //        RedirectStandardOutput = true,
-                    //        UseShellExecute = false,
-                    //        CreateNoWindow = true,
-                    //    },
-                    //})
-                    //{
-                    //    process.Start();
-                    //    process.WaitForExit();
-                    //}
-                    //-----------------
-
-                    //string postgreSQLPath = @"C:\Program Files\PostgreSQL";
-
-                    //// PostgreSQL dizinindeki alt dizinleri kontrol ederek PostgreSQL sürümünü bulun
-                    //string[] postgreSQLVersions = Directory.GetDirectories(postgreSQLPath);
-                    //string postgreSQLVersion = "";
-                    //if (postgreSQLVersions.Any())
-                    //{
-                    //    postgreSQLVersion = Path.GetFileName(postgreSQLVersions[0]);
-                    //}
-
-                    //// pg_dump dosyasının tam yolunu oluşturun
-                    //string pgDumpPath = Path.Combine(postgreSQLPath, postgreSQLVersion, "bin", "pg_dump");
-                    //// Yedek alma işlemini başlat
-                    //Process process = new Process();
-                    //ProcessStartInfo startInfo = new ProcessStartInfo();
-                    //startInfo.FileName = pgDumpPath;
-                    //startInfo.Arguments = $"-h localhost -p 5432 -U postgres -F d -f \"{localDatabasePath}\" {databaseName}"; // -F d için directory formatı
-                    //startInfo.CreateNoWindow = true;
-                    //startInfo.UseShellExecute = false;
-
-                    //// İşlem tamamlandığında olayı dinleyin
-                    //process.EnableRaisingEvents = true;
-                    //process.Exited += (s, args) =>
-                    //{
-                    //    MessageBox.Show("Yedek alma işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //};
-
-                    //// İşlemi başlat
-                    //process.Start();
+                    MessageBox.Show($"Lütfen yedekleme dosyasını oluşturacağınız bir konum seçin!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                else 
-                    MessageBox.Show($"Veritabanı yedekleme işlemi için, önce bir bir konum seçmelisiniz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                BackupManager.RunBackup(localDatabasePath);
+                MessageBox.Show("Yedek alma işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Veritabanı yedekleme işleminde bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Yedek dosyası oluşturulurken hata meydana geldi: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        public class BackupManager
+        {
+            public static void RunBackup(string filePath = "")
+            {
+                string backUpName = "";
+                // Eğer tarFilePath boş ise varsayılan yolu belirle
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    // Varsayılan klasör yolunu oluştur
+                    string defaultFolderPath = @"C:\PostgreSQLBackUpFiles";
+
+                    // Klasör yoksa oluştur
+                    if (!Directory.Exists(defaultFolderPath))
+                    {
+                        Directory.CreateDirectory(defaultFolderPath);
+                    }
+
+                    // Varsayılan klasör yolunu tarFilePath'e ata
+                    filePath = defaultFolderPath;
+                    backUpName = "last_backup.tar";
+                }
+                else backUpName = DateTime.Now.ToString("ddMMyyyyHHmmss") + "_backup.tar";
+                
+                
+                string backupFilePath = Path.Combine(filePath, backUpName);
+                //BackupManager.RunBackup(@"C:\Users\MSI\Downloads\Makbuz\Yedekler\backup.tar");
+                string postgreSQLPath = @"C:\Program Files\PostgreSQL";
+                string[] postgreSQLVersions = Directory.GetDirectories(postgreSQLPath);
+                string postgreSQLVersion = "";
+                if (postgreSQLVersions.Any())
+                {
+                    postgreSQLVersion = Path.GetFileName(postgreSQLVersions[0]);
+                }
+
+                string pgDumpPath = Path.Combine(postgreSQLPath, postgreSQLVersion, "bin", "pg_dump.exe");
+                //string pgDumpPath = @"C:\Program Files\PostgreSQL\16\bin\pg_dump.exe";
+
+                string commandText = $"-U postgres -h localhost -p 5432 -F tar -f \"{backupFilePath}\" dbphoto";
+
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = pgDumpPath,
+                    Arguments = commandText,
+                    RedirectStandardInput = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (Process process = new Process())
+                {
+                    process.StartInfo = startInfo;
+                    // PostgreSQL şifresini otomatik olarak sağlamak için
+                    process.StartInfo.Environment["PGPASSWORD"] = "postgres";
+                    process.Start();
+                    process.WaitForExit();
+                }
             }
         }
 
@@ -2574,18 +2562,101 @@ namespace PhotoEmin
             }
         }
 
-        private void btnUploadDB_Click(object sender, EventArgs e)
+        private async void btnUploadDB_Click(object sender, EventArgs e)
         {
             try
             {
+
                 if (string.IsNullOrWhiteSpace(txtUploadDBLocation.Text))
                 {
                     MessageBox.Show("Lütfen geri yüklemek için bir dosya seçin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                // Kullanıcıya onay mesajı göster
+                DialogResult result = MessageBox.Show("Seçtiğiniz yedek dosyası yüklenirken mevcut veri tabanınız silinmiş olacak, devam etmek istediğinize emin misiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                string backupFilePath = txtUploadDBLocation.Text;
+                // Kullanıcı evet derse devam et
+                if (result == DialogResult.Yes)
+                {
+                    while (true)
+                    {
+                        using (Form passwordPromptDialog = new Form())
+                        {
+                            passwordPromptDialog.Text = "Şifre Girişi";
+                            passwordPromptDialog.Size = new Size(300, 150);
+                            passwordPromptDialog.StartPosition = FormStartPosition.CenterParent;
 
+                            Label label = new Label();
+                            label.Text = "Lütfen şifreyi giriniz:";
+                            label.Location = new Point(10, 20);
+                            label.AutoSize = true;
+
+                            TextBox textBox = new TextBox();
+                            textBox.PasswordChar = '*';
+                            textBox.Location = new Point(10, 50);
+                            textBox.Size = new Size(200, 20);
+
+                            Button confirmButton = new Button();
+                            confirmButton.Text = "Onayla";
+                            confirmButton.DialogResult = DialogResult.OK;
+                            confirmButton.Location = new Point(10, 80);
+                            confirmButton.Size = new Size(75, 23);
+
+                            Button cancelButton = new Button();
+                            cancelButton.Text = "İptal";
+                            cancelButton.DialogResult = DialogResult.Cancel;
+                            cancelButton.Location = new Point(90, 80);
+                            cancelButton.Size = new Size(75, 23);
+
+                            passwordPromptDialog.Controls.Clear();
+                            passwordPromptDialog.Controls.Add(label);
+                            passwordPromptDialog.Controls.Add(textBox);
+                            passwordPromptDialog.Controls.Add(confirmButton);
+                            passwordPromptDialog.Controls.Add(cancelButton);
+
+                            DialogResult passwordResult = await Task.Run(() => passwordPromptDialog.ShowDialog());
+
+                            if (passwordResult != DialogResult.OK)
+                                return;
+
+                            string passwordInput = textBox.Text;
+
+                            if (passwordInput == "emin")
+                            {
+                                // Şifre doğruysa işlemi gerçekleştir
+                                if (!CheckDatabaseExists())
+                                {
+                                    CreateDatabase();
+                                }
+                                else
+                                {
+                                    RemoveDatabase();
+                                    CreateDatabase();
+                                }
+                                string backupFilePath = txtUploadDBLocation.Text;
+                                RestoreManager.RunRestore(txtUploadDBLocation.Text);
+                                MessageBox.Show("Veritabanı geri yükleme işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                break;
+                            }
+
+                            MessageBox.Show("Yanlış şifre girdiniz. Lütfen tekrar deneyin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            await Task.Delay(304);
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Veritabanı geri yükleme işleminde bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        public class RestoreManager
+        {
+            public static void RunRestore(string tarFilePath)
+            {
                 string postgreSQLPath = @"C:\Program Files\PostgreSQL";
 
                 // PostgreSQL dizinindeki alt dizinleri kontrol ederek PostgreSQL sürümünü bulun
@@ -2597,28 +2668,30 @@ namespace PhotoEmin
                 }
 
                 // PostgreSQL sürümüne göre pg_restore dosyasının tam yolunu oluşturun
-                string pgRestorePath = Path.Combine(postgreSQLPath, postgreSQLVersion, "bin", "pg_restore");
+                string pgRestorePath = Path.Combine(postgreSQLPath, postgreSQLVersion, "bin", "pg_restore.exe");
+                string commandText = $"-U postgres -h localhost -p 5432 -d dbphoto \"{tarFilePath}\"";
 
-                ProcessStartInfo psi = new ProcessStartInfo
+                ProcessStartInfo startInfo = new ProcessStartInfo
                 {
                     FileName = pgRestorePath,
-                    Arguments = $"-h localhost -p 5432 -U postgres -d dbphoto \"{backupFilePath}\"",
+                    Arguments = commandText,
+                    RedirectStandardInput = true,
                     RedirectStandardOutput = true,
+                    RedirectStandardError = true,
                     UseShellExecute = false,
                     CreateNoWindow = true
                 };
 
-                using (var process = Process.Start(psi))
+                using (Process process = new Process())
                 {
-                    process!.Exited += (s, args) =>
-                    {
-                    };
+                    process.StartInfo = startInfo;
+
+                    // PostgreSQL şifresini otomatik olarak sağlamak için
+                    process.StartInfo.Environment["PGPASSWORD"] = "postgres";
+
+                    process.Start();
+                    process.WaitForExit();
                 }
-                MessageBox.Show("Veritabanı geri yükleme işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Veritabanı geri yükleme işleminde bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
