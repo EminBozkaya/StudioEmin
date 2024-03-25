@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Globalization;
+using System.Management;
 using System.Text;
 
 namespace PhotoEmin
@@ -42,6 +43,15 @@ namespace PhotoEmin
                 pictureBoxLoadingDbToFolder.Visible = false;
                 pictureBoxLoadingSpareToArchive.Visible = false;
                 pnlBorder.Visible = false;
+
+                
+                ////kullanılacak olan kod:
+                //ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive");
+                //ManagementObject _disk = searcher.Get().Cast<ManagementObject>().First();
+                //Debug.WriteLine("Disk Seri Numarası: " + _disk["SerialNumber"]);
+
+                ////Terminal Kodu:
+                ////wmic diskdrive where index = 0 get serialnumber
 
                 //Auto backup:
                 try
