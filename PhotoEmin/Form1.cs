@@ -58,7 +58,7 @@ namespace PhotoEmin
                 {
                     if (CheckDatabaseExists())
                     {
-                        BackupManager.RunBackup("");
+                        BackupManager.RunBackup();
                     }
                     else
                     {
@@ -2131,6 +2131,8 @@ namespace PhotoEmin
                                 passwordPromptDialog.Text = "Şifre Girişi";
                                 passwordPromptDialog.Size = new Size(300, 150);
                                 passwordPromptDialog.StartPosition = FormStartPosition.CenterParent;
+                                passwordPromptDialog.FormBorderStyle = FormBorderStyle.FixedDialog;
+
 
                                 Label label = new Label();
                                 label.Text = "Lütfen şifreyi giriniz:";
@@ -2160,16 +2162,20 @@ namespace PhotoEmin
                                 passwordPromptDialog.Controls.Add(confirmButton);
                                 passwordPromptDialog.Controls.Add(cancelButton);
 
-                                DialogResult passwordResult = await Task.Run(() => passwordPromptDialog.ShowDialog());
-
-                                if (passwordResult != DialogResult.OK)
+                                if (passwordPromptDialog.ShowDialog() != DialogResult.OK)
+                                {
+                                    passwordPromptDialog.Close();
                                     return;
+                                }
 
                                 string passwordInput = passwordPromptDialog.Controls[1].Text;
 
                                 if (passwordInput == "emin")
+                                {
+                                    passwordPromptDialog.Close();
                                     break;
-
+                                }
+                                passwordPromptDialog.Close();
                                 MessageBox.Show("Yanlış şifre girdiniz. Lütfen tekrar deneyin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 await Task.Delay(304);
                             }
@@ -2216,13 +2222,69 @@ namespace PhotoEmin
             }
         }
 
-        private void btnDB_Click(object sender, EventArgs e)
+        private async void btnDB_Click(object sender, EventArgs e)
         {
-            pnlBorder.Visible = true;
-            pnlReceipt.Visible = false;
-            pnlFindFolder.Visible = false;
-            flowLayoutPanelArchive.Visible = false;
-            pnlDBprocess.Visible = true;
+            while (true)
+            {
+                Form passwordPromptDialog = new Form();
+
+                passwordPromptDialog.Text = "Şifre Girişi";
+                passwordPromptDialog.Size = new Size(300, 150);
+                passwordPromptDialog.StartPosition = FormStartPosition.CenterParent;
+                passwordPromptDialog.FormBorderStyle = FormBorderStyle.FixedDialog;
+
+
+                Label label = new Label();
+                label.Text = "Veri tabanı işlemleri için \nlütfen yönetici şifresini giriniz:";
+                label.Location = new Point(10, 20);
+                label.AutoSize = true;
+
+                TextBox textBox = new TextBox();
+                textBox.PasswordChar = '*';
+                textBox.Location = new Point(10, 50);
+                textBox.Size = new Size(200, 20);
+
+                Button confirmButton = new Button();
+                confirmButton.Text = "Onayla";
+                confirmButton.DialogResult = DialogResult.OK;
+                confirmButton.Location = new Point(10, 80);
+                confirmButton.Size = new Size(75, 23);
+
+                Button cancelButton = new Button();
+                cancelButton.Text = "İptal";
+                cancelButton.DialogResult = DialogResult.Cancel;
+                cancelButton.Location = new Point(90, 80);
+                cancelButton.Size = new Size(75, 23);
+
+                passwordPromptDialog.Controls.Clear();
+                passwordPromptDialog.Controls.Add(label);
+                passwordPromptDialog.Controls.Add(textBox);
+                passwordPromptDialog.Controls.Add(confirmButton);
+                passwordPromptDialog.Controls.Add(cancelButton);
+
+                if (passwordPromptDialog.ShowDialog() != DialogResult.OK)
+                {
+                    passwordPromptDialog.Close();
+                    return;
+                }
+
+                string passwordInput = passwordPromptDialog.Controls[1].Text;
+
+                if (passwordInput == "wingman")
+                {
+                    passwordPromptDialog.Close();
+                    pnlBorder.Visible = true;
+                    pnlReceipt.Visible = false;
+                    pnlFindFolder.Visible = false;
+                    flowLayoutPanelArchive.Visible = false;
+                    pnlDBprocess.Visible = true;
+                    break;
+                }
+                passwordPromptDialog.Close();
+                MessageBox.Show("Yanlış şifre girdiniz. Lütfen tekrar deneyin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                await Task.Delay(304);
+            }
+            
         }
 
         private void btnCreateDB_Click(object sender, EventArgs e)
@@ -2378,6 +2440,7 @@ namespace PhotoEmin
                             passwordPromptDialog.Text = "Şifre Girişi";
                             passwordPromptDialog.Size = new Size(300, 150);
                             passwordPromptDialog.StartPosition = FormStartPosition.CenterParent;
+                            passwordPromptDialog.FormBorderStyle = FormBorderStyle.FixedDialog;
 
                             Label label = new Label();
                             label.Text = "Lütfen şifreyi giriniz:";
@@ -2407,10 +2470,11 @@ namespace PhotoEmin
                             passwordPromptDialog.Controls.Add(confirmButton);
                             passwordPromptDialog.Controls.Add(cancelButton);
 
-                            DialogResult passwordResult = await Task.Run(() => passwordPromptDialog.ShowDialog());
-
-                            if (passwordResult != DialogResult.OK)
+                            if (passwordPromptDialog.ShowDialog() != DialogResult.OK)
+                            {
+                                passwordPromptDialog.Close();
                                 return;
+                            }
 
                             string passwordInput = passwordPromptDialog.Controls[1].Text;
 
@@ -2419,14 +2483,17 @@ namespace PhotoEmin
                                 DialogResult resultLast = MessageBox.Show("Veri tabanınız tamamen kaldırılacak, onaylıyor musunuz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                                 if (resultLast == DialogResult.Yes)
                                 {
+                                    passwordPromptDialog.Close();
                                     break;
                                 }
                                 else return;
                             }
-
+                            passwordPromptDialog.Close();
                             MessageBox.Show("Yanlış şifre girdiniz. Lütfen tekrar deneyin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             await Task.Delay(304);
                         }
+
+                        //BackupManager.RunBackup("beforeDelete_lastBackUp.tar");
                         RemoveDatabase();
                         MessageBox.Show("Veri tabanı başarıyla kaldırıldı", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -2488,9 +2555,8 @@ namespace PhotoEmin
 
         public class BackupManager
         {
-            public static void RunBackup(string filePath = "")
+            public static void RunBackup(string filePath = "", string? backUpName = null)
             {
-                string backUpName = "";
                 // Eğer tarFilePath boş ise varsayılan yolu belirle
                 if (string.IsNullOrEmpty(filePath))
                 {
@@ -2505,10 +2571,8 @@ namespace PhotoEmin
 
                     // Varsayılan klasör yolunu tarFilePath'e ata
                     filePath = defaultFolderPath;
-                    backUpName = "last_backup.tar";
                 }
-                else backUpName = DateTime.Now.ToString("ddMMyyyyHHmmss") + "_backup.tar";
-                
+                backUpName = string.IsNullOrEmpty(backUpName) ? DateTime.Now.ToString("ddMMyyyyHHmmss") + "_backup.tar" : DateTime.Now.ToString("ddMMyyyyHHmmss") + backUpName + ".tar";
                 
                 string backupFilePath = Path.Combine(filePath, backUpName);
                 //BackupManager.RunBackup(@"C:\Users\MSI\Downloads\Makbuz\Yedekler\backup.tar");
@@ -2595,6 +2659,7 @@ namespace PhotoEmin
                             passwordPromptDialog.Text = "Şifre Girişi";
                             passwordPromptDialog.Size = new Size(300, 150);
                             passwordPromptDialog.StartPosition = FormStartPosition.CenterParent;
+                            passwordPromptDialog.FormBorderStyle = FormBorderStyle.FixedDialog;
 
                             Label label = new Label();
                             label.Text = "Lütfen şifreyi giriniz:";
@@ -2624,10 +2689,12 @@ namespace PhotoEmin
                             passwordPromptDialog.Controls.Add(confirmButton);
                             passwordPromptDialog.Controls.Add(cancelButton);
 
-                            DialogResult passwordResult = await Task.Run(() => passwordPromptDialog.ShowDialog());
 
-                            if (passwordResult != DialogResult.OK)
+                            if (passwordPromptDialog.ShowDialog() != DialogResult.OK)
+                            {
+                                passwordPromptDialog.Close();
                                 return;
+                            }
 
                             string passwordInput = textBox.Text;
 
@@ -2640,15 +2707,19 @@ namespace PhotoEmin
                                 }
                                 else
                                 {
+                                    //BackupManager.RunBackup("beforeUpload_lastBackUp.tar");
                                     RemoveDatabase();
+                                    await Task.Delay(1000);
                                     CreateDatabase();
                                 }
+                                await Task.Delay(2000);
                                 string backupFilePath = txtUploadDBLocation.Text;
                                 RestoreManager.RunRestore(txtUploadDBLocation.Text);
                                 MessageBox.Show("Veritabanı geri yükleme işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                passwordPromptDialog.Close();
                                 break;
                             }
-
+                            passwordPromptDialog.Close();
                             MessageBox.Show("Yanlış şifre girdiniz. Lütfen tekrar deneyin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             await Task.Delay(304);
                         }
@@ -2662,7 +2733,7 @@ namespace PhotoEmin
                 return;
             }
         }
-
+       
         public class RestoreManager
         {
             public static void RunRestore(string tarFilePath)
