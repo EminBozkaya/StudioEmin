@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             dataGridRecords = new DataGridView();
             btnFindFolder = new Button();
@@ -95,25 +95,6 @@
             label1 = new Label();
             btnSearchPhoto = new Button();
             pnlBorder = new Panel();
-            pnlDBprocess = new Panel();
-            txtUploadDBLocation = new TextBox();
-            label56 = new Label();
-            btnUploadDBLocation = new Button();
-            txtDownloadDBLocation = new TextBox();
-            label55 = new Label();
-            btnDownloadDBLocation = new Button();
-            richTextBox2 = new RichTextBox();
-            richTextBox4 = new RichTextBox();
-            richTextBox3 = new RichTextBox();
-            richTextBox1 = new RichTextBox();
-            label54 = new Label();
-            label53 = new Label();
-            label52 = new Label();
-            label51 = new Label();
-            btnRemoveDB = new Button();
-            btnUploadDB = new Button();
-            btnDownloadDB = new Button();
-            btnCreateDB = new Button();
             flowLayoutPanelArchive = new Panel();
             pnlArchiveContents = new Panel();
             pnlSearchPhoto = new Panel();
@@ -188,8 +169,28 @@
             btnAddSpareToArchive = new Button();
             btnMakeSpare = new Button();
             btnAddFoldersToArchive = new Button();
+            pnlDBprocess = new Panel();
+            txtUploadDBLocation = new TextBox();
+            label56 = new Label();
+            btnUploadDBLocation = new Button();
+            txtDownloadDBLocation = new TextBox();
+            label55 = new Label();
+            btnDownloadDBLocation = new Button();
+            richTextBox2 = new RichTextBox();
+            richTextBox4 = new RichTextBox();
+            richTextBox3 = new RichTextBox();
+            richTextBox1 = new RichTextBox();
+            label54 = new Label();
+            label53 = new Label();
+            label52 = new Label();
+            label51 = new Label();
+            btnRemoveDB = new Button();
+            btnUploadDB = new Button();
+            btnDownloadDB = new Button();
+            btnCreateDB = new Button();
             label50 = new Label();
             btnDB = new Button();
+            label57 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridRecords).BeginInit();
             pnlReceipt.SuspendLayout();
             pnlReceiptInputs.SuspendLayout();
@@ -198,7 +199,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBoxLoading).BeginInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             pnlBorder.SuspendLayout();
-            pnlDBprocess.SuspendLayout();
             flowLayoutPanelArchive.SuspendLayout();
             pnlArchiveContents.SuspendLayout();
             pnlSearchPhoto.SuspendLayout();
@@ -212,6 +212,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBoxLoadingDbToFolder).BeginInit();
             pnlAddFoldersToArchive.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxAddFolderToArchive).BeginInit();
+            pnlDBprocess.SuspendLayout();
             SuspendLayout();
             // 
             // dataGridRecords
@@ -219,23 +220,23 @@
             dataGridRecords.AllowUserToAddRows = false;
             dataGridRecords.AllowUserToOrderColumns = true;
             dataGridRecords.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridRecords.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dataGridRecords.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridRecords.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dataGridRecords.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dataGridRecords.DefaultCellStyle = dataGridViewCellStyle4;
             dataGridRecords.Location = new Point(3, 70);
             dataGridRecords.Name = "dataGridRecords";
             dataGridRecords.RowHeadersVisible = false;
@@ -382,6 +383,7 @@
             // 
             pnlReceiptInputs.BackgroundImage = Extensions.Resources.printPAPER;
             pnlReceiptInputs.BackgroundImageLayout = ImageLayout.Stretch;
+            pnlReceiptInputs.Controls.Add(label57);
             pnlReceiptInputs.Controls.Add(numQty);
             pnlReceiptInputs.Controls.Add(txtDeliveryDate);
             pnlReceiptInputs.Controls.Add(txtRemainingAmount);
@@ -408,7 +410,7 @@
             // numQty
             // 
             numQty.Font = new Font("Arial", 14.25F);
-            numQty.Location = new Point(306, 145);
+            numQty.Location = new Point(306, 153);
             numQty.Margin = new Padding(2, 1, 2, 1);
             numQty.Name = "numQty";
             numQty.Size = new Size(75, 29);
@@ -457,7 +459,7 @@
             // txtDimensions
             // 
             txtDimensions.Font = new Font("Arial", 14.25F);
-            txtDimensions.Location = new Point(139, 144);
+            txtDimensions.Location = new Point(139, 152);
             txtDimensions.Name = "txtDimensions";
             txtDimensions.Size = new Size(108, 29);
             txtDimensions.TabIndex = 3;
@@ -485,7 +487,7 @@
             // 
             // label5
             // 
-            label5.Location = new Point(247, 147);
+            label5.Location = new Point(247, 155);
             label5.Name = "label5";
             label5.Size = new Size(56, 23);
             label5.TabIndex = 0;
@@ -509,7 +511,7 @@
             // 
             // label4
             // 
-            label4.Location = new Point(91, 147);
+            label4.Location = new Point(91, 155);
             label4.Name = "label4";
             label4.Size = new Size(100, 23);
             label4.TabIndex = 0;
@@ -958,240 +960,14 @@
             // 
             pnlBorder.Anchor = AnchorStyles.Top;
             pnlBorder.BackColor = Color.Silver;
+            pnlBorder.Controls.Add(pnlReceipt);
             pnlBorder.Controls.Add(flowLayoutPanelArchive);
             pnlBorder.Controls.Add(pnlDBprocess);
-            pnlBorder.Controls.Add(pnlReceipt);
             pnlBorder.Controls.Add(pnlFindFolder);
             pnlBorder.Location = new Point(214, 71);
             pnlBorder.Name = "pnlBorder";
             pnlBorder.Size = new Size(1365, 657);
             pnlBorder.TabIndex = 18;
-            // 
-            // pnlDBprocess
-            // 
-            pnlDBprocess.Controls.Add(txtUploadDBLocation);
-            pnlDBprocess.Controls.Add(label56);
-            pnlDBprocess.Controls.Add(btnUploadDBLocation);
-            pnlDBprocess.Controls.Add(txtDownloadDBLocation);
-            pnlDBprocess.Controls.Add(label55);
-            pnlDBprocess.Controls.Add(btnDownloadDBLocation);
-            pnlDBprocess.Controls.Add(richTextBox2);
-            pnlDBprocess.Controls.Add(richTextBox4);
-            pnlDBprocess.Controls.Add(richTextBox3);
-            pnlDBprocess.Controls.Add(richTextBox1);
-            pnlDBprocess.Controls.Add(label54);
-            pnlDBprocess.Controls.Add(label53);
-            pnlDBprocess.Controls.Add(label52);
-            pnlDBprocess.Controls.Add(label51);
-            pnlDBprocess.Controls.Add(btnRemoveDB);
-            pnlDBprocess.Controls.Add(btnUploadDB);
-            pnlDBprocess.Controls.Add(btnDownloadDB);
-            pnlDBprocess.Controls.Add(btnCreateDB);
-            pnlDBprocess.Location = new Point(24, 15);
-            pnlDBprocess.Name = "pnlDBprocess";
-            pnlDBprocess.Size = new Size(1317, 618);
-            pnlDBprocess.TabIndex = 18;
-            // 
-            // txtUploadDBLocation
-            // 
-            txtUploadDBLocation.BackColor = SystemColors.ScrollBar;
-            txtUploadDBLocation.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtUploadDBLocation.Location = new Point(687, 383);
-            txtUploadDBLocation.Name = "txtUploadDBLocation";
-            txtUploadDBLocation.ReadOnly = true;
-            txtUploadDBLocation.Size = new Size(282, 27);
-            txtUploadDBLocation.TabIndex = 39;
-            // 
-            // label56
-            // 
-            label56.AutoSize = true;
-            label56.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label56.Location = new Point(794, 335);
-            label56.Name = "label56";
-            label56.Size = new Size(141, 26);
-            label56.TabIndex = 37;
-            label56.Text = "Seçilen Yedek:";
-            // 
-            // btnUploadDBLocation
-            // 
-            btnUploadDBLocation.BackgroundImage = Extensions.Resources.btnDB;
-            btnUploadDBLocation.BackgroundImageLayout = ImageLayout.Stretch;
-            btnUploadDBLocation.FlatAppearance.BorderSize = 0;
-            btnUploadDBLocation.FlatStyle = FlatStyle.Flat;
-            btnUploadDBLocation.Location = new Point(702, 309);
-            btnUploadDBLocation.Name = "btnUploadDBLocation";
-            btnUploadDBLocation.Size = new Size(86, 67);
-            btnUploadDBLocation.TabIndex = 38;
-            btnUploadDBLocation.UseVisualStyleBackColor = true;
-            btnUploadDBLocation.Click += btnUploadDBLocation_Click;
-            // 
-            // txtDownloadDBLocation
-            // 
-            txtDownloadDBLocation.BackColor = SystemColors.ScrollBar;
-            txtDownloadDBLocation.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtDownloadDBLocation.Location = new Point(333, 383);
-            txtDownloadDBLocation.Name = "txtDownloadDBLocation";
-            txtDownloadDBLocation.ReadOnly = true;
-            txtDownloadDBLocation.Size = new Size(282, 27);
-            txtDownloadDBLocation.TabIndex = 36;
-            // 
-            // label55
-            // 
-            label55.AutoSize = true;
-            label55.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label55.Location = new Point(440, 335);
-            label55.Name = "label55";
-            label55.Size = new Size(154, 26);
-            label55.TabIndex = 34;
-            label55.Text = "Seçilen Konum:";
-            // 
-            // btnDownloadDBLocation
-            // 
-            btnDownloadDBLocation.BackgroundImage = Extensions.Resources.btnHardDrive;
-            btnDownloadDBLocation.BackgroundImageLayout = ImageLayout.Stretch;
-            btnDownloadDBLocation.FlatAppearance.BorderSize = 0;
-            btnDownloadDBLocation.FlatStyle = FlatStyle.Flat;
-            btnDownloadDBLocation.Location = new Point(348, 319);
-            btnDownloadDBLocation.Name = "btnDownloadDBLocation";
-            btnDownloadDBLocation.Size = new Size(86, 57);
-            btnDownloadDBLocation.TabIndex = 35;
-            btnDownloadDBLocation.UseVisualStyleBackColor = true;
-            btnDownloadDBLocation.Click += btnDownloadDBLocation_Click;
-            // 
-            // richTextBox2
-            // 
-            richTextBox2.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 162);
-            richTextBox2.ForeColor = Color.ForestGreen;
-            richTextBox2.Location = new Point(19, 416);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.Size = new Size(218, 135);
-            richTextBox2.TabIndex = 33;
-            richTextBox2.Text = "- Program ilk olarak bu işlemle başlatılmalıdır.\n- Bu işlem bir kez gerçekleştirilmelidir.\n- Sistem ilk kurulduğunda boş bir veri tabanı oluşturulur.\n";
-            // 
-            // richTextBox4
-            // 
-            richTextBox4.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            richTextBox4.ForeColor = Color.Red;
-            richTextBox4.Location = new Point(1048, 416);
-            richTextBox4.Name = "richTextBox4";
-            richTextBox4.Size = new Size(218, 199);
-            richTextBox4.TabIndex = 33;
-            richTextBox4.Text = resources.GetString("richTextBox4.Text");
-            // 
-            // richTextBox3
-            // 
-            richTextBox3.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            richTextBox3.Location = new Point(720, 416);
-            richTextBox3.Name = "richTextBox3";
-            richTextBox3.Size = new Size(218, 150);
-            richTextBox3.TabIndex = 33;
-            richTextBox3.Text = resources.GetString("richTextBox3.Text");
-            // 
-            // richTextBox1
-            // 
-            richTextBox1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 162);
-            richTextBox1.ForeColor = SystemColors.MenuHighlight;
-            richTextBox1.Location = new Point(356, 416);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(218, 120);
-            richTextBox1.TabIndex = 33;
-            richTextBox1.Text = "- Bu işlem, kayıtlarımızın bulunduğu veri tabanını\n <seçilen konumda> \nyedeklemek için kulanılmalıdır.";
-            // 
-            // label54
-            // 
-            label54.AutoSize = true;
-            label54.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label54.ForeColor = SystemColors.ControlText;
-            label54.Location = new Point(1046, 274);
-            label54.Name = "label54";
-            label54.Size = new Size(196, 32);
-            label54.TabIndex = 31;
-            label54.Text = "Veri Tabanını Sil";
-            // 
-            // label53
-            // 
-            label53.AutoSize = true;
-            label53.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label53.ForeColor = SystemColors.ControlText;
-            label53.Location = new Point(638, 274);
-            label53.Name = "label53";
-            label53.Size = new Size(360, 32);
-            label53.TabIndex = 31;
-            label53.Text = "Yedekten Veri Tabanını Oluştur";
-            // 
-            // label52
-            // 
-            label52.AutoSize = true;
-            label52.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label52.ForeColor = SystemColors.ControlText;
-            label52.Location = new Point(333, 278);
-            label52.Name = "label52";
-            label52.Size = new Size(253, 32);
-            label52.TabIndex = 31;
-            label52.Text = "Veri Tabanını Yedekle";
-            // 
-            // label51
-            // 
-            label51.AutoSize = true;
-            label51.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label51.ForeColor = SystemColors.ControlText;
-            label51.Location = new Point(13, 278);
-            label51.Name = "label51";
-            label51.Size = new Size(252, 32);
-            label51.TabIndex = 31;
-            label51.Text = "Veri Tabanını Oluştur";
-            // 
-            // btnRemoveDB
-            // 
-            btnRemoveDB.BackgroundImage = Extensions.Resources.btnClearDB;
-            btnRemoveDB.BackgroundImageLayout = ImageLayout.Stretch;
-            btnRemoveDB.FlatAppearance.BorderSize = 0;
-            btnRemoveDB.FlatStyle = FlatStyle.Flat;
-            btnRemoveDB.Location = new Point(1061, 84);
-            btnRemoveDB.Name = "btnRemoveDB";
-            btnRemoveDB.Size = new Size(175, 175);
-            btnRemoveDB.TabIndex = 32;
-            btnRemoveDB.UseVisualStyleBackColor = true;
-            btnRemoveDB.Click += btnRemoveDB_Click;
-            // 
-            // btnUploadDB
-            // 
-            btnUploadDB.BackgroundImage = Extensions.Resources.btnUploadDB;
-            btnUploadDB.BackgroundImageLayout = ImageLayout.Stretch;
-            btnUploadDB.FlatAppearance.BorderSize = 0;
-            btnUploadDB.FlatStyle = FlatStyle.Flat;
-            btnUploadDB.Location = new Point(728, 84);
-            btnUploadDB.Name = "btnUploadDB";
-            btnUploadDB.Size = new Size(175, 175);
-            btnUploadDB.TabIndex = 32;
-            btnUploadDB.UseVisualStyleBackColor = true;
-            btnUploadDB.Click += btnUploadDB_Click;
-            // 
-            // btnDownloadDB
-            // 
-            btnDownloadDB.BackgroundImage = Extensions.Resources.btnDownloadDB;
-            btnDownloadDB.BackgroundImageLayout = ImageLayout.Stretch;
-            btnDownloadDB.FlatAppearance.BorderSize = 0;
-            btnDownloadDB.FlatStyle = FlatStyle.Flat;
-            btnDownloadDB.Location = new Point(371, 88);
-            btnDownloadDB.Name = "btnDownloadDB";
-            btnDownloadDB.Size = new Size(175, 175);
-            btnDownloadDB.TabIndex = 32;
-            btnDownloadDB.UseVisualStyleBackColor = true;
-            btnDownloadDB.Click += btnDownloadDB_Click;
-            // 
-            // btnCreateDB
-            // 
-            btnCreateDB.BackgroundImage = Extensions.Resources.btnCreateDB;
-            btnCreateDB.BackgroundImageLayout = ImageLayout.Stretch;
-            btnCreateDB.FlatAppearance.BorderSize = 0;
-            btnCreateDB.FlatStyle = FlatStyle.Flat;
-            btnCreateDB.Location = new Point(51, 88);
-            btnCreateDB.Name = "btnCreateDB";
-            btnCreateDB.Size = new Size(175, 175);
-            btnCreateDB.TabIndex = 32;
-            btnCreateDB.UseVisualStyleBackColor = true;
-            btnCreateDB.Click += btnCreateDB_Click;
             // 
             // flowLayoutPanelArchive
             // 
@@ -1317,12 +1093,12 @@
             // label46
             // 
             label46.AutoSize = true;
-            label46.BackColor = Color.Gold;
-            label46.Font = new Font("Segoe UI", 12F, FontStyle.Underline, GraphicsUnit.Point, 0);
+            label46.BackColor = Color.Transparent;
+            label46.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 162);
             label46.ForeColor = Color.Black;
             label46.Location = new Point(46, 3);
             label46.Name = "label46";
-            label46.Size = new Size(213, 21);
+            label46.Size = new Size(236, 21);
             label46.TabIndex = 33;
             label46.Text = "Kaydın Klasörünü Açmak İçin:";
             // 
@@ -2119,6 +1895,232 @@
             btnAddFoldersToArchive.UseVisualStyleBackColor = false;
             btnAddFoldersToArchive.Click += btnAddFoldersToArchive_Click;
             // 
+            // pnlDBprocess
+            // 
+            pnlDBprocess.Controls.Add(txtUploadDBLocation);
+            pnlDBprocess.Controls.Add(label56);
+            pnlDBprocess.Controls.Add(btnUploadDBLocation);
+            pnlDBprocess.Controls.Add(txtDownloadDBLocation);
+            pnlDBprocess.Controls.Add(label55);
+            pnlDBprocess.Controls.Add(btnDownloadDBLocation);
+            pnlDBprocess.Controls.Add(richTextBox2);
+            pnlDBprocess.Controls.Add(richTextBox4);
+            pnlDBprocess.Controls.Add(richTextBox3);
+            pnlDBprocess.Controls.Add(richTextBox1);
+            pnlDBprocess.Controls.Add(label54);
+            pnlDBprocess.Controls.Add(label53);
+            pnlDBprocess.Controls.Add(label52);
+            pnlDBprocess.Controls.Add(label51);
+            pnlDBprocess.Controls.Add(btnRemoveDB);
+            pnlDBprocess.Controls.Add(btnUploadDB);
+            pnlDBprocess.Controls.Add(btnDownloadDB);
+            pnlDBprocess.Controls.Add(btnCreateDB);
+            pnlDBprocess.Location = new Point(24, 15);
+            pnlDBprocess.Name = "pnlDBprocess";
+            pnlDBprocess.Size = new Size(1317, 618);
+            pnlDBprocess.TabIndex = 18;
+            // 
+            // txtUploadDBLocation
+            // 
+            txtUploadDBLocation.BackColor = SystemColors.ScrollBar;
+            txtUploadDBLocation.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtUploadDBLocation.Location = new Point(687, 383);
+            txtUploadDBLocation.Name = "txtUploadDBLocation";
+            txtUploadDBLocation.ReadOnly = true;
+            txtUploadDBLocation.Size = new Size(282, 27);
+            txtUploadDBLocation.TabIndex = 39;
+            // 
+            // label56
+            // 
+            label56.AutoSize = true;
+            label56.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label56.Location = new Point(794, 335);
+            label56.Name = "label56";
+            label56.Size = new Size(141, 26);
+            label56.TabIndex = 37;
+            label56.Text = "Seçilen Yedek:";
+            // 
+            // btnUploadDBLocation
+            // 
+            btnUploadDBLocation.BackgroundImage = Extensions.Resources.btnDB;
+            btnUploadDBLocation.BackgroundImageLayout = ImageLayout.Stretch;
+            btnUploadDBLocation.FlatAppearance.BorderSize = 0;
+            btnUploadDBLocation.FlatStyle = FlatStyle.Flat;
+            btnUploadDBLocation.Location = new Point(702, 309);
+            btnUploadDBLocation.Name = "btnUploadDBLocation";
+            btnUploadDBLocation.Size = new Size(86, 67);
+            btnUploadDBLocation.TabIndex = 38;
+            btnUploadDBLocation.UseVisualStyleBackColor = true;
+            btnUploadDBLocation.Click += btnUploadDBLocation_Click;
+            // 
+            // txtDownloadDBLocation
+            // 
+            txtDownloadDBLocation.BackColor = SystemColors.ScrollBar;
+            txtDownloadDBLocation.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtDownloadDBLocation.Location = new Point(333, 383);
+            txtDownloadDBLocation.Name = "txtDownloadDBLocation";
+            txtDownloadDBLocation.ReadOnly = true;
+            txtDownloadDBLocation.Size = new Size(282, 27);
+            txtDownloadDBLocation.TabIndex = 36;
+            // 
+            // label55
+            // 
+            label55.AutoSize = true;
+            label55.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label55.Location = new Point(440, 335);
+            label55.Name = "label55";
+            label55.Size = new Size(154, 26);
+            label55.TabIndex = 34;
+            label55.Text = "Seçilen Konum:";
+            // 
+            // btnDownloadDBLocation
+            // 
+            btnDownloadDBLocation.BackgroundImage = Extensions.Resources.btnHardDrive;
+            btnDownloadDBLocation.BackgroundImageLayout = ImageLayout.Stretch;
+            btnDownloadDBLocation.FlatAppearance.BorderSize = 0;
+            btnDownloadDBLocation.FlatStyle = FlatStyle.Flat;
+            btnDownloadDBLocation.Location = new Point(348, 319);
+            btnDownloadDBLocation.Name = "btnDownloadDBLocation";
+            btnDownloadDBLocation.Size = new Size(86, 57);
+            btnDownloadDBLocation.TabIndex = 35;
+            btnDownloadDBLocation.UseVisualStyleBackColor = true;
+            btnDownloadDBLocation.Click += btnDownloadDBLocation_Click;
+            // 
+            // richTextBox2
+            // 
+            richTextBox2.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 162);
+            richTextBox2.ForeColor = Color.ForestGreen;
+            richTextBox2.Location = new Point(19, 416);
+            richTextBox2.Name = "richTextBox2";
+            richTextBox2.Size = new Size(218, 135);
+            richTextBox2.TabIndex = 33;
+            richTextBox2.Text = "- Program ilk çalıştırıldığında veri tabanı otomatik olarak oluşturulur.\n- Şayet veri tabanı oluşturulamamışsa veya silinmişse bu işlev sayesinde boş bir veri tabanı oluşturulabilir.";
+            // 
+            // richTextBox4
+            // 
+            richTextBox4.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            richTextBox4.ForeColor = Color.Red;
+            richTextBox4.Location = new Point(1048, 416);
+            richTextBox4.Name = "richTextBox4";
+            richTextBox4.Size = new Size(218, 199);
+            richTextBox4.TabIndex = 33;
+            richTextBox4.Text = resources.GetString("richTextBox4.Text");
+            // 
+            // richTextBox3
+            // 
+            richTextBox3.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            richTextBox3.Location = new Point(720, 416);
+            richTextBox3.Name = "richTextBox3";
+            richTextBox3.Size = new Size(218, 150);
+            richTextBox3.TabIndex = 33;
+            richTextBox3.Text = resources.GetString("richTextBox3.Text");
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 162);
+            richTextBox1.ForeColor = SystemColors.MenuHighlight;
+            richTextBox1.Location = new Point(356, 416);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new Size(218, 120);
+            richTextBox1.TabIndex = 33;
+            richTextBox1.Text = "- Bu işlem, kayıtlarımızın bulunduğu veri tabanını\n <seçilen konumda> \nyedeklemek için kulanılmalıdır.";
+            // 
+            // label54
+            // 
+            label54.AutoSize = true;
+            label54.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            label54.ForeColor = SystemColors.ControlText;
+            label54.Location = new Point(1046, 274);
+            label54.Name = "label54";
+            label54.Size = new Size(196, 32);
+            label54.TabIndex = 31;
+            label54.Text = "Veri Tabanını Sil";
+            // 
+            // label53
+            // 
+            label53.AutoSize = true;
+            label53.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            label53.ForeColor = SystemColors.ControlText;
+            label53.Location = new Point(638, 274);
+            label53.Name = "label53";
+            label53.Size = new Size(360, 32);
+            label53.TabIndex = 31;
+            label53.Text = "Yedekten Veri Tabanını Oluştur";
+            // 
+            // label52
+            // 
+            label52.AutoSize = true;
+            label52.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            label52.ForeColor = SystemColors.ControlText;
+            label52.Location = new Point(333, 278);
+            label52.Name = "label52";
+            label52.Size = new Size(253, 32);
+            label52.TabIndex = 31;
+            label52.Text = "Veri Tabanını Yedekle";
+            // 
+            // label51
+            // 
+            label51.AutoSize = true;
+            label51.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            label51.ForeColor = SystemColors.ControlText;
+            label51.Location = new Point(13, 278);
+            label51.Name = "label51";
+            label51.Size = new Size(252, 32);
+            label51.TabIndex = 31;
+            label51.Text = "Veri Tabanını Oluştur";
+            // 
+            // btnRemoveDB
+            // 
+            btnRemoveDB.BackgroundImage = Extensions.Resources.btnClearDB;
+            btnRemoveDB.BackgroundImageLayout = ImageLayout.Stretch;
+            btnRemoveDB.FlatAppearance.BorderSize = 0;
+            btnRemoveDB.FlatStyle = FlatStyle.Flat;
+            btnRemoveDB.Location = new Point(1061, 84);
+            btnRemoveDB.Name = "btnRemoveDB";
+            btnRemoveDB.Size = new Size(175, 175);
+            btnRemoveDB.TabIndex = 32;
+            btnRemoveDB.UseVisualStyleBackColor = true;
+            btnRemoveDB.Click += btnRemoveDB_Click;
+            // 
+            // btnUploadDB
+            // 
+            btnUploadDB.BackgroundImage = Extensions.Resources.btnUploadDB;
+            btnUploadDB.BackgroundImageLayout = ImageLayout.Stretch;
+            btnUploadDB.FlatAppearance.BorderSize = 0;
+            btnUploadDB.FlatStyle = FlatStyle.Flat;
+            btnUploadDB.Location = new Point(728, 84);
+            btnUploadDB.Name = "btnUploadDB";
+            btnUploadDB.Size = new Size(175, 175);
+            btnUploadDB.TabIndex = 32;
+            btnUploadDB.UseVisualStyleBackColor = true;
+            btnUploadDB.Click += btnUploadDB_Click;
+            // 
+            // btnDownloadDB
+            // 
+            btnDownloadDB.BackgroundImage = Extensions.Resources.btnDownloadDB;
+            btnDownloadDB.BackgroundImageLayout = ImageLayout.Stretch;
+            btnDownloadDB.FlatAppearance.BorderSize = 0;
+            btnDownloadDB.FlatStyle = FlatStyle.Flat;
+            btnDownloadDB.Location = new Point(371, 88);
+            btnDownloadDB.Name = "btnDownloadDB";
+            btnDownloadDB.Size = new Size(175, 175);
+            btnDownloadDB.TabIndex = 32;
+            btnDownloadDB.UseVisualStyleBackColor = true;
+            btnDownloadDB.Click += btnDownloadDB_Click;
+            // 
+            // btnCreateDB
+            // 
+            btnCreateDB.BackgroundImage = Extensions.Resources.btnCreateDB;
+            btnCreateDB.BackgroundImageLayout = ImageLayout.Stretch;
+            btnCreateDB.FlatAppearance.BorderSize = 0;
+            btnCreateDB.FlatStyle = FlatStyle.Flat;
+            btnCreateDB.Location = new Point(51, 88);
+            btnCreateDB.Name = "btnCreateDB";
+            btnCreateDB.Size = new Size(175, 175);
+            btnCreateDB.TabIndex = 32;
+            btnCreateDB.UseVisualStyleBackColor = true;
+            btnCreateDB.Click += btnCreateDB_Click;
+            // 
             // label50
             // 
             label50.AutoSize = true;
@@ -2144,6 +2146,16 @@
             btnDB.TabIndex = 19;
             btnDB.UseVisualStyleBackColor = false;
             btnDB.Click += btnDB_Click;
+            // 
+            // label57
+            // 
+            label57.AutoSize = true;
+            label57.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            label57.Location = new Point(94, 125);
+            label57.Name = "label57";
+            label57.Size = new Size(285, 15);
+            label57.TabIndex = 10;
+            label57.Text = "Lütfen 'İsim Soyisim' kısmında alt çizgi '_' KULLANMAYINIZ!";
             // 
             // Form1
             // 
@@ -2179,8 +2191,6 @@
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             pnlBorder.ResumeLayout(false);
             pnlBorder.PerformLayout();
-            pnlDBprocess.ResumeLayout(false);
-            pnlDBprocess.PerformLayout();
             flowLayoutPanelArchive.ResumeLayout(false);
             flowLayoutPanelArchive.PerformLayout();
             pnlArchiveContents.ResumeLayout(false);
@@ -2201,6 +2211,8 @@
             pnlAddFoldersToArchive.ResumeLayout(false);
             pnlAddFoldersToArchive.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxAddFolderToArchive).EndInit();
+            pnlDBprocess.ResumeLayout(false);
+            pnlDBprocess.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2367,5 +2379,6 @@
         private TextBox txtUploadDBLocation;
         private Label label56;
         private Button btnUploadDBLocation;
+        private Label label57;
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Npgsql;
+﻿using Npgsql;
 using NpgsqlTypes;
 using PhotoEmin.Model;
 using System.Data;
@@ -7,15 +6,18 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Globalization;
-using System.Management;
-using System.Text;
 
 namespace PhotoEmin
 {
     public partial class Form1 : Form
     {
+        //passwords:
+        private const string pswDBprocess = "wingman";
+        private const string pswDelete = "emin";
+
         //postgresql
         private const string ConnectionString = "Server=localhost;Port=5432;Database=dbphoto;User Id=postgres;Password=postgres;Encoding=UTF8;";
+        private const string MainConnStr = "Server=localhost;Port=5432;User Id=postgres;Password=postgres;";
 
         //msSql
         //private const string ConnectionString = "Server=localhost;Database=dbphoto;User Id=postgres;Password=postgres;";
@@ -44,7 +46,7 @@ namespace PhotoEmin
                 pictureBoxLoadingSpareToArchive.Visible = false;
                 pnlBorder.Visible = false;
 
-                
+
                 ////kullanılacak olan kod:
                 //ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive");
                 //ManagementObject _disk = searcher.Get().Cast<ManagementObject>().First();
@@ -71,7 +73,7 @@ namespace PhotoEmin
 
                     throw;
                 }
-                
+
             };
 
             // Form üzerinde herhangi bir yere tıklandığında
@@ -433,6 +435,60 @@ namespace PhotoEmin
             e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(20, (int)currentYlast + 2, 235, 103), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
         }
 
+        void PrintProcess()
+        {
+            CreateReceipt();
+            if (!String.IsNullOrEmpty(newReceipt.Name))
+            {
+                ////ön izleme ekranı ile:
+                //printDocument1.DocumentName = "Makbuz";
+                //printPreviewDialog1.Document = printDocument1;
+                //if (printPreviewDialog1.Visible)
+                //{
+                //    printPreviewDialog1.Close();
+                //}
+                //printPreviewDialog1.ShowDialog();
+
+                //Direkt yazdırma:
+                printDocument1.DocumentName = "Makbuz";
+                printDocument1.Print();
+            }
+            else
+            {
+                MessageBox.Show("Lütfen Ad Soyad girin", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        void CreateReceipt()
+        {
+            string name = txtName.Text.Trim().Replace("_", " ");
+            if (!String.IsNullOrEmpty(name))
+            {
+                //name = name.ToUpper(new CultureInfo("tr-TR"));
+                string dimensions = txtDimensions.Text.Trim(); ;
+                decimal quantity = numQty.Value;
+                decimal totalAmount = 0;
+                decimal receivedAmount = 0;
+                decimal remainingAmount = 0;
+                CultureInfo turkishCulture = new CultureInfo("tr-TR");
+                if (decimal.TryParse(txtTotalAmount.Text, turkishCulture, out totalAmount)) { }
+                if (decimal.TryParse(txtReceivedAmount.Text, turkishCulture, out receivedAmount)) { }
+                if (decimal.TryParse(txtRemainingAmount.Text, turkishCulture, out remainingAmount)) { }
+                string deliveryDate = txtDeliveryDate.Text.Trim();
+                string note = txtBoxNotes.Text.Trim();
+
+
+                newReceipt.Name = name;
+                newReceipt.Dimensions = dimensions;
+                newReceipt.Quantity = quantity;
+                newReceipt.TotalAmount = totalAmount;
+                newReceipt.ReceivedAmount = receivedAmount;
+                newReceipt.RemainingAmount = remainingAmount;
+                newReceipt.DeliveryDate = deliveryDate;
+                newReceipt.Note = note;
+            }
+        }
+
         bool SaveProcess(bool isSaveAndPrint = false)
         {
             if (String.IsNullOrEmpty(textBoxFileLocation.Text))
@@ -502,61 +558,12 @@ namespace PhotoEmin
             }
         }
 
-        void CreateReceipt()
-        {
-            string name = txtName.Text.Trim();
-            if (!String.IsNullOrEmpty(name))
-            {
-                //name = name.ToUpper(new CultureInfo("tr-TR"));
-                string dimensions = txtDimensions.Text.Trim(); ;
-                decimal quantity = numQty.Value;
-                decimal totalAmount = 0;
-                decimal receivedAmount = 0;
-                decimal remainingAmount = 0;
-                CultureInfo turkishCulture = new CultureInfo("tr-TR");
-                if (decimal.TryParse(txtTotalAmount.Text, turkishCulture, out totalAmount)) { }
-                if (decimal.TryParse(txtReceivedAmount.Text, turkishCulture, out receivedAmount)) { }
-                if (decimal.TryParse(txtRemainingAmount.Text, turkishCulture, out remainingAmount)) { }
-                string deliveryDate = txtDeliveryDate.Text.Trim();
-                string note = txtBoxNotes.Text.Trim();
-
-
-                newReceipt.Name = name;
-                newReceipt.Dimensions = dimensions;
-                newReceipt.Quantity = quantity;
-                newReceipt.TotalAmount = totalAmount;
-                newReceipt.ReceivedAmount = receivedAmount;
-                newReceipt.RemainingAmount = remainingAmount;
-                newReceipt.DeliveryDate = deliveryDate;
-                newReceipt.Note = note;
-            }
-        }
-
         private void setVisibleAfterSaveProcess(bool status)
         {
             btnSave.Visible = status;
             lblSave.Visible = status;
             btnSaveAndPrint.Visible = status;
             lblSaveAndPrint.Visible = status;
-        }
-
-        void PrintProcess()
-        {
-            CreateReceipt();
-            if (!String.IsNullOrEmpty(newReceipt.Name))
-            {
-                printDocument1.DocumentName = "Makbuz";
-                printPreviewDialog1.Document = printDocument1;
-                if (printPreviewDialog1.Visible)
-                {
-                    printPreviewDialog1.Close();
-                }
-                printPreviewDialog1.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("Lütfen Ad Soyad girin", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
         private void btnSaveAndPrint_Click(object sender, EventArgs e)
@@ -2162,6 +2169,15 @@ namespace PhotoEmin
                                 passwordPromptDialog.Controls.Add(confirmButton);
                                 passwordPromptDialog.Controls.Add(cancelButton);
 
+                                textBox.KeyDown += (s, e) =>
+                                {
+                                    if (e.KeyCode == Keys.Enter)
+                                    {
+                                        passwordPromptDialog.DialogResult = DialogResult.OK;
+                                        passwordPromptDialog.Close();
+                                    }
+                                };
+
                                 if (passwordPromptDialog.ShowDialog() != DialogResult.OK)
                                 {
                                     passwordPromptDialog.Close();
@@ -2170,7 +2186,7 @@ namespace PhotoEmin
 
                                 string passwordInput = passwordPromptDialog.Controls[1].Text;
 
-                                if (passwordInput == "emin")
+                                if (passwordInput == pswDelete)
                                 {
                                     passwordPromptDialog.Close();
                                     break;
@@ -2224,6 +2240,10 @@ namespace PhotoEmin
 
         private async void btnDB_Click(object sender, EventArgs e)
         {
+            pnlBorder.Visible = false;
+            pnlReceipt.Visible = false;
+            pnlFindFolder.Visible = false;
+            flowLayoutPanelArchive.Visible = false;
             while (true)
             {
                 Form passwordPromptDialog = new Form();
@@ -2262,6 +2282,15 @@ namespace PhotoEmin
                 passwordPromptDialog.Controls.Add(confirmButton);
                 passwordPromptDialog.Controls.Add(cancelButton);
 
+                textBox.KeyDown += (s, e) =>
+                {
+                    if (e.KeyCode == Keys.Enter)
+                    {
+                        passwordPromptDialog.DialogResult = DialogResult.OK;
+                        passwordPromptDialog.Close();
+                    }
+                };
+
                 if (passwordPromptDialog.ShowDialog() != DialogResult.OK)
                 {
                     passwordPromptDialog.Close();
@@ -2270,13 +2299,10 @@ namespace PhotoEmin
 
                 string passwordInput = passwordPromptDialog.Controls[1].Text;
 
-                if (passwordInput == "wingman")
+                if (passwordInput == pswDBprocess)
                 {
                     passwordPromptDialog.Close();
                     pnlBorder.Visible = true;
-                    pnlReceipt.Visible = false;
-                    pnlFindFolder.Visible = false;
-                    flowLayoutPanelArchive.Visible = false;
                     pnlDBprocess.Visible = true;
                     break;
                 }
@@ -2284,7 +2310,7 @@ namespace PhotoEmin
                 MessageBox.Show("Yanlış şifre girdiniz. Lütfen tekrar deneyin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 await Task.Delay(304);
             }
-            
+
         }
 
         private void btnCreateDB_Click(object sender, EventArgs e)
@@ -2314,7 +2340,7 @@ namespace PhotoEmin
 
         private bool CheckDatabaseExists()
         {
-            using (var conn = new NpgsqlConnection("Server=localhost;Port=5432;User Id=postgres;Password=postgres;"))
+            using (var conn = new NpgsqlConnection(MainConnStr))
             {
                 try
                 {
@@ -2337,7 +2363,7 @@ namespace PhotoEmin
 
         private void CreateDatabase()
         {
-            using (var conn = new NpgsqlConnection("Server=localhost;Port=5432;User Id=postgres;Password=postgres;"))
+            using (var conn = new NpgsqlConnection(MainConnStr))
             {
                 try
                 {
@@ -2470,6 +2496,15 @@ namespace PhotoEmin
                             passwordPromptDialog.Controls.Add(confirmButton);
                             passwordPromptDialog.Controls.Add(cancelButton);
 
+                            textBox.KeyDown += (s, e) =>
+                            {
+                                if (e.KeyCode == Keys.Enter)
+                                {
+                                    passwordPromptDialog.DialogResult = DialogResult.OK;
+                                    passwordPromptDialog.Close();
+                                }
+                            };
+
                             if (passwordPromptDialog.ShowDialog() != DialogResult.OK)
                             {
                                 passwordPromptDialog.Close();
@@ -2478,7 +2513,7 @@ namespace PhotoEmin
 
                             string passwordInput = passwordPromptDialog.Controls[1].Text;
 
-                            if (passwordInput == "emin")
+                            if (passwordInput == pswDelete)
                             {
                                 DialogResult resultLast = MessageBox.Show("Veri tabanınız tamamen kaldırılacak, onaylıyor musunuz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                                 if (resultLast == DialogResult.Yes)
@@ -2511,7 +2546,7 @@ namespace PhotoEmin
 
         private void RemoveDatabase()
         {
-            var connectionStringBuilder = new NpgsqlConnectionStringBuilder("Server=localhost;Port=5432;User Id=postgres;Password=postgres;");
+            var connectionStringBuilder = new NpgsqlConnectionStringBuilder(MainConnStr);
             connectionStringBuilder.Database = "postgres"; // Yönetici veritabanı
 
             using (var conn = new NpgsqlConnection(connectionStringBuilder.ConnectionString))
@@ -2573,7 +2608,7 @@ namespace PhotoEmin
                     filePath = defaultFolderPath;
                 }
                 backUpName = string.IsNullOrEmpty(backUpName) ? DateTime.Now.ToString("ddMMyyyyHHmmss") + "_backup.tar" : DateTime.Now.ToString("ddMMyyyyHHmmss") + backUpName + ".tar";
-                
+
                 string backupFilePath = Path.Combine(filePath, backUpName);
                 //BackupManager.RunBackup(@"C:\Users\MSI\Downloads\Makbuz\Yedekler\backup.tar");
                 string postgreSQLPath = @"C:\Program Files\PostgreSQL";
@@ -2689,6 +2724,14 @@ namespace PhotoEmin
                             passwordPromptDialog.Controls.Add(confirmButton);
                             passwordPromptDialog.Controls.Add(cancelButton);
 
+                            textBox.KeyDown += (s, e) =>
+                            {
+                                if (e.KeyCode == Keys.Enter)
+                                {
+                                    passwordPromptDialog.DialogResult = DialogResult.OK;
+                                    passwordPromptDialog.Close();
+                                }
+                            };
 
                             if (passwordPromptDialog.ShowDialog() != DialogResult.OK)
                             {
@@ -2698,7 +2741,7 @@ namespace PhotoEmin
 
                             string passwordInput = textBox.Text;
 
-                            if (passwordInput == "emin")
+                            if (passwordInput == pswDelete)
                             {
                                 // Şifre doğruysa işlemi gerçekleştir
                                 if (!CheckDatabaseExists())
@@ -2733,7 +2776,7 @@ namespace PhotoEmin
                 return;
             }
         }
-       
+
         public class RestoreManager
         {
             public static void RunRestore(string tarFilePath)
