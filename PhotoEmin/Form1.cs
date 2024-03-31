@@ -269,23 +269,23 @@ namespace PhotoEmin
             //string note = "heeey";
 
             // Logo eklemek
-            Bitmap logo = Extensions.Resources.ResimMakbuz;
+            Bitmap logo = Extensions.Resources.Studyoeminlogo;
             int logoWidth = 240;
             int logoHeight = 75;
             e.Graphics!.DrawImage(logo, new Rectangle((e.PageBounds.Width - logoWidth) / 2, 0, logoWidth, logoHeight));
 
-            // Başlık eklemek
-            Font titleFont = new Font("Arial", 10, FontStyle.Bold);
-            string titleText = "www.studyoemin.com";
-            SizeF titleSize = e.Graphics.MeasureString(titleText, titleFont);
-            e.Graphics.DrawString(titleText, titleFont, Brushes.Black, new PointF((e.PageBounds.Width - titleSize.Width) / 2, 5 + logoHeight));
+            //// Başlık eklemek
+            //Font titleFont = new Font("Arial", 10, FontStyle.Bold);
+            //string titleText = "www.studyoemin.com";
+            //SizeF titleSize = e.Graphics.MeasureString(titleText, titleFont);
+            //e.Graphics.DrawString(titleText, titleFont, Brushes.Black, new PointF((e.PageBounds.Width - titleSize.Width) / 2, 5 + logoHeight));
 
             // İkinci metin eklemek
             Font titleFont2 = new Font("Arial", 8, FontStyle.Regular);
             string titleText2 = "Adres: Camicedit Mah. Cumhuriyet Cad.";
             SizeF titleSize2 = e.Graphics.MeasureString(titleText2, titleFont2);
-            float currentY = 1 + logoHeight; // currentY'yi tanımla ve başlangıç değerini ayarla
-            currentY += (int)titleSize.Height + 6; // Önceki metinden sonra bir boşluk bırakmak için
+            float currentY = logoHeight - 7; // currentY'yi tanımla ve başlangıç değerini ayarla
+            //currentY += (int)titleSize.Height + 6; //// Önceki metinden sonra bir boşluk bırakmak için
             e.Graphics.DrawString(titleText2, titleFont2, Brushes.Black, new PointF((e.PageBounds.Width - titleSize2.Width) / 2, currentY));
 
             // İkinciye devam metin eklemek
@@ -434,7 +434,7 @@ namespace PhotoEmin
             Font titleFont5 = new Font("Arial", 6, FontStyle.Regular);
             string titleText5 = "1) Makbuzsuz fotoğraf verilmez.\n2) 1 ay içerisinde alınmayan fotoğraftan mesul değiliz.\n3) Özel çekimleriniz için lütfen randevu alınız.\n4) Çekimleri tarafımızca yapılan bütün işler 5846 sayılı fikir ve sanat eserleri yasasıyla koruma altındadır.\n5) Çekimleri tarafımızca yapılmış olan bütün işlerin telif ve mülkiyet hakkı firmamıza aittir. Çekim öncesi özel bir anlaşma yapılmadı ise; dijital, negatif, orijinal görüntü ve çalışmalar müşteriye teslim edilmez. Kullanım hakkının ihlâli, yasal olmayan kopyalama, çoğaltma, yasa uyarınca suç teşkil etmektedir.";
             //currentYlast += 200; // Önceki metinden sonra bir boşluk bırakmak için
-            e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(20, (int)currentYlast + 2, 235, 105), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
+            e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(20, (int)currentYlast + 2, 235, 120), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
         }
 
         void PrintProcess()
