@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             dataGridRecords = new DataGridView();
             btnFindFolder = new Button();
@@ -44,6 +44,7 @@
             lblSaveAndPrint = new Label();
             label15 = new Label();
             pnlReceiptInputs = new Panel();
+            label57 = new Label();
             numQty = new NumericUpDown();
             txtDeliveryDate = new TextBox();
             txtRemainingAmount = new TextBox();
@@ -190,7 +191,6 @@
             btnCreateDB = new Button();
             label50 = new Label();
             btnDB = new Button();
-            label57 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridRecords).BeginInit();
             pnlReceipt.SuspendLayout();
             pnlReceiptInputs.SuspendLayout();
@@ -220,23 +220,23 @@
             dataGridRecords.AllowUserToAddRows = false;
             dataGridRecords.AllowUserToOrderColumns = true;
             dataGridRecords.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dataGridRecords.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridRecords.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridRecords.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dataGridRecords.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dataGridRecords.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridRecords.Location = new Point(3, 70);
             dataGridRecords.Name = "dataGridRecords";
             dataGridRecords.RowHeadersVisible = false;
@@ -406,6 +406,16 @@
             pnlReceiptInputs.Name = "pnlReceiptInputs";
             pnlReceiptInputs.Size = new Size(474, 594);
             pnlReceiptInputs.TabIndex = 0;
+            // 
+            // label57
+            // 
+            label57.AutoSize = true;
+            label57.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            label57.Location = new Point(94, 125);
+            label57.Name = "label57";
+            label57.Size = new Size(269, 15);
+            label57.TabIndex = 10;
+            label57.Text = "Lütfen 'Ad Soyad' kısmında alt çizgi '_' KULLANMAYINIZ!";
             // 
             // numQty
             // 
@@ -2146,16 +2156,6 @@
             btnDB.TabIndex = 19;
             btnDB.UseVisualStyleBackColor = false;
             btnDB.Click += btnDB_Click;
-            // 
-            // label57
-            // 
-            label57.AutoSize = true;
-            label57.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label57.Location = new Point(94, 125);
-            label57.Name = "label57";
-            label57.Size = new Size(285, 15);
-            label57.TabIndex = 10;
-            label57.Text = "Lütfen 'İsim Soyisim' kısmında alt çizgi '_' KULLANMAYINIZ!";
             // 
             // Form1
             // 

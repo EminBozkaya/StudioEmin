@@ -423,6 +423,16 @@ namespace PhotoEmin.Extensions {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ResimMakbuz {
+            get {
+                object obj = ResourceManager.GetObject("ResimMakbuz", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rulo {
             get {
                 object obj = ResourceManager.GetObject("rulo", resourceCulture);

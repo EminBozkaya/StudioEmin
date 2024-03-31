@@ -14,6 +14,7 @@ namespace PhotoEmin
         //passwords:
         private const string pswDBprocess = "wingman";
         private const string pswDelete = "emin";
+        private const string pswUpdate = "emin";
 
         //postgresql
         private const string ConnectionString = "Server=localhost;Port=5432;Database=dbphoto;User Id=postgres;Password=postgres;Encoding=UTF8;";
@@ -60,7 +61,8 @@ namespace PhotoEmin
                 {
                     if (CheckDatabaseExists())
                     {
-                        BackupManager.RunBackup();
+                        ////Oto back-up şimdilik iptal
+                        //BackupManager.RunBackup();
                     }
                     else
                     {
@@ -267,10 +269,10 @@ namespace PhotoEmin
             //string note = "heeey";
 
             // Logo eklemek
-            Bitmap logo = Extensions.Resources.makbuzResim;
+            Bitmap logo = Extensions.Resources.ResimMakbuz;
             int logoWidth = 240;
             int logoHeight = 75;
-            e.Graphics!.DrawImage(logo, new Rectangle((e.PageBounds.Width - logoWidth) / 2, 5, logoWidth, logoHeight));
+            e.Graphics!.DrawImage(logo, new Rectangle((e.PageBounds.Width - logoWidth) / 2, 0, logoWidth, logoHeight));
 
             // Başlık eklemek
             Font titleFont = new Font("Arial", 10, FontStyle.Bold);
@@ -432,7 +434,7 @@ namespace PhotoEmin
             Font titleFont5 = new Font("Arial", 6, FontStyle.Regular);
             string titleText5 = "1) Makbuzsuz fotoğraf verilmez.\n2) 1 ay içerisinde alınmayan fotoğraftan mesul değiliz.\n3) Özel çekimleriniz için lütfen randevu alınız.\n4) Çekimleri tarafımızca yapılan bütün işler 5846 sayılı fikir ve sanat eserleri yasasıyla koruma altındadır.\n5) Çekimleri tarafımızca yapılmış olan bütün işlerin telif ve mülkiyet hakkı firmamıza aittir. Çekim öncesi özel bir anlaşma yapılmadı ise; dijital, negatif, orijinal görüntü ve çalışmalar müşteriye teslim edilmez. Kullanım hakkının ihlâli, yasal olmayan kopyalama, çoğaltma, yasa uyarınca suç teşkil etmektedir.";
             //currentYlast += 200; // Önceki metinden sonra bir boşluk bırakmak için
-            e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(20, (int)currentYlast + 2, 235, 103), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
+            e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(20, (int)currentYlast + 2, 235, 105), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
         }
 
         void PrintProcess()
@@ -449,6 +451,7 @@ namespace PhotoEmin
                 //}
                 //printPreviewDialog1.ShowDialog();
 
+
                 //Direkt yazdırma:
                 printDocument1.DocumentName = "Makbuz";
                 printDocument1.Print();
@@ -461,7 +464,7 @@ namespace PhotoEmin
 
         void CreateReceipt()
         {
-            string name = txtName.Text.Trim().Replace("_", " ");
+            string name = txtName.Text.Trim().Replace("_", " ").ToUpper(new CultureInfo("tr-TR"));
             if (!String.IsNullOrEmpty(name))
             {
                 //name = name.ToUpper(new CultureInfo("tr-TR"));
@@ -2049,7 +2052,7 @@ namespace PhotoEmin
             }
         }
 
-        private void btnUpdateRecord_Click(object sender, EventArgs e)
+        private async void btnUpdateRecord_Click(object sender, EventArgs e)
         {
             int selectedRowId;
             if (dataGridRecords.CurrentRow != null && dataGridRecords.CurrentRow.Cells["id"].Value != null)
@@ -2068,46 +2071,111 @@ namespace PhotoEmin
 
                     if (result == DialogResult.Yes)
                     {
-                        try
+                        while (true)
                         {
-
-                            #region postgresql
-                            using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+                            using (Form passwordPromptDialog = new Form())
                             {
-                                connection.Open();
-                                string updateSql = "UPDATE customers SET fullname = @fullname WHERE id = @id";
-                                using (NpgsqlCommand command = new NpgsqlCommand(updateSql, connection))
+                                passwordPromptDialog.Text = "Şifre Girişi";
+                                passwordPromptDialog.Size = new Size(300, 150);
+                                passwordPromptDialog.StartPosition = FormStartPosition.CenterParent;
+                                passwordPromptDialog.FormBorderStyle = FormBorderStyle.FixedDialog;
+
+                                Label label = new Label();
+                                label.Text = "Lütfen şifreyi giriniz:";
+                                label.Location = new Point(10, 20);
+                                label.AutoSize = true;
+
+                                TextBox textBox = new TextBox();
+                                textBox.PasswordChar = '*';
+                                textBox.Location = new Point(10, 50);
+                                textBox.Size = new Size(200, 20);
+
+                                Button confirmButton = new Button();
+                                confirmButton.Text = "Onayla";
+                                confirmButton.DialogResult = DialogResult.OK;
+                                confirmButton.Location = new Point(10, 80);
+                                confirmButton.Size = new Size(75, 23);
+
+                                Button cancelButton = new Button();
+                                cancelButton.Text = "İptal";
+                                cancelButton.DialogResult = DialogResult.Cancel;
+                                cancelButton.Location = new Point(90, 80);
+                                cancelButton.Size = new Size(75, 23);
+
+                                passwordPromptDialog.Controls.Clear();
+                                passwordPromptDialog.Controls.Add(label);
+                                passwordPromptDialog.Controls.Add(textBox);
+                                passwordPromptDialog.Controls.Add(confirmButton);
+                                passwordPromptDialog.Controls.Add(cancelButton);
+
+                                textBox.KeyDown += (s, e) =>
                                 {
-                                    command.Parameters.AddWithValue("@fullname", selectedFullName);
-                                    command.Parameters.AddWithValue("@id", selectedRowId);
+                                    if (e.KeyCode == Keys.Enter)
+                                    {
+                                        passwordPromptDialog.DialogResult = DialogResult.OK;
+                                        passwordPromptDialog.Close();
+                                    }
+                                };
 
-                                    command.ExecuteNonQuery();
+                                if (passwordPromptDialog.ShowDialog() != DialogResult.OK)
+                                {
+                                    passwordPromptDialog.Close();
+                                    return;
                                 }
+
+                                string passwordInput = textBox.Text;
+
+                                if (passwordInput == pswUpdate)
+                                {
+                                    // Şifre doğruysa işlemi gerçekleştir
+                                    try
+                                    {
+
+                                        #region postgresql
+                                        using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+                                        {
+                                            connection.Open();
+                                            string updateSql = "UPDATE customers SET fullname = @fullname WHERE id = @id";
+                                            using (NpgsqlCommand command = new NpgsqlCommand(updateSql, connection))
+                                            {
+                                                command.Parameters.AddWithValue("@fullname", selectedFullName);
+                                                command.Parameters.AddWithValue("@id", selectedRowId);
+
+                                                command.ExecuteNonQuery();
+                                            }
+                                        }
+                                        #endregion
+
+                                        #region msSql
+                                        //using (SqlConnection connection = new SqlConnection(ConnectionString))
+                                        //{
+                                        //    connection.Open();
+                                        //    string updateSql = "UPDATE customers SET fullname = @fullname WHERE id = @id";
+                                        //    using (SqlCommand command = new SqlCommand(updateSql, connection))
+                                        //    {
+                                        //        command.Parameters.AddWithValue("@fullname", selectedFullName);
+                                        //        command.Parameters.AddWithValue("@id", selectedRowId);
+
+                                        //        command.ExecuteNonQuery();
+                                        //    }
+                                        //} 
+                                        #endregion
+
+                                        MessageBox.Show("Kayıt başarıyla güncellendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        txtFullName_TextChanged(sender, e);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show($"Kayıt güncellenirken hata oluştu! {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                    break;
+                                }
+                                passwordPromptDialog.Close();
+                                MessageBox.Show("Yanlış şifre girdiniz. Lütfen tekrar deneyin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                await Task.Delay(304);
                             }
-                            #endregion
-
-                            #region msSql
-                            //using (SqlConnection connection = new SqlConnection(ConnectionString))
-                            //{
-                            //    connection.Open();
-                            //    string updateSql = "UPDATE customers SET fullname = @fullname WHERE id = @id";
-                            //    using (SqlCommand command = new SqlCommand(updateSql, connection))
-                            //    {
-                            //        command.Parameters.AddWithValue("@fullname", selectedFullName);
-                            //        command.Parameters.AddWithValue("@id", selectedRowId);
-
-                            //        command.ExecuteNonQuery();
-                            //    }
-                            //} 
-                            #endregion
-
-                            MessageBox.Show("Kayıt başarıyla güncellendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            txtFullName_TextChanged(sender, e);
                         }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Kayıt güncellenirken hata oluştu! {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        
                     }
                 }
             }
