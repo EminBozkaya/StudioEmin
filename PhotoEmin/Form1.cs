@@ -432,9 +432,9 @@ namespace PhotoEmin
             }
             // Footer metin eklemek
             Font titleFont5 = new Font("Arial", 6, FontStyle.Regular);
-            string titleText5 = "1) Makbuzsuz fotoğraf verilmez.\n2) 1 ay içerisinde alınmayan fotoğraftan mesul değiliz.\n3) Özel çekimleriniz için lütfen randevu alınız.\n4) Çekimleri tarafımızca yapılan bütün işler 5846 sayılı fikir ve sanat eserleri yasasıyla koruma altındadır.\n5) Çekimleri tarafımızca yapılmış olan bütün işlerin telif ve mülkiyet hakkı firmamıza aittir. Çekim öncesi özel bir anlaşma yapılmadı ise; dijital, negatif, orijinal görüntü ve çalışmalar müşteriye teslim edilmez. Kullanım hakkının ihlâli, yasal olmayan kopyalama, çoğaltma, yasa uyarınca suç teşkil etmektedir.";
+            string titleText5 = "1) Makbuzsuz fotoğraf verilmez.\n2) 1 ay içerisinde alınmayan fotoğraftan mesul değiliz.\n3) Özel çekimleriniz için lütfen randevu alınız.\n4) Çekimleri tarafımızca yapılan bütün işler 5846 sayılı fikir ve sanat eserleri yasasıyla koruma altındadır.\n5) Çekimleri tarafımızca yapılmış olan bütün işlerin telif ve mülkiyet hakkı firmamıza aittir. Çekim öncesi özel bir anlaşma yapılmadı ise; dijital, negatif, orijinal görüntü ve çalışmalar müşteriye teslim edilmez. Kullanım hakkının ihlâli, yasal olmayan kopyalama, çoğaltma, yasa uyarınca suç teşkil etmektedir.\n \n \n ";
             //currentYlast += 200; // Önceki metinden sonra bir boşluk bırakmak için
-            e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(20, (int)currentYlast + 2, 235, 120), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
+            e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(20, (int)currentYlast + 2, 235, 135), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
         }
 
         void PrintProcess()
@@ -1071,7 +1071,7 @@ namespace PhotoEmin
                 return;
             }
             SetLoading(true, false, true);
-            await Task.Delay(2000);
+            await Task.Delay(1000);
 
             RecordStatus recordStatus = new RecordStatus();
             if (!isUpperArchiveBtn)
@@ -1093,17 +1093,20 @@ namespace PhotoEmin
                         recordStatus.successfulInserts += subStatus.successfulInserts;
                         recordStatus.duplicateRecords.AddRange(subStatus.duplicateRecords);
                         recordStatus.errorFullNames.AddRange(subStatus.errorFullNames);
+                        recordStatus.noImageRecords.AddRange(subStatus.noImageRecords);
+                        recordStatus.faultyImageRecords.AddRange(subStatus.faultyImageRecords);
                     }
                 }
             }
 
             SetLoading(false, false, true);
-            MessageBox.Show($"Toplam kayıt sayısı: {recordStatus.totalInserts}\nBaşarılı kayıt sayısı: {recordStatus.successfulInserts}\nTekrar eden kayıt sayısı: {recordStatus.duplicateRecords!.Count} {string.Join(", ", recordStatus.duplicateRecords)}\nHata alınan kayıt sayısı: {recordStatus.errorFullNames.Count} {string.Join(", ", recordStatus.errorFullNames)}");
+            MessageBox.Show($"Toplam kayıt sayısı: {recordStatus.totalInserts}\nBaşarılı kayıt sayısı: {recordStatus.successfulInserts}\nTekrar ettiği için veri tabanına eklenMEYEN kayıt sayısı: {recordStatus.duplicateRecords!.Count} {string.Join(", ", recordStatus.duplicateRecords)}\nHata alındığı için veri tabanına ekleNEMEYEN kayıt sayısı: {recordStatus.errorFullNames.Count} {string.Join(", ", recordStatus.errorFullNames)}\n--------\nBAŞARILI KAYITLARDA İLAVE NOTLAR:\nUygun resmi olmayan kayıt sayısı: {recordStatus.noImageRecords.Count} {string.Join(", ", recordStatus.noImageRecords)}\nResmi bozuk veya işlenemeyen kayıt sayısı: {recordStatus.faultyImageRecords.Count} {string.Join(", ", recordStatus.faultyImageRecords)}");
         }
 
         private RecordStatus RecordToDB(string folderPath, string[] subDirectories)
         {
             string errorFullName = "";
+            string folderName = "";
             RecordStatus recordStatus = new RecordStatus();
             recordStatus.totalInserts = subDirectories.Length;
 
@@ -1116,65 +1119,13 @@ namespace PhotoEmin
                     try
                     {
                         DirectoryInfo subDirInfo = new DirectoryInfo(subDir);
-                        string folderName = Path.GetFileName(folderPath);
-
-                        string[] jpgFiles = Directory.GetFiles(subDir, "a.jpg");
-                        string[] jpegFiles = Directory.GetFiles(subDir, "a.jpeg");
-                        string[] otherJpgFiles = Directory.GetFiles(subDir, "*.jpg");
-                        string[] otherJpegFiles = Directory.GetFiles(subDir, "*.jpeg");
-                        string[] otherPngFiles = Directory.GetFiles(subDir, "*.png");
-                        string[] otherBmpFiles = Directory.GetFiles(subDir, "*.bmp");
-                        string[] otherGifFiles = Directory.GetFiles(subDir, "*.gif");
-
-                        byte[]? photoData = null;
-                        DateTime? creationDate = DateTime.UtcNow;
-                        if (jpgFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(jpgFiles[0]);
-                            photoData = ResizeImage(jpgFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(jpgFiles[0]);
-                        }
-                        else if (jpegFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(otherJpgFiles[0]);
-                            photoData = ResizeImage(jpegFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(jpegFiles[0]);
-                        }
-                        else if (otherJpgFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(otherJpgFiles[0]);
-                            photoData = ResizeImage(otherJpgFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(otherJpgFiles[0]);
-                        }
-                        else if (otherJpegFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(otherJpgFiles[0]);
-                            photoData = ResizeImage(otherJpegFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(otherJpegFiles[0]);
-                        }
-                        else if (otherPngFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(otherPngFiles[0]);
-                            photoData = ResizeImage(otherPngFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(otherPngFiles[0]);
-                        }
-                        else if (otherBmpFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(otherPngFiles[0]);
-                            photoData = ResizeImage(otherBmpFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(otherBmpFiles[0]);
-                        }
-                        else if (otherGifFiles.Length > 0)
-                        {
-                            //photoData = File.ReadAllBytes(otherPngFiles[0]);
-                            photoData = ResizeImage(otherGifFiles[0], 118, 118);
-                            creationDate = File.GetCreationTimeUtc(otherGifFiles[0]);
-                        }
-
+                        folderName = Path.GetFileName(folderPath);
                         string fullName = subDirInfo.Name;
                         //string fullName = subDirInfo.Name.ToUpper(new CultureInfo("tr-TR"));
                         errorFullName = subDirInfo.Name;
 
+                        
+                        
                         string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
 
                         using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkDuplicateQuery, connection))
@@ -1184,8 +1135,71 @@ namespace PhotoEmin
 
                             long existingRecordsCount = (long)checkCommand.ExecuteScalar()!;
 
-                            if (existingRecordsCount == 0)
+                            if (existingRecordsCount == 0)//kayıt yoksa işlemlere devam
                             {
+                                string[] jpgFiles = Directory.GetFiles(subDir, "a.jpg");
+                                string[] jpegFiles = Directory.GetFiles(subDir, "a.jpeg");
+                                string[] otherJpgFiles = Directory.GetFiles(subDir, "*.jpg");
+                                string[] otherJpegFiles = Directory.GetFiles(subDir, "*.jpeg");
+                                string[] otherPngFiles = Directory.GetFiles(subDir, "*.png");
+                                string[] otherBmpFiles = Directory.GetFiles(subDir, "*.bmp");
+                                string[] otherGifFiles = Directory.GetFiles(subDir, "*.gif");
+
+                                byte[]? photoData = null;
+                                DateTime? creationDate = DateTime.UtcNow;
+                                try
+                                {
+                                    if (jpgFiles.Length > 0)
+                                    {
+                                        //photoData = File.ReadAllBytes(jpgFiles[0]);
+                                        photoData = ResizeImage(jpgFiles[0], 118, 118);
+                                        creationDate = File.GetCreationTimeUtc(jpgFiles[0]);
+                                    }
+                                    else if (jpegFiles.Length > 0)
+                                    {
+                                        //photoData = File.ReadAllBytes(otherJpgFiles[0]);
+                                        photoData = ResizeImage(jpegFiles[0], 118, 118);
+                                        creationDate = File.GetCreationTimeUtc(jpegFiles[0]);
+                                    }
+                                    else if (otherJpgFiles.Length > 0)
+                                    {
+                                        //photoData = File.ReadAllBytes(otherJpgFiles[0]);
+                                        photoData = ResizeImage(otherJpgFiles[0], 118, 118);
+                                        creationDate = File.GetCreationTimeUtc(otherJpgFiles[0]);
+                                    }
+                                    else if (otherJpegFiles.Length > 0)
+                                    {
+                                        //photoData = File.ReadAllBytes(otherJpgFiles[0]);
+                                        photoData = ResizeImage(otherJpegFiles[0], 118, 118);
+                                        creationDate = File.GetCreationTimeUtc(otherJpegFiles[0]);
+                                    }
+                                    else if (otherPngFiles.Length > 0)
+                                    {
+                                        //photoData = File.ReadAllBytes(otherPngFiles[0]);
+                                        photoData = ResizeImage(otherPngFiles[0], 118, 118);
+                                        creationDate = File.GetCreationTimeUtc(otherPngFiles[0]);
+                                    }
+                                    else if (otherBmpFiles.Length > 0)
+                                    {
+                                        //photoData = File.ReadAllBytes(otherPngFiles[0]);
+                                        photoData = ResizeImage(otherBmpFiles[0], 118, 118);
+                                        creationDate = File.GetCreationTimeUtc(otherBmpFiles[0]);
+                                    }
+                                    else if (otherGifFiles.Length > 0)
+                                    {
+                                        //photoData = File.ReadAllBytes(otherPngFiles[0]);
+                                        photoData = ResizeImage(otherGifFiles[0], 118, 118);
+                                        creationDate = File.GetCreationTimeUtc(otherGifFiles[0]);
+                                    }
+                                    else recordStatus.noImageRecords.Add($"{errorFullName}({folderName}): resim dosyası bulunamadı!");
+                                }
+                                catch (Exception)
+                                {
+                                    // Hata alınan fullname'i listeye ekle
+                                    recordStatus.faultyImageRecords.Add($"{errorFullName}({folderName})");
+                                }
+
+                                //db kayıt:
                                 string insertQuery = "INSERT INTO customers (fullname, foldername, photodata, createdate, insertdate) VALUES (@fullname, @foldername, @photodata, @createdate, @insertdate)";
 
                                 using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
@@ -1195,8 +1209,6 @@ namespace PhotoEmin
                                     command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
                                     command.Parameters.AddWithValue("@createdate", NpgsqlDbType.TimestampTz, creationDate);
                                     command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.TimestampTz, DateTime.UtcNow);
-
-
 
                                     int rowsAffected = command.ExecuteNonQuery();
 
@@ -1208,14 +1220,14 @@ namespace PhotoEmin
                             }
                             else
                             {
-                                recordStatus.duplicateRecords.Add(fullName);
+                                recordStatus.duplicateRecords.Add($"{fullName}({folderName})");
                             }
                         }
                     }
                     catch (Exception ex)
                     {
                         // Hata alınan fullname'i listeye ekle
-                        recordStatus.errorFullNames.Add($"{errorFullName}: {ex.Message}");
+                        recordStatus.errorFullNames.Add($"{errorFullName}({folderName}): {ex.Message}");
                     }
                 }
             }
@@ -1388,7 +1400,12 @@ namespace PhotoEmin
                 using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
                 {
                     connection.Open();
-                    string sql = $"SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE UPPER(REPLACE(REPLACE(fullname, 'i', 'İ'), 'ı', 'I')) LIKE @searchText";
+                    //birebir uyan kayıt grid tabloda en üstte olsun
+                    string sql = $"SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE UPPER(REPLACE(REPLACE(fullname, 'i', 'İ'), 'ı', 'I')) LIKE @searchText ORDER BY CASE WHEN UPPER(REPLACE(REPLACE(fullname, 'i', 'İ'), 'ı', 'I')) = @searchText THEN 0 ELSE 1 END, fullname";
+
+                    //string sql = $"SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE UPPER(REPLACE(REPLACE(fullname, 'i', 'İ'), 'ı', 'I')) LIKE @searchText";
+
+
 
                     //string sql = $"SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE UPPER(REPLACE(fullname, 'i', 'İ')) LIKE @searchText";
                     //string sql = "SELECT id, fullname AS \"Ad Soyad\" FROM customers WHERE fullname ILIKE @searchText";
