@@ -413,9 +413,9 @@
             label57.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 162);
             label57.Location = new Point(94, 125);
             label57.Name = "label57";
-            label57.Size = new Size(269, 15);
+            label57.Size = new Size(237, 15);
             label57.TabIndex = 10;
-            label57.Text = "Lütfen 'Ad Soyad' kısmında alt çizgi '_' KULLANMAYINIZ!";
+            label57.Text = "'Ad Soyad' kısmında alt çizgi '_' KULLANMAYINIZ!";
             // 
             // numQty
             // 

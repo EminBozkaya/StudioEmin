@@ -432,9 +432,13 @@ namespace PhotoEmin
             }
             // Footer metin eklemek
             Font titleFont5 = new Font("Arial", 6, FontStyle.Regular);
-            string titleText5 = "1) Makbuzsuz fotoğraf verilmez.\n2) 1 ay içerisinde alınmayan fotoğraftan mesul değiliz.\n3) Özel çekimleriniz için lütfen randevu alınız.\n4) Çekimleri tarafımızca yapılan bütün işler 5846 sayılı fikir ve sanat eserleri yasasıyla koruma altındadır.\n5) Çekimleri tarafımızca yapılmış olan bütün işlerin telif ve mülkiyet hakkı firmamıza aittir. Çekim öncesi özel bir anlaşma yapılmadı ise; dijital, negatif, orijinal görüntü ve çalışmalar müşteriye teslim edilmez. Kullanım hakkının ihlâli, yasal olmayan kopyalama, çoğaltma, yasa uyarınca suç teşkil etmektedir.\n \n \n ";
+            string titleText5 = "1) Makbuzsuz fotoğraf verilmez.\n2) 1 ay içerisinde alınmayan fotoğraftan mesul değiliz.\n3) Özel çekimleriniz için lütfen randevu alınız.\n4) Çekimleri tarafımızca yapılan bütün işler 5846 sayılı fikir ve sanat eserleri yasasıyla koruma altındadır.\n5) Çekimleri tarafımızca yapılmış olan bütün işlerin telif ve mülkiyet hakkı firmamıza aittir. Çekim öncesi özel bir anlaşma yapılmadı ise; dijital, negatif, orijinal görüntü ve çalışmalar müşteriye teslim edilmez. Kullanım hakkının ihlâli, yasal olmayan kopyalama, çoğaltma, yasa uyarınca suç teşkil etmektedir.";
             //currentYlast += 200; // Önceki metinden sonra bir boşluk bırakmak için
-            e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(20, (int)currentYlast + 2, 235, 135), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
+            e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(20, (int)currentYlast + 2, 235, 120), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
+            Font emptyTitleFont = new Font("Arial", 6, FontStyle.Regular);
+            string emptyTitleText = "Bu satır alt boşluk içindir ve makbuzda görünmeyecektir!";
+            //currentYlast += 200; // Önceki metinden sonra bir boşluk bırakmak için
+            e.Graphics.DrawString(emptyTitleText, emptyTitleFont, Brushes.White, new RectangleF(20, (int)currentYlast + 110, 235, 9), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
         }
 
         void PrintProcess()
