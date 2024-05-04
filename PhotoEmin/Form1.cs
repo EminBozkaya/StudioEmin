@@ -436,9 +436,9 @@ namespace PhotoEmin
             //currentYlast += 200; // Önceki metinden sonra bir boşluk bırakmak için
             e.Graphics.DrawString(titleText5, titleFont5, Brushes.Black, new RectangleF(20, (int)currentYlast + 2, 235, 120), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
             Font emptyTitleFont = new Font("Arial", 6, FontStyle.Regular);
-            string emptyTitleText = "Bu satır alt boşluk içindir ve makbuzda görünmeyecektir!";
+            string emptyTitleText = " \n";
             //currentYlast += 200; // Önceki metinden sonra bir boşluk bırakmak için
-            e.Graphics.DrawString(emptyTitleText, emptyTitleFont, Brushes.White, new RectangleF(20, (int)currentYlast + 110, 235, 9), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
+            e.Graphics.DrawString(emptyTitleText, emptyTitleFont, Brushes.Black, new RectangleF(20, (int)currentYlast + 110, 235, 9), new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
         }
 
         void PrintProcess()
