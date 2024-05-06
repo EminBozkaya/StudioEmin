@@ -1086,6 +1086,23 @@ namespace PhotoEmin
             {
                 foreach (string subDirectory in subDirectories)
                 {
+                    //Check record count:(max 20 for demo)
+                    using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+                    {
+                        connection.Open();
+                        string checkCount = "SELECT COUNT(*) FROM customers";
+
+                        using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkCount, connection))
+                        {
+                            long totalExistingRecordsCount = (long)checkCommand.ExecuteScalar()!;
+                            if (totalExistingRecordsCount > 20)
+                            {
+                                MessageBox.Show($"Demo programında maksimum 20 adet kayıt yapılabilmektedir!", "Üzgünüm", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
+                        }
+                    }
+
                     DirectoryInfo subDirInfo = new DirectoryInfo(subDirectory);
                     string subDirInfoName = subDirInfo.Name;
                     string subFolderPath = Path.Combine(folderPath, subDirInfoName);
@@ -1122,14 +1139,28 @@ namespace PhotoEmin
                 {
                     try
                     {
+                        //Check record count:(max 20 for demo)
+                        string checkCount = "SELECT COUNT(*) FROM customers";
+
+                        using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkCount, connection))
+                        {
+                            long totalExistingRecordsCount = (long)checkCommand.ExecuteScalar()!;
+                            if (totalExistingRecordsCount > 20)
+                            {
+                                MessageBox.Show($"Demo programında maksimum 20 adet kayıt yapılabilmektedir!", "Üzgünüm", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
+                        }
+
+
                         DirectoryInfo subDirInfo = new DirectoryInfo(subDir);
                         folderName = Path.GetFileName(folderPath);
                         string fullName = subDirInfo.Name;
                         //string fullName = subDirInfo.Name.ToUpper(new CultureInfo("tr-TR"));
                         errorFullName = subDirInfo.Name;
 
-                        
-                        
+
+
                         string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
 
                         using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkDuplicateQuery, connection))
@@ -2196,7 +2227,7 @@ namespace PhotoEmin
                                 await Task.Delay(304);
                             }
                         }
-                        
+
                     }
                 }
             }

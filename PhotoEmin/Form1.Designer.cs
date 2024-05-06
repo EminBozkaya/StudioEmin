@@ -970,8 +970,8 @@
             // 
             pnlBorder.Anchor = AnchorStyles.Top;
             pnlBorder.BackColor = Color.Silver;
-            pnlBorder.Controls.Add(pnlReceipt);
             pnlBorder.Controls.Add(flowLayoutPanelArchive);
+            pnlBorder.Controls.Add(pnlReceipt);
             pnlBorder.Controls.Add(pnlDBprocess);
             pnlBorder.Controls.Add(pnlFindFolder);
             pnlBorder.Location = new Point(214, 71);
@@ -998,10 +998,10 @@
             // pnlArchiveContents
             // 
             pnlArchiveContents.BorderStyle = BorderStyle.FixedSingle;
+            pnlArchiveContents.Controls.Add(pnlAddFoldersToArchive);
             pnlArchiveContents.Controls.Add(pnlSearchPhoto);
             pnlArchiveContents.Controls.Add(pnlAddSpareToArchive);
             pnlArchiveContents.Controls.Add(pnlMakeSpare);
-            pnlArchiveContents.Controls.Add(pnlAddFoldersToArchive);
             pnlArchiveContents.Location = new Point(165, 150);
             pnlArchiveContents.Margin = new Padding(2, 1, 2, 1);
             pnlArchiveContents.Name = "pnlArchiveContents";
@@ -1619,6 +1619,7 @@
             // 
             // pnlAddFoldersToArchive
             // 
+            pnlAddFoldersToArchive.Controls.Add(btnAddFolderToArchive);
             pnlAddFoldersToArchive.Controls.Add(txtChosenUpperFolder);
             pnlAddFoldersToArchive.Controls.Add(label23);
             pnlAddFoldersToArchive.Controls.Add(label41);
@@ -1628,7 +1629,6 @@
             pnlAddFoldersToArchive.Controls.Add(label35);
             pnlAddFoldersToArchive.Controls.Add(pictureBoxAddFolderToArchive);
             pnlAddFoldersToArchive.Controls.Add(lblAddFolderToArchive);
-            pnlAddFoldersToArchive.Controls.Add(btnAddFolderToArchive);
             pnlAddFoldersToArchive.Controls.Add(label27);
             pnlAddFoldersToArchive.Controls.Add(btnChooseUpperFolder);
             pnlAddFoldersToArchive.Controls.Add(label20);
