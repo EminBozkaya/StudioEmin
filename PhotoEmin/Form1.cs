@@ -1095,7 +1095,7 @@ namespace PhotoEmin
                         using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkCount, connection))
                         {
                             long totalExistingRecordsCount = (long)checkCommand.ExecuteScalar()!;
-                            if (totalExistingRecordsCount > 20)
+                            if (totalExistingRecordsCount > 19)
                             {
                                 MessageBox.Show($"Demo programında maksimum 20 adet kayıt yapılabilmektedir!", "Üzgünüm", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 break;
@@ -1145,7 +1145,7 @@ namespace PhotoEmin
                         using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkCount, connection))
                         {
                             long totalExistingRecordsCount = (long)checkCommand.ExecuteScalar()!;
-                            if (totalExistingRecordsCount > 20)
+                            if (totalExistingRecordsCount > 19)
                             {
                                 MessageBox.Show($"Demo programında maksimum 20 adet kayıt yapılabilmektedir!", "Üzgünüm", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 break;
