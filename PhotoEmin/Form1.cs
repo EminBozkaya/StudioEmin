@@ -252,7 +252,7 @@ namespace PhotoEmin
         {
             string name = newReceipt.Name!;
             string dimensions = newReceipt.Dimensions!;
-            decimal? qty = newReceipt.Quantity == 0 ? null : newReceipt.Quantity;
+            string qty = newReceipt.Quantity!;
             string totalAmountText = (newReceipt.TotalAmount != 0) ? $"Tutar: {newReceipt.TotalAmount} ₺" : "Tutar: ";
             string receivedAmountText = (newReceipt.ReceivedAmount != 0) ? $"Alınan: {newReceipt.ReceivedAmount} ₺" : "Alınan: ";
             string remainingAmountText = (newReceipt.RemainingAmount != 0) ? $"Kalan: {newReceipt.RemainingAmount} ₺" : "Kalan: ";
@@ -472,8 +472,8 @@ namespace PhotoEmin
             if (!String.IsNullOrEmpty(name))
             {
                 //name = name.ToUpper(new CultureInfo("tr-TR"));
-                string dimensions = txtDimensions.Text.Trim(); ;
-                decimal quantity = numQty.Value;
+                string dimensions = txtDimensions.Text.Trim();
+                string quantity = txtNumQty.Text.Trim();
                 decimal totalAmount = 0;
                 decimal receivedAmount = 0;
                 decimal remainingAmount = 0;
