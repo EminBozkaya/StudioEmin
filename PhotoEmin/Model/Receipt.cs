@@ -5,7 +5,7 @@
         public string? Name { get; set; }
         public string? LastName { get; set; }
         public string? Dimensions { get; set; }
-        public decimal Quantity { get; set; } = 0;
+        public string? Quantity { get; set; }
         public decimal TotalAmount { get; set; } = 0;
         public decimal ReceivedAmount { get; set; } = 0;
         public decimal RemainingAmount { get; set; } = 0;
@@ -35,7 +35,7 @@
                 }
                 else if (satir.StartsWith("Adet:"))
                 {
-                    receipt.Quantity = Convert.ToDecimal(satir.Replace("Adet:", "").Trim());
+                    receipt.Quantity = satir.Replace("Adet:", "").Trim();
                 }
                 else if (satir.StartsWith("Toplam Tutar:"))
                 {

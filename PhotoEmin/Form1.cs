@@ -252,7 +252,7 @@ namespace PhotoEmin
         {
             string name = newReceipt.Name!;
             string dimensions = newReceipt.Dimensions!;
-            decimal? qty = newReceipt.Quantity == 0 ? null : newReceipt.Quantity;
+            string qty = newReceipt.Quantity!;
             string totalAmountText = (newReceipt.TotalAmount != 0) ? $"Tutar: {newReceipt.TotalAmount} ₺" : "Tutar: ";
             string receivedAmountText = (newReceipt.ReceivedAmount != 0) ? $"Alınan: {newReceipt.ReceivedAmount} ₺" : "Alınan: ";
             string remainingAmountText = (newReceipt.RemainingAmount != 0) ? $"Kalan: {newReceipt.RemainingAmount} ₺" : "Kalan: ";
@@ -472,8 +472,8 @@ namespace PhotoEmin
             if (!String.IsNullOrEmpty(name))
             {
                 //name = name.ToUpper(new CultureInfo("tr-TR"));
-                string dimensions = txtDimensions.Text.Trim(); ;
-                decimal quantity = numQty.Value;
+                string dimensions = txtDimensions.Text.Trim();
+                string quantity = txtNumQty.Text.Trim();
                 decimal totalAmount = 0;
                 decimal receivedAmount = 0;
                 decimal remainingAmount = 0;
@@ -1086,6 +1086,23 @@ namespace PhotoEmin
             {
                 foreach (string subDirectory in subDirectories)
                 {
+                    //Check record count:(max 20 for demo)
+                    using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+                    {
+                        connection.Open();
+                        string checkCount = "SELECT COUNT(*) FROM customers";
+
+                        using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkCount, connection))
+                        {
+                            long totalExistingRecordsCount = (long)checkCommand.ExecuteScalar()!;
+                            if (totalExistingRecordsCount > 19)
+                            {
+                                MessageBox.Show($"Demo programında maksimum 20 adet kayıt yapılabilmektedir!", "Üzgünüm", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
+                        }
+                    }
+
                     DirectoryInfo subDirInfo = new DirectoryInfo(subDirectory);
                     string subDirInfoName = subDirInfo.Name;
                     string subFolderPath = Path.Combine(folderPath, subDirInfoName);
@@ -1122,14 +1139,28 @@ namespace PhotoEmin
                 {
                     try
                     {
+                        //Check record count:(max 20 for demo)
+                        string checkCount = "SELECT COUNT(*) FROM customers";
+
+                        using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkCount, connection))
+                        {
+                            long totalExistingRecordsCount = (long)checkCommand.ExecuteScalar()!;
+                            if (totalExistingRecordsCount > 19)
+                            {
+                                MessageBox.Show($"Demo programında maksimum 20 adet kayıt yapılabilmektedir!", "Üzgünüm", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                break;
+                            }
+                        }
+
+
                         DirectoryInfo subDirInfo = new DirectoryInfo(subDir);
                         folderName = Path.GetFileName(folderPath);
                         string fullName = subDirInfo.Name;
                         //string fullName = subDirInfo.Name.ToUpper(new CultureInfo("tr-TR"));
                         errorFullName = subDirInfo.Name;
 
-                        
-                        
+
+
                         string checkDuplicateQuery = "SELECT COUNT(*) FROM customers WHERE fullname = @fullname AND foldername = @foldername";
 
                         using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkDuplicateQuery, connection))
@@ -2196,7 +2227,7 @@ namespace PhotoEmin
                                 await Task.Delay(304);
                             }
                         }
-                        
+
                     }
                 }
             }
