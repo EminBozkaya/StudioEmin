@@ -1086,22 +1086,22 @@ namespace PhotoEmin
             {
                 foreach (string subDirectory in subDirectories)
                 {
-                    //Check record count:(max 20 for demo)
-                    using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
-                    {
-                        connection.Open();
-                        string checkCount = "SELECT COUNT(*) FROM customers";
+                    ////Check record count:(max 20 for demo)
+                    //using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
+                    //{
+                    //    connection.Open();
+                    //    string checkCount = "SELECT COUNT(*) FROM customers";
 
-                        using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkCount, connection))
-                        {
-                            long totalExistingRecordsCount = (long)checkCommand.ExecuteScalar()!;
-                            if (totalExistingRecordsCount > 19)
-                            {
-                                MessageBox.Show($"Demo programında maksimum 20 adet kayıt yapılabilmektedir!", "Üzgünüm", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                break;
-                            }
-                        }
-                    }
+                    //    using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkCount, connection))
+                    //    {
+                    //        long totalExistingRecordsCount = (long)checkCommand.ExecuteScalar()!;
+                    //        if (totalExistingRecordsCount > 19)
+                    //        {
+                    //            MessageBox.Show($"Demo programında maksimum 20 adet kayıt yapılabilmektedir!", "Üzgünüm", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //            break;
+                    //        }
+                    //    }
+                    //}
 
                     DirectoryInfo subDirInfo = new DirectoryInfo(subDirectory);
                     string subDirInfoName = subDirInfo.Name;
@@ -1139,18 +1139,18 @@ namespace PhotoEmin
                 {
                     try
                     {
-                        //Check record count:(max 20 for demo)
-                        string checkCount = "SELECT COUNT(*) FROM customers";
+                        ////Check record count:(max 20 for demo)
+                        //string checkCount = "SELECT COUNT(*) FROM customers";
 
-                        using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkCount, connection))
-                        {
-                            long totalExistingRecordsCount = (long)checkCommand.ExecuteScalar()!;
-                            if (totalExistingRecordsCount > 19)
-                            {
-                                MessageBox.Show($"Demo programında maksimum 20 adet kayıt yapılabilmektedir!", "Üzgünüm", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                break;
-                            }
-                        }
+                        //using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkCount, connection))
+                        //{
+                        //    long totalExistingRecordsCount = (long)checkCommand.ExecuteScalar()!;
+                        //    if (totalExistingRecordsCount > 19)
+                        //    {
+                        //        MessageBox.Show($"Demo programında maksimum 20 adet kayıt yapılabilmektedir!", "Üzgünüm", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //        break;
+                        //    }
+                        //}
 
 
                         DirectoryInfo subDirInfo = new DirectoryInfo(subDir);
