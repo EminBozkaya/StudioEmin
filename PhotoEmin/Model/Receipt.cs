@@ -1,4 +1,4 @@
-﻿namespace PhotoEmin.Model
+namespace PhotoEmin.Model
 {
     public class Receipt
     {
@@ -21,8 +21,13 @@
             // Satırları oku ve ilgili değişkenlere atama yap
             foreach (string satir in satirlar)
             {
-                if (satir.StartsWith("Ad:"))
+                if (satir.StartsWith("Ad-Soyad:"))
                 {
+                    receipt.Name = satir.Replace("Ad-Soyad:", "").Trim();
+                }
+                else if (satir.StartsWith("Ad:"))
+                {
+                    // To handle older format files
                     receipt.Name = satir.Replace("Ad:", "").Trim();
                 }
                 else if (satir.StartsWith("Soyad:"))

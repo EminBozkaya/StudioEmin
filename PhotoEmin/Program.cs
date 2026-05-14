@@ -1,3 +1,5 @@
+using PhotoEmin.Helpers;
+
 namespace PhotoEmin
 {
     internal static class Program
@@ -11,7 +13,8 @@ namespace PhotoEmin
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            AppConfig.Load();
             Application.Run(new Form1());
         }
     }
-}
+}

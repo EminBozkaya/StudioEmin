@@ -1,4 +1,4 @@
-﻿namespace PhotoEmin
+namespace PhotoEmin
 {
     partial class Form1
     {
@@ -37,15 +37,15 @@
             btnCreateReceipt = new Button();
             pnlReceipt = new Panel();
             textBoxFileLocation = new TextBox();
-            label12 = new Label();
+            lblYazdır = new Label();
             lblFileLocation = new Label();
             lblReceiptName = new Label();
             lblSave = new Label();
             lblSaveAndPrint = new Label();
-            label15 = new Label();
+            lblFormuTemizle = new Label();
             pnlReceiptInputs = new Panel();
             txtNumQty = new TextBox();
-            label57 = new Label();
+            lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ = new Label();
             txtDeliveryDate = new TextBox();
             txtRemainingAmount = new TextBox();
             txtReceivedAmount = new TextBox();
@@ -53,20 +53,20 @@
             txtDimensions = new TextBox();
             txtName = new TextBox();
             txtBoxNotes = new RichTextBox();
-            label5 = new Label();
-            label3 = new Label();
-            label6 = new Label();
-            label4 = new Label();
-            label7 = new Label();
-            label8 = new Label();
-            label2 = new Label();
+            lblAdet = new Label();
+            lblKalan = new Label();
+            lblTutar = new Label();
+            lblEbat = new Label();
+            lblTeslimTarihi = new Label();
+            lblNot = new Label();
+            lblAlınan = new Label();
             lblName = new Label();
-            label26 = new Label();
-            label14 = new Label();
-            label25 = new Label();
-            label24 = new Label();
+            lblMakbuzaGit = new Label();
+            lblKlasöreGit = new Label();
+            lblMakbuzAdı = new Label();
+            lblKlasör = new Label();
             lblReceiptCaption = new Label();
-            label13 = new Label();
+            lblSeçilenKonum = new Label();
             btnTrash = new Button();
             btnPrint = new Button();
             btnChooseFileLocation = new Button();
@@ -80,37 +80,37 @@
             txtFileNameInput = new TextBox();
             btnSearchFile = new Button();
             cmbBoxDriver = new ComboBox();
-            label18 = new Label();
-            label17 = new Label();
+            lblEmpty_label18 = new Label();
+            lblSürücüSeç = new Label();
             lblSearchFile = new Label();
-            label19 = new Label();
-            label16 = new Label();
-            label9 = new Label();
+            lblBulunanKlasörler = new Label();
+            lblKlasörAdıGir = new Label();
+            lblMakbuzKes = new Label();
             errorProvider1 = new ErrorProvider(components);
             printDocument1 = new System.Drawing.Printing.PrintDocument();
             printPreviewDialog1 = new PrintPreviewDialog();
-            label21 = new Label();
-            label22 = new Label();
+            lblKlasörAra = new Label();
+            lblBilgisayarım = new Label();
             btnMyComputer = new Button();
             button1 = new Button();
-            label1 = new Label();
+            lblArşiv = new Label();
             btnSearchPhoto = new Button();
             pnlBorder = new Panel();
             pnlDBprocess = new Panel();
             txtUploadDBLocation = new TextBox();
-            label56 = new Label();
+            lblSeçilenYedek = new Label();
             btnUploadDBLocation = new Button();
             txtDownloadDBLocation = new TextBox();
-            label55 = new Label();
+            lblSeçilenKonum2 = new Label();
             btnDownloadDBLocation = new Button();
             richTextBox2 = new RichTextBox();
             richTextBox4 = new RichTextBox();
             richTextBox3 = new RichTextBox();
             richTextBox1 = new RichTextBox();
-            label54 = new Label();
-            label53 = new Label();
-            label52 = new Label();
-            label51 = new Label();
+            lblVeriTabanınıSil = new Label();
+            lblYedektenVeriTabanınıOluştur = new Label();
+            lblVeriTabanınıYedekle = new Label();
+            lblVeriTabanınıOluştur = new Label();
             btnRemoveDB = new Button();
             btnUploadDB = new Button();
             btnDownloadDB = new Button();
@@ -119,28 +119,28 @@
             pnlArchiveContents = new Panel();
             pnlSearchPhoto = new Panel();
             panel2 = new Panel();
-            label49 = new Label();
-            label48 = new Label();
-            label47 = new Label();
+            lbl3 = new Label();
+            lbl2 = new Label();
+            lbl1 = new Label();
             lblChooseDriver = new Label();
-            label46 = new Label();
+            lblKaydınKlasörünüAçmakİçin = new Label();
             lblGoRecord = new Label();
             comboBoxDriversForRecord = new ComboBox();
-            label45 = new Label();
+            lblGit = new Label();
             btnGoRecord = new Button();
-            label44 = new Label();
+            lblEmpty_label44 = new Label();
             listBoxArchive = new ListBox();
             btnSearchArchive = new Button();
             pictureBoxLoadingArchive = new PictureBox();
             lblSearchArchive = new Label();
-            label43 = new Label();
+            lblKaydıSil = new Label();
             btnDeleteRecord = new Button();
-            label42 = new Label();
+            lblKaydıGüncelle = new Label();
             btnUpdateRecord = new Button();
             panel1 = new Panel();
             lblTotalRecord = new Label();
-            label40 = new Label();
-            label39 = new Label();
+            lblKayıtSayısı = new Label();
+            lblSeçilenKaydınBulunduğuÜstKlasör = new Label();
             txtDataUpperFileName = new TextBox();
             pictureBoxChosenPhoto = new PictureBox();
             lblFoundPhoto = new Label();
@@ -150,46 +150,46 @@
             pnlAddFoldersToArchive = new Panel();
             btnAddFolderToArchive = new Button();
             txtChosenUpperFolder = new TextBox();
-            label23 = new Label();
-            label41 = new Label();
+            lblArşiveEklemekİçinSeçilenÜstKlasör = new Label();
+            lblVeya = new Label();
             btnUpperArchiveFoldersToDB = new Button();
-            label28 = new Label();
-            label32 = new Label();
-            label35 = new Label();
+            lblÜSTklasörleribarındıran = new Label();
+            lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz = new Label();
+            lblÖncedenArşiveeklemeküzerehazırladığınız = new Label();
             pictureBoxAddFolderToArchive = new PictureBox();
             lblAddFolderToArchive = new Label();
-            label27 = new Label();
+            lblEmpty_label27 = new Label();
             btnChooseUpperFolder = new Button();
-            label20 = new Label();
-            label11 = new Label();
-            label10 = new Label();
+            lblmüşterilerinkayıtdosyalarınıbulunduran = new Label();
+            lblÜSTKLASÖRÜNÜZÜSeçiniz = new Label();
+            lblHazırlamışolduğunuz = new Label();
             pnlAddSpareToArchive = new Panel();
             pictureBoxLoadingSpareToArchive = new PictureBox();
-            label34 = new Label();
+            lblEmpty_label34 = new Label();
             lblSpareToArchive = new Label();
             btnSpareToArchive = new Button();
             txtLocationOfSpareFolder = new TextBox();
-            label36 = new Label();
+            lblSeçilenYedekDosyası = new Label();
             btnChooseSpareFolder = new Button();
-            label37 = new Label();
-            label38 = new Label();
+            lblDosyayıSeçiniz = new Label();
+            lblDahaöncedenyedeklediğiniz = new Label();
             pnlMakeSpare = new Panel();
             pictureBoxLoadingDbToFolder = new PictureBox();
-            label33 = new Label();
+            lblEmpty_label33 = new Label();
             lblDbToFolder = new Label();
             btnDBtoFolder = new Button();
             txtLocationForArchive = new TextBox();
-            label31 = new Label();
+            lblSeçilenKonum3 = new Label();
             btnLocationForArchive = new Button();
-            label30 = new Label();
-            label29 = new Label();
+            lblDosyaKonumuSeçiniz = new Label();
+            lblVeriTabanındakiarşiviyedeklemekiçin = new Label();
             lblExplanation = new Label();
             lblMainArchiveCaption = new Label();
             lblEmpty = new Label();
             btnAddSpareToArchive = new Button();
             btnMakeSpare = new Button();
             btnAddFoldersToArchive = new Button();
-            label50 = new Label();
+            lblVeriTabanı = new Label();
             btnDB = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridRecords).BeginInit();
             pnlReceipt.SuspendLayout();
@@ -277,19 +277,19 @@
             pnlReceipt.AutoSize = true;
             pnlReceipt.BackColor = Color.Transparent;
             pnlReceipt.Controls.Add(textBoxFileLocation);
-            pnlReceipt.Controls.Add(label12);
+            pnlReceipt.Controls.Add(lblYazdır);
             pnlReceipt.Controls.Add(lblFileLocation);
             pnlReceipt.Controls.Add(lblReceiptName);
             pnlReceipt.Controls.Add(lblSave);
             pnlReceipt.Controls.Add(lblSaveAndPrint);
-            pnlReceipt.Controls.Add(label15);
+            pnlReceipt.Controls.Add(lblFormuTemizle);
             pnlReceipt.Controls.Add(pnlReceiptInputs);
-            pnlReceipt.Controls.Add(label26);
-            pnlReceipt.Controls.Add(label14);
-            pnlReceipt.Controls.Add(label25);
-            pnlReceipt.Controls.Add(label24);
+            pnlReceipt.Controls.Add(lblMakbuzaGit);
+            pnlReceipt.Controls.Add(lblKlasöreGit);
+            pnlReceipt.Controls.Add(lblMakbuzAdı);
+            pnlReceipt.Controls.Add(lblKlasör);
             pnlReceipt.Controls.Add(lblReceiptCaption);
-            pnlReceipt.Controls.Add(label13);
+            pnlReceipt.Controls.Add(lblSeçilenKonum);
             pnlReceipt.Controls.Add(btnTrash);
             pnlReceipt.Controls.Add(btnPrint);
             pnlReceipt.Controls.Add(btnChooseFileLocation);
@@ -312,16 +312,16 @@
             textBoxFileLocation.Size = new Size(282, 27);
             textBoxFileLocation.TabIndex = 14;
             // 
-            // label12
+            // lblYazdır
             // 
-            label12.AutoSize = true;
-            label12.FlatStyle = FlatStyle.Flat;
-            label12.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label12.Location = new Point(589, 591);
-            label12.Name = "label12";
-            label12.Size = new Size(58, 22);
-            label12.TabIndex = 2;
-            label12.Text = "Yazdır";
+            lblYazdır.AutoSize = true;
+            lblYazdır.FlatStyle = FlatStyle.Flat;
+            lblYazdır.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblYazdır.Location = new Point(589, 591);
+            lblYazdır.Name = "lblYazdır";
+            lblYazdır.Size = new Size(58, 22);
+            lblYazdır.TabIndex = 2;
+            lblYazdır.Text = "Yazdır";
             // 
             // lblFileLocation
             // 
@@ -367,23 +367,23 @@
             lblSaveAndPrint.TabIndex = 2;
             lblSaveAndPrint.Text = "Kaydet ve Yazdır";
             // 
-            // label15
+            // lblFormuTemizle
             // 
-            label15.AutoSize = true;
-            label15.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label15.ForeColor = Color.Red;
-            label15.Location = new Point(787, 589);
-            label15.Name = "label15";
-            label15.Size = new Size(123, 22);
-            label15.TabIndex = 2;
-            label15.Text = "Formu Temizle";
+            lblFormuTemizle.AutoSize = true;
+            lblFormuTemizle.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblFormuTemizle.ForeColor = Color.Red;
+            lblFormuTemizle.Location = new Point(787, 589);
+            lblFormuTemizle.Name = "lblFormuTemizle";
+            lblFormuTemizle.Size = new Size(123, 22);
+            lblFormuTemizle.TabIndex = 2;
+            lblFormuTemizle.Text = "Formu Temizle";
             // 
             // pnlReceiptInputs
             // 
             pnlReceiptInputs.BackgroundImage = Extensions.Resources.printPAPER;
             pnlReceiptInputs.BackgroundImageLayout = ImageLayout.Stretch;
             pnlReceiptInputs.Controls.Add(txtNumQty);
-            pnlReceiptInputs.Controls.Add(label57);
+            pnlReceiptInputs.Controls.Add(lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ);
             pnlReceiptInputs.Controls.Add(txtDeliveryDate);
             pnlReceiptInputs.Controls.Add(txtRemainingAmount);
             pnlReceiptInputs.Controls.Add(txtReceivedAmount);
@@ -391,13 +391,13 @@
             pnlReceiptInputs.Controls.Add(txtDimensions);
             pnlReceiptInputs.Controls.Add(txtName);
             pnlReceiptInputs.Controls.Add(txtBoxNotes);
-            pnlReceiptInputs.Controls.Add(label5);
-            pnlReceiptInputs.Controls.Add(label3);
-            pnlReceiptInputs.Controls.Add(label6);
-            pnlReceiptInputs.Controls.Add(label4);
-            pnlReceiptInputs.Controls.Add(label7);
-            pnlReceiptInputs.Controls.Add(label8);
-            pnlReceiptInputs.Controls.Add(label2);
+            pnlReceiptInputs.Controls.Add(lblAdet);
+            pnlReceiptInputs.Controls.Add(lblKalan);
+            pnlReceiptInputs.Controls.Add(lblTutar);
+            pnlReceiptInputs.Controls.Add(lblEbat);
+            pnlReceiptInputs.Controls.Add(lblTeslimTarihi);
+            pnlReceiptInputs.Controls.Add(lblNot);
+            pnlReceiptInputs.Controls.Add(lblAlınan);
             pnlReceiptInputs.Controls.Add(lblName);
             pnlReceiptInputs.Font = new Font("MV Boli", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             pnlReceiptInputs.ForeColor = Color.DimGray;
@@ -414,15 +414,15 @@
             txtNumQty.Size = new Size(101, 26);
             txtNumQty.TabIndex = 11;
             // 
-            // label57
+            // lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ
             // 
-            label57.AutoSize = true;
-            label57.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label57.Location = new Point(94, 125);
-            label57.Name = "label57";
-            label57.Size = new Size(237, 15);
-            label57.TabIndex = 10;
-            label57.Text = "'Ad Soyad' kısmında alt çizgi '_' KULLANMAYINIZ!";
+            lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ.AutoSize = true;
+            lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ.Location = new Point(94, 125);
+            lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ.Name = "lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ";
+            lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ.Size = new Size(237, 15);
+            lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ.TabIndex = 10;
+            lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ.Text = "'Ad Soyad' kısmında alt çizgi '_' KULLANMAYINIZ!";
             // 
             // txtDeliveryDate
             // 
@@ -492,61 +492,61 @@
             txtBoxNotes.Text = "";
             txtBoxNotes.TextChanged += txtName_TextChanged;
             // 
-            // label5
+            // lblAdet
             // 
-            label5.Location = new Point(239, 155);
-            label5.Name = "label5";
-            label5.Size = new Size(56, 23);
-            label5.TabIndex = 0;
-            label5.Text = "Adet:";
+            lblAdet.Location = new Point(239, 155);
+            lblAdet.Name = "lblAdet";
+            lblAdet.Size = new Size(56, 23);
+            lblAdet.TabIndex = 0;
+            lblAdet.Text = "Adet:";
             // 
-            // label3
+            // lblKalan
             // 
-            label3.Location = new Point(306, 198);
-            label3.Name = "label3";
-            label3.Size = new Size(77, 23);
-            label3.TabIndex = 0;
-            label3.Text = "Kalan:";
+            lblKalan.Location = new Point(306, 198);
+            lblKalan.Name = "lblKalan";
+            lblKalan.Size = new Size(77, 23);
+            lblKalan.TabIndex = 0;
+            lblKalan.Text = "Kalan:";
             // 
-            // label6
+            // lblTutar
             // 
-            label6.Location = new Point(101, 198);
-            label6.Name = "label6";
-            label6.Size = new Size(64, 23);
-            label6.TabIndex = 0;
-            label6.Text = "Tutar:";
+            lblTutar.Location = new Point(101, 198);
+            lblTutar.Name = "lblTutar";
+            lblTutar.Size = new Size(64, 23);
+            lblTutar.TabIndex = 0;
+            lblTutar.Text = "Tutar:";
             // 
-            // label4
+            // lblEbat
             // 
-            label4.Location = new Point(91, 155);
-            label4.Name = "label4";
-            label4.Size = new Size(100, 23);
-            label4.TabIndex = 0;
-            label4.Text = "Ebat:";
+            lblEbat.Location = new Point(91, 155);
+            lblEbat.Name = "lblEbat";
+            lblEbat.Size = new Size(100, 23);
+            lblEbat.TabIndex = 0;
+            lblEbat.Text = "Ebat:";
             // 
-            // label7
+            // lblTeslimTarihi
             // 
-            label7.Location = new Point(150, 284);
-            label7.Name = "label7";
-            label7.Size = new Size(126, 23);
-            label7.TabIndex = 0;
-            label7.Text = "Teslim Tarihi:";
+            lblTeslimTarihi.Location = new Point(150, 284);
+            lblTeslimTarihi.Name = "lblTeslimTarihi";
+            lblTeslimTarihi.Size = new Size(126, 23);
+            lblTeslimTarihi.TabIndex = 0;
+            lblTeslimTarihi.Text = "Teslim Tarihi:";
             // 
-            // label8
+            // lblNot
             // 
-            label8.Location = new Point(91, 319);
-            label8.Name = "label8";
-            label8.Size = new Size(100, 23);
-            label8.TabIndex = 0;
-            label8.Text = "Not:";
+            lblNot.Location = new Point(91, 319);
+            lblNot.Name = "lblNot";
+            lblNot.Size = new Size(100, 23);
+            lblNot.TabIndex = 0;
+            lblNot.Text = "Not:";
             // 
-            // label2
+            // lblAlınan
             // 
-            label2.Location = new Point(196, 199);
-            label2.Name = "label2";
-            label2.Size = new Size(76, 23);
-            label2.TabIndex = 0;
-            label2.Text = "Alınan:";
+            lblAlınan.Location = new Point(196, 199);
+            lblAlınan.Name = "lblAlınan";
+            lblAlınan.Size = new Size(76, 23);
+            lblAlınan.TabIndex = 0;
+            lblAlınan.Text = "Alınan:";
             // 
             // lblName
             // 
@@ -556,47 +556,47 @@
             lblName.TabIndex = 0;
             lblName.Text = "Ad - Soyad:";
             // 
-            // label26
+            // lblMakbuzaGit
             // 
-            label26.AutoSize = true;
-            label26.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
-            label26.ForeColor = SystemColors.ControlText;
-            label26.Location = new Point(905, 434);
-            label26.Name = "label26";
-            label26.Size = new Size(108, 22);
-            label26.TabIndex = 2;
-            label26.Text = "Makbuza Git";
+            lblMakbuzaGit.AutoSize = true;
+            lblMakbuzaGit.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
+            lblMakbuzaGit.ForeColor = SystemColors.ControlText;
+            lblMakbuzaGit.Location = new Point(905, 434);
+            lblMakbuzaGit.Name = "lblMakbuzaGit";
+            lblMakbuzaGit.Size = new Size(108, 22);
+            lblMakbuzaGit.TabIndex = 2;
+            lblMakbuzaGit.Text = "Makbuza Git";
             // 
-            // label14
+            // lblKlasöreGit
             // 
-            label14.AutoSize = true;
-            label14.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
-            label14.ForeColor = SystemColors.ControlText;
-            label14.Location = new Point(787, 434);
-            label14.Name = "label14";
-            label14.Size = new Size(94, 22);
-            label14.TabIndex = 2;
-            label14.Text = "Klasöre Git";
+            lblKlasöreGit.AutoSize = true;
+            lblKlasöreGit.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
+            lblKlasöreGit.ForeColor = SystemColors.ControlText;
+            lblKlasöreGit.Location = new Point(787, 434);
+            lblKlasöreGit.Name = "lblKlasöreGit";
+            lblKlasöreGit.Size = new Size(94, 22);
+            lblKlasöreGit.TabIndex = 2;
+            lblKlasöreGit.Text = "Klasöre Git";
             // 
-            // label25
+            // lblMakbuzAdı
             // 
-            label25.AutoSize = true;
-            label25.Font = new Font("Palatino Linotype", 15.75F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
-            label25.Location = new Point(796, 263);
-            label25.Name = "label25";
-            label25.Size = new Size(140, 28);
-            label25.TabIndex = 2;
-            label25.Text = "Makbuz Adı:";
+            lblMakbuzAdı.AutoSize = true;
+            lblMakbuzAdı.Font = new Font("Palatino Linotype", 15.75F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            lblMakbuzAdı.Location = new Point(796, 263);
+            lblMakbuzAdı.Name = "lblMakbuzAdı";
+            lblMakbuzAdı.Size = new Size(140, 28);
+            lblMakbuzAdı.TabIndex = 2;
+            lblMakbuzAdı.Text = "Makbuz Adı:";
             // 
-            // label24
+            // lblKlasör
             // 
-            label24.AutoSize = true;
-            label24.Font = new Font("Palatino Linotype", 15.75F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
-            label24.Location = new Point(796, 202);
-            label24.Name = "label24";
-            label24.Size = new Size(135, 28);
-            label24.TabIndex = 2;
-            label24.Text = "Klasör           :";
+            lblKlasör.AutoSize = true;
+            lblKlasör.Font = new Font("Palatino Linotype", 15.75F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            lblKlasör.Location = new Point(796, 202);
+            lblKlasör.Name = "lblKlasör";
+            lblKlasör.Size = new Size(135, 28);
+            lblKlasör.TabIndex = 2;
+            lblKlasör.Text = "Klasör           :";
             // 
             // lblReceiptCaption
             // 
@@ -608,15 +608,15 @@
             lblReceiptCaption.TabIndex = 2;
             lblReceiptCaption.Text = "Oluşturulan Makbuz:";
             // 
-            // label13
+            // lblSeçilenKonum
             // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label13.Location = new Point(536, 162);
-            label13.Name = "label13";
-            label13.Size = new Size(154, 26);
-            label13.TabIndex = 2;
-            label13.Text = "Seçilen Konum:";
+            lblSeçilenKonum.AutoSize = true;
+            lblSeçilenKonum.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSeçilenKonum.Location = new Point(536, 162);
+            lblSeçilenKonum.Name = "lblSeçilenKonum";
+            lblSeçilenKonum.Size = new Size(154, 26);
+            lblSeçilenKonum.TabIndex = 2;
+            lblSeçilenKonum.Text = "Seçilen Konum:";
             // 
             // btnTrash
             // 
@@ -717,11 +717,11 @@
             pnlFindFolder.Controls.Add(txtFileNameInput);
             pnlFindFolder.Controls.Add(btnSearchFile);
             pnlFindFolder.Controls.Add(cmbBoxDriver);
-            pnlFindFolder.Controls.Add(label18);
-            pnlFindFolder.Controls.Add(label17);
+            pnlFindFolder.Controls.Add(lblEmpty_label18);
+            pnlFindFolder.Controls.Add(lblSürücüSeç);
             pnlFindFolder.Controls.Add(lblSearchFile);
-            pnlFindFolder.Controls.Add(label19);
-            pnlFindFolder.Controls.Add(label16);
+            pnlFindFolder.Controls.Add(lblBulunanKlasörler);
+            pnlFindFolder.Controls.Add(lblKlasörAdıGir);
             pnlFindFolder.Location = new Point(208, 4);
             pnlFindFolder.Margin = new Padding(2, 1, 2, 1);
             pnlFindFolder.Name = "pnlFindFolder";
@@ -788,29 +788,29 @@
             cmbBoxDriver.Size = new Size(132, 33);
             cmbBoxDriver.TabIndex = 0;
             // 
-            // label18
+            // lblEmpty_label18
             // 
-            label18.AutoSize = true;
-            label18.BackColor = Color.Transparent;
-            label18.Font = new Font("Palatino Linotype", 19.875F, FontStyle.Bold);
-            label18.ForeColor = SystemColors.ButtonFace;
-            label18.Location = new Point(402, 132);
-            label18.Name = "label18";
-            label18.Size = new Size(31, 37);
-            label18.TabIndex = 2;
-            label18.Text = ">";
+            lblEmpty_label18.AutoSize = true;
+            lblEmpty_label18.BackColor = Color.Transparent;
+            lblEmpty_label18.Font = new Font("Palatino Linotype", 19.875F, FontStyle.Bold);
+            lblEmpty_label18.ForeColor = SystemColors.ButtonFace;
+            lblEmpty_label18.Location = new Point(402, 132);
+            lblEmpty_label18.Name = "lblEmpty_label18";
+            lblEmpty_label18.Size = new Size(31, 37);
+            lblEmpty_label18.TabIndex = 2;
+            lblEmpty_label18.Text = ">";
             // 
-            // label17
+            // lblSürücüSeç
             // 
-            label17.AutoSize = true;
-            label17.BackColor = Color.Transparent;
-            label17.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold);
-            label17.ForeColor = SystemColors.ActiveCaptionText;
-            label17.Location = new Point(174, 105);
-            label17.Name = "label17";
-            label17.Size = new Size(144, 32);
-            label17.TabIndex = 2;
-            label17.Text = "Sürücü Seç:";
+            lblSürücüSeç.AutoSize = true;
+            lblSürücüSeç.BackColor = Color.Transparent;
+            lblSürücüSeç.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold);
+            lblSürücüSeç.ForeColor = SystemColors.ActiveCaptionText;
+            lblSürücüSeç.Location = new Point(174, 105);
+            lblSürücüSeç.Name = "lblSürücüSeç";
+            lblSürücüSeç.Size = new Size(144, 32);
+            lblSürücüSeç.TabIndex = 2;
+            lblSürücüSeç.Text = "Sürücü Seç:";
             // 
             // lblSearchFile
             // 
@@ -824,41 +824,41 @@
             lblSearchFile.TabIndex = 2;
             lblSearchFile.Text = "Ara";
             // 
-            // label19
+            // lblBulunanKlasörler
             // 
-            label19.AutoSize = true;
-            label19.BackColor = Color.Transparent;
-            label19.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label19.ForeColor = SystemColors.ActiveCaptionText;
-            label19.Location = new Point(317, 403);
-            label19.Name = "label19";
-            label19.Size = new Size(219, 32);
-            label19.TabIndex = 2;
-            label19.Text = "Bulunan Klasörler:";
+            lblBulunanKlasörler.AutoSize = true;
+            lblBulunanKlasörler.BackColor = Color.Transparent;
+            lblBulunanKlasörler.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblBulunanKlasörler.ForeColor = SystemColors.ActiveCaptionText;
+            lblBulunanKlasörler.Location = new Point(317, 403);
+            lblBulunanKlasörler.Name = "lblBulunanKlasörler";
+            lblBulunanKlasörler.Size = new Size(219, 32);
+            lblBulunanKlasörler.TabIndex = 2;
+            lblBulunanKlasörler.Text = "Bulunan Klasörler:";
             // 
-            // label16
+            // lblKlasörAdıGir
             // 
-            label16.AutoSize = true;
-            label16.BackColor = Color.Transparent;
-            label16.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold);
-            label16.ForeColor = SystemColors.ActiveCaptionText;
-            label16.Location = new Point(556, 105);
-            label16.Name = "label16";
-            label16.Size = new Size(177, 32);
-            label16.TabIndex = 2;
-            label16.Text = "Klasör Adı Gir:";
+            lblKlasörAdıGir.AutoSize = true;
+            lblKlasörAdıGir.BackColor = Color.Transparent;
+            lblKlasörAdıGir.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold);
+            lblKlasörAdıGir.ForeColor = SystemColors.ActiveCaptionText;
+            lblKlasörAdıGir.Location = new Point(556, 105);
+            lblKlasörAdıGir.Name = "lblKlasörAdıGir";
+            lblKlasörAdıGir.Size = new Size(177, 32);
+            lblKlasörAdıGir.TabIndex = 2;
+            lblKlasörAdıGir.Text = "Klasör Adı Gir:";
             // 
-            // label9
+            // lblMakbuzKes
             // 
-            label9.AutoSize = true;
-            label9.BackColor = Color.Transparent;
-            label9.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.ForeColor = SystemColors.ButtonFace;
-            label9.Location = new Point(19, 323);
-            label9.Name = "label9";
-            label9.Size = new Size(103, 22);
-            label9.TabIndex = 2;
-            label9.Text = "Makbuz Kes";
+            lblMakbuzKes.AutoSize = true;
+            lblMakbuzKes.BackColor = Color.Transparent;
+            lblMakbuzKes.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMakbuzKes.ForeColor = SystemColors.ButtonFace;
+            lblMakbuzKes.Location = new Point(19, 323);
+            lblMakbuzKes.Name = "lblMakbuzKes";
+            lblMakbuzKes.Size = new Size(103, 22);
+            lblMakbuzKes.TabIndex = 2;
+            lblMakbuzKes.Text = "Makbuz Kes";
             // 
             // errorProvider1
             // 
@@ -879,29 +879,29 @@
             printPreviewDialog1.Name = "printPreviewDialog1";
             printPreviewDialog1.Visible = false;
             // 
-            // label21
+            // lblKlasörAra
             // 
-            label21.AutoSize = true;
-            label21.BackColor = Color.Transparent;
-            label21.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label21.ForeColor = SystemColors.ButtonFace;
-            label21.Location = new Point(25, 203);
-            label21.Name = "label21";
-            label21.Size = new Size(88, 22);
-            label21.TabIndex = 2;
-            label21.Text = "Klasör Ara";
+            lblKlasörAra.AutoSize = true;
+            lblKlasörAra.BackColor = Color.Transparent;
+            lblKlasörAra.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblKlasörAra.ForeColor = SystemColors.ButtonFace;
+            lblKlasörAra.Location = new Point(25, 203);
+            lblKlasörAra.Name = "lblKlasörAra";
+            lblKlasörAra.Size = new Size(88, 22);
+            lblKlasörAra.TabIndex = 2;
+            lblKlasörAra.Text = "Klasör Ara";
             // 
-            // label22
+            // lblBilgisayarım
             // 
-            label22.AutoSize = true;
-            label22.BackColor = Color.Transparent;
-            label22.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label22.ForeColor = SystemColors.ButtonFace;
-            label22.Location = new Point(19, 95);
-            label22.Name = "label22";
-            label22.Size = new Size(104, 22);
-            label22.TabIndex = 2;
-            label22.Text = "Bilgisayarım";
+            lblBilgisayarım.AutoSize = true;
+            lblBilgisayarım.BackColor = Color.Transparent;
+            lblBilgisayarım.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblBilgisayarım.ForeColor = SystemColors.ButtonFace;
+            lblBilgisayarım.Location = new Point(19, 95);
+            lblBilgisayarım.Name = "lblBilgisayarım";
+            lblBilgisayarım.Size = new Size(104, 22);
+            lblBilgisayarım.TabIndex = 2;
+            lblBilgisayarım.Text = "Bilgisayarım";
             // 
             // btnMyComputer
             // 
@@ -931,17 +931,17 @@
             button1.UseVisualStyleBackColor = false;
             button1.Click += flowLayoutPanelArchive_Click;
             // 
-            // label1
+            // lblArşiv
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.Transparent;
-            label1.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = SystemColors.ButtonFace;
-            label1.Location = new Point(46, 444);
-            label1.Name = "label1";
-            label1.Size = new Size(50, 22);
-            label1.TabIndex = 2;
-            label1.Text = "Arşiv";
+            lblArşiv.AutoSize = true;
+            lblArşiv.BackColor = Color.Transparent;
+            lblArşiv.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblArşiv.ForeColor = SystemColors.ButtonFace;
+            lblArşiv.Location = new Point(46, 444);
+            lblArşiv.Name = "lblArşiv";
+            lblArşiv.Size = new Size(50, 22);
+            lblArşiv.TabIndex = 2;
+            lblArşiv.Text = "Arşiv";
             // 
             // btnSearchPhoto
             // 
@@ -979,19 +979,19 @@
             // pnlDBprocess
             // 
             pnlDBprocess.Controls.Add(txtUploadDBLocation);
-            pnlDBprocess.Controls.Add(label56);
+            pnlDBprocess.Controls.Add(lblSeçilenYedek);
             pnlDBprocess.Controls.Add(btnUploadDBLocation);
             pnlDBprocess.Controls.Add(txtDownloadDBLocation);
-            pnlDBprocess.Controls.Add(label55);
+            pnlDBprocess.Controls.Add(lblSeçilenKonum2);
             pnlDBprocess.Controls.Add(btnDownloadDBLocation);
             pnlDBprocess.Controls.Add(richTextBox2);
             pnlDBprocess.Controls.Add(richTextBox4);
             pnlDBprocess.Controls.Add(richTextBox3);
             pnlDBprocess.Controls.Add(richTextBox1);
-            pnlDBprocess.Controls.Add(label54);
-            pnlDBprocess.Controls.Add(label53);
-            pnlDBprocess.Controls.Add(label52);
-            pnlDBprocess.Controls.Add(label51);
+            pnlDBprocess.Controls.Add(lblVeriTabanınıSil);
+            pnlDBprocess.Controls.Add(lblYedektenVeriTabanınıOluştur);
+            pnlDBprocess.Controls.Add(lblVeriTabanınıYedekle);
+            pnlDBprocess.Controls.Add(lblVeriTabanınıOluştur);
             pnlDBprocess.Controls.Add(btnRemoveDB);
             pnlDBprocess.Controls.Add(btnUploadDB);
             pnlDBprocess.Controls.Add(btnDownloadDB);
@@ -1011,15 +1011,15 @@
             txtUploadDBLocation.Size = new Size(282, 27);
             txtUploadDBLocation.TabIndex = 39;
             // 
-            // label56
+            // lblSeçilenYedek
             // 
-            label56.AutoSize = true;
-            label56.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label56.Location = new Point(794, 335);
-            label56.Name = "label56";
-            label56.Size = new Size(141, 26);
-            label56.TabIndex = 37;
-            label56.Text = "Seçilen Yedek:";
+            lblSeçilenYedek.AutoSize = true;
+            lblSeçilenYedek.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSeçilenYedek.Location = new Point(794, 335);
+            lblSeçilenYedek.Name = "lblSeçilenYedek";
+            lblSeçilenYedek.Size = new Size(141, 26);
+            lblSeçilenYedek.TabIndex = 37;
+            lblSeçilenYedek.Text = "Seçilen Yedek:";
             // 
             // btnUploadDBLocation
             // 
@@ -1044,15 +1044,15 @@
             txtDownloadDBLocation.Size = new Size(282, 27);
             txtDownloadDBLocation.TabIndex = 36;
             // 
-            // label55
+            // lblSeçilenKonum2
             // 
-            label55.AutoSize = true;
-            label55.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label55.Location = new Point(440, 335);
-            label55.Name = "label55";
-            label55.Size = new Size(154, 26);
-            label55.TabIndex = 34;
-            label55.Text = "Seçilen Konum:";
+            lblSeçilenKonum2.AutoSize = true;
+            lblSeçilenKonum2.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSeçilenKonum2.Location = new Point(440, 335);
+            lblSeçilenKonum2.Name = "lblSeçilenKonum2";
+            lblSeçilenKonum2.Size = new Size(154, 26);
+            lblSeçilenKonum2.TabIndex = 34;
+            lblSeçilenKonum2.Text = "Seçilen Konum:";
             // 
             // btnDownloadDBLocation
             // 
@@ -1106,49 +1106,49 @@
             richTextBox1.TabIndex = 33;
             richTextBox1.Text = "- Bu işlem, kayıtlarımızın bulunduğu veri tabanını\n <seçilen konumda> \nyedeklemek için kulanılmalıdır.";
             // 
-            // label54
+            // lblVeriTabanınıSil
             // 
-            label54.AutoSize = true;
-            label54.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label54.ForeColor = SystemColors.ControlText;
-            label54.Location = new Point(1046, 274);
-            label54.Name = "label54";
-            label54.Size = new Size(196, 32);
-            label54.TabIndex = 31;
-            label54.Text = "Veri Tabanını Sil";
+            lblVeriTabanınıSil.AutoSize = true;
+            lblVeriTabanınıSil.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            lblVeriTabanınıSil.ForeColor = SystemColors.ControlText;
+            lblVeriTabanınıSil.Location = new Point(1046, 274);
+            lblVeriTabanınıSil.Name = "lblVeriTabanınıSil";
+            lblVeriTabanınıSil.Size = new Size(196, 32);
+            lblVeriTabanınıSil.TabIndex = 31;
+            lblVeriTabanınıSil.Text = "Veri Tabanını Sil";
             // 
-            // label53
+            // lblYedektenVeriTabanınıOluştur
             // 
-            label53.AutoSize = true;
-            label53.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label53.ForeColor = SystemColors.ControlText;
-            label53.Location = new Point(638, 274);
-            label53.Name = "label53";
-            label53.Size = new Size(360, 32);
-            label53.TabIndex = 31;
-            label53.Text = "Yedekten Veri Tabanını Oluştur";
+            lblYedektenVeriTabanınıOluştur.AutoSize = true;
+            lblYedektenVeriTabanınıOluştur.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            lblYedektenVeriTabanınıOluştur.ForeColor = SystemColors.ControlText;
+            lblYedektenVeriTabanınıOluştur.Location = new Point(638, 274);
+            lblYedektenVeriTabanınıOluştur.Name = "lblYedektenVeriTabanınıOluştur";
+            lblYedektenVeriTabanınıOluştur.Size = new Size(360, 32);
+            lblYedektenVeriTabanınıOluştur.TabIndex = 31;
+            lblYedektenVeriTabanınıOluştur.Text = "Yedekten Veri Tabanını Oluştur";
             // 
-            // label52
+            // lblVeriTabanınıYedekle
             // 
-            label52.AutoSize = true;
-            label52.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label52.ForeColor = SystemColors.ControlText;
-            label52.Location = new Point(333, 278);
-            label52.Name = "label52";
-            label52.Size = new Size(253, 32);
-            label52.TabIndex = 31;
-            label52.Text = "Veri Tabanını Yedekle";
+            lblVeriTabanınıYedekle.AutoSize = true;
+            lblVeriTabanınıYedekle.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            lblVeriTabanınıYedekle.ForeColor = SystemColors.ControlText;
+            lblVeriTabanınıYedekle.Location = new Point(333, 278);
+            lblVeriTabanınıYedekle.Name = "lblVeriTabanınıYedekle";
+            lblVeriTabanınıYedekle.Size = new Size(253, 32);
+            lblVeriTabanınıYedekle.TabIndex = 31;
+            lblVeriTabanınıYedekle.Text = "Veri Tabanını Yedekle";
             // 
-            // label51
+            // lblVeriTabanınıOluştur
             // 
-            label51.AutoSize = true;
-            label51.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label51.ForeColor = SystemColors.ControlText;
-            label51.Location = new Point(13, 278);
-            label51.Name = "label51";
-            label51.Size = new Size(252, 32);
-            label51.TabIndex = 31;
-            label51.Text = "Veri Tabanını Oluştur";
+            lblVeriTabanınıOluştur.AutoSize = true;
+            lblVeriTabanınıOluştur.Font = new Font("Palatino Linotype", 18F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            lblVeriTabanınıOluştur.ForeColor = SystemColors.ControlText;
+            lblVeriTabanınıOluştur.Location = new Point(13, 278);
+            lblVeriTabanınıOluştur.Name = "lblVeriTabanınıOluştur";
+            lblVeriTabanınıOluştur.Size = new Size(252, 32);
+            lblVeriTabanınıOluştur.TabIndex = 31;
+            lblVeriTabanınıOluştur.Text = "Veri Tabanını Oluştur";
             // 
             // btnRemoveDB
             // 
@@ -1234,12 +1234,12 @@
             // pnlSearchPhoto
             // 
             pnlSearchPhoto.Controls.Add(panel2);
-            pnlSearchPhoto.Controls.Add(label43);
+            pnlSearchPhoto.Controls.Add(lblKaydıSil);
             pnlSearchPhoto.Controls.Add(btnDeleteRecord);
-            pnlSearchPhoto.Controls.Add(label42);
+            pnlSearchPhoto.Controls.Add(lblKaydıGüncelle);
             pnlSearchPhoto.Controls.Add(btnUpdateRecord);
             pnlSearchPhoto.Controls.Add(panel1);
-            pnlSearchPhoto.Controls.Add(label39);
+            pnlSearchPhoto.Controls.Add(lblSeçilenKaydınBulunduğuÜstKlasör);
             pnlSearchPhoto.Controls.Add(txtDataUpperFileName);
             pnlSearchPhoto.Controls.Add(pictureBoxChosenPhoto);
             pnlSearchPhoto.Controls.Add(dataGridRecords);
@@ -1256,16 +1256,16 @@
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
-            panel2.Controls.Add(label49);
-            panel2.Controls.Add(label48);
-            panel2.Controls.Add(label47);
+            panel2.Controls.Add(lbl3);
+            panel2.Controls.Add(lbl2);
+            panel2.Controls.Add(lbl1);
             panel2.Controls.Add(lblChooseDriver);
-            panel2.Controls.Add(label46);
+            panel2.Controls.Add(lblKaydınKlasörünüAçmakİçin);
             panel2.Controls.Add(lblGoRecord);
             panel2.Controls.Add(comboBoxDriversForRecord);
-            panel2.Controls.Add(label45);
+            panel2.Controls.Add(lblGit);
             panel2.Controls.Add(btnGoRecord);
-            panel2.Controls.Add(label44);
+            panel2.Controls.Add(lblEmpty_label44);
             panel2.Controls.Add(listBoxArchive);
             panel2.Controls.Add(btnSearchArchive);
             panel2.Controls.Add(pictureBoxLoadingArchive);
@@ -1275,41 +1275,41 @@
             panel2.Size = new Size(306, 240);
             panel2.TabIndex = 34;
             // 
-            // label49
+            // lbl3
             // 
-            label49.AutoSize = true;
-            label49.BackColor = Color.Gold;
-            label49.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label49.ForeColor = Color.Black;
-            label49.Location = new Point(20, 187);
-            label49.Name = "label49";
-            label49.Size = new Size(22, 21);
-            label49.TabIndex = 37;
-            label49.Text = "3.";
+            lbl3.AutoSize = true;
+            lbl3.BackColor = Color.Gold;
+            lbl3.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            lbl3.ForeColor = Color.Black;
+            lbl3.Location = new Point(20, 187);
+            lbl3.Name = "lbl3";
+            lbl3.Size = new Size(22, 21);
+            lbl3.TabIndex = 37;
+            lbl3.Text = "3.";
             // 
-            // label48
+            // lbl2
             // 
-            label48.AutoSize = true;
-            label48.BackColor = Color.Gold;
-            label48.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label48.ForeColor = Color.Black;
-            label48.Location = new Point(164, 31);
-            label48.Name = "label48";
-            label48.Size = new Size(22, 21);
-            label48.TabIndex = 36;
-            label48.Text = "2.";
+            lbl2.AutoSize = true;
+            lbl2.BackColor = Color.Gold;
+            lbl2.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            lbl2.ForeColor = Color.Black;
+            lbl2.Location = new Point(164, 31);
+            lbl2.Name = "lbl2";
+            lbl2.Size = new Size(22, 21);
+            lbl2.TabIndex = 36;
+            lbl2.Text = "2.";
             // 
-            // label47
+            // lbl1
             // 
-            label47.AutoSize = true;
-            label47.BackColor = Color.Gold;
-            label47.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label47.ForeColor = Color.Black;
-            label47.Location = new Point(15, 30);
-            label47.Name = "label47";
-            label47.Size = new Size(22, 21);
-            label47.TabIndex = 35;
-            label47.Text = "1.";
+            lbl1.AutoSize = true;
+            lbl1.BackColor = Color.Gold;
+            lbl1.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            lbl1.ForeColor = Color.Black;
+            lbl1.Location = new Point(15, 30);
+            lbl1.Name = "lbl1";
+            lbl1.Size = new Size(22, 21);
+            lbl1.TabIndex = 35;
+            lbl1.Text = "1.";
             // 
             // lblChooseDriver
             // 
@@ -1323,17 +1323,17 @@
             lblChooseDriver.TabIndex = 6;
             lblChooseDriver.Text = "Önce Sürücü Seç:";
             // 
-            // label46
+            // lblKaydınKlasörünüAçmakİçin
             // 
-            label46.AutoSize = true;
-            label46.BackColor = Color.Transparent;
-            label46.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 162);
-            label46.ForeColor = Color.Black;
-            label46.Location = new Point(46, 3);
-            label46.Name = "label46";
-            label46.Size = new Size(236, 21);
-            label46.TabIndex = 33;
-            label46.Text = "Kaydın Klasörünü Açmak İçin:";
+            lblKaydınKlasörünüAçmakİçin.AutoSize = true;
+            lblKaydınKlasörünüAçmakİçin.BackColor = Color.Transparent;
+            lblKaydınKlasörünüAçmakİçin.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 162);
+            lblKaydınKlasörünüAçmakİçin.ForeColor = Color.Black;
+            lblKaydınKlasörünüAçmakİçin.Location = new Point(46, 3);
+            lblKaydınKlasörünüAçmakİçin.Name = "lblKaydınKlasörünüAçmakİçin";
+            lblKaydınKlasörünüAçmakİçin.Size = new Size(236, 21);
+            lblKaydınKlasörünüAçmakİçin.TabIndex = 33;
+            lblKaydınKlasörünüAçmakİçin.Text = "Kaydın Klasörünü Açmak İçin:";
             // 
             // lblGoRecord
             // 
@@ -1356,16 +1356,16 @@
             comboBoxDriversForRecord.Size = new Size(132, 33);
             comboBoxDriversForRecord.TabIndex = 5;
             // 
-            // label45
+            // lblGit
             // 
-            label45.AutoSize = true;
-            label45.Font = new Font("Palatino Linotype", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label45.ForeColor = SystemColors.ControlText;
-            label45.Location = new Point(61, 202);
-            label45.Name = "label45";
-            label45.Size = new Size(27, 18);
-            label45.TabIndex = 32;
-            label45.Text = "Git";
+            lblGit.AutoSize = true;
+            lblGit.Font = new Font("Palatino Linotype", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblGit.ForeColor = SystemColors.ControlText;
+            lblGit.Location = new Point(61, 202);
+            lblGit.Name = "lblGit";
+            lblGit.Size = new Size(27, 18);
+            lblGit.TabIndex = 32;
+            lblGit.Text = "Git";
             // 
             // btnGoRecord
             // 
@@ -1380,16 +1380,16 @@
             btnGoRecord.UseVisualStyleBackColor = true;
             btnGoRecord.Click += btnGoRecord_Click;
             // 
-            // label44
+            // lblEmpty_label44
             // 
-            label44.AutoSize = true;
-            label44.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label44.ForeColor = Color.GhostWhite;
-            label44.Location = new Point(95, 189);
-            label44.Name = "label44";
-            label44.Size = new Size(53, 45);
-            label44.TabIndex = 31;
-            label44.Text = "➪";
+            lblEmpty_label44.AutoSize = true;
+            lblEmpty_label44.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblEmpty_label44.ForeColor = Color.GhostWhite;
+            lblEmpty_label44.Location = new Point(95, 189);
+            lblEmpty_label44.Name = "lblEmpty_label44";
+            lblEmpty_label44.Size = new Size(53, 45);
+            lblEmpty_label44.TabIndex = 31;
+            lblEmpty_label44.Text = "➪";
             // 
             // listBoxArchive
             // 
@@ -1442,16 +1442,16 @@
             lblSearchArchive.TabIndex = 25;
             lblSearchArchive.Text = "Üst Klasörü Ara";
             // 
-            // label43
+            // lblKaydıSil
             // 
-            label43.AutoSize = true;
-            label43.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
-            label43.ForeColor = SystemColors.ControlText;
-            label43.Location = new Point(1035, 85);
-            label43.Name = "label43";
-            label43.Size = new Size(78, 22);
-            label43.TabIndex = 29;
-            label43.Text = "Kaydı Sil";
+            lblKaydıSil.AutoSize = true;
+            lblKaydıSil.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
+            lblKaydıSil.ForeColor = SystemColors.ControlText;
+            lblKaydıSil.Location = new Point(1035, 85);
+            lblKaydıSil.Name = "lblKaydıSil";
+            lblKaydıSil.Size = new Size(78, 22);
+            lblKaydıSil.TabIndex = 29;
+            lblKaydıSil.Text = "Kaydı Sil";
             // 
             // btnDeleteRecord
             // 
@@ -1466,16 +1466,16 @@
             btnDeleteRecord.UseVisualStyleBackColor = true;
             btnDeleteRecord.Click += btnDeleteRecord_Click;
             // 
-            // label42
+            // lblKaydıGüncelle
             // 
-            label42.AutoSize = true;
-            label42.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
-            label42.ForeColor = SystemColors.ControlText;
-            label42.Location = new Point(873, 85);
-            label42.Name = "label42";
-            label42.Size = new Size(124, 22);
-            label42.TabIndex = 27;
-            label42.Text = "Kaydı Güncelle";
+            lblKaydıGüncelle.AutoSize = true;
+            lblKaydıGüncelle.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold);
+            lblKaydıGüncelle.ForeColor = SystemColors.ControlText;
+            lblKaydıGüncelle.Location = new Point(873, 85);
+            lblKaydıGüncelle.Name = "lblKaydıGüncelle";
+            lblKaydıGüncelle.Size = new Size(124, 22);
+            lblKaydıGüncelle.TabIndex = 27;
+            lblKaydıGüncelle.Text = "Kaydı Güncelle";
             // 
             // btnUpdateRecord
             // 
@@ -1495,7 +1495,7 @@
             panel1.BackColor = SystemColors.ControlDark;
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(lblTotalRecord);
-            panel1.Controls.Add(label40);
+            panel1.Controls.Add(lblKayıtSayısı);
             panel1.Location = new Point(3, 279);
             panel1.Name = "panel1";
             panel1.Size = new Size(347, 25);
@@ -1511,28 +1511,28 @@
             lblTotalRecord.TabIndex = 27;
             lblTotalRecord.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // label40
+            // lblKayıtSayısı
             // 
-            label40.AutoSize = true;
-            label40.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label40.ForeColor = Color.Black;
-            label40.Location = new Point(-1, 0);
-            label40.Name = "label40";
-            label40.Size = new Size(108, 21);
-            label40.TabIndex = 26;
-            label40.Text = "Kayıt Sayısı=";
+            lblKayıtSayısı.AutoSize = true;
+            lblKayıtSayısı.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblKayıtSayısı.ForeColor = Color.Black;
+            lblKayıtSayısı.Location = new Point(-1, 0);
+            lblKayıtSayısı.Name = "lblKayıtSayısı";
+            lblKayıtSayısı.Size = new Size(108, 21);
+            lblKayıtSayısı.TabIndex = 26;
+            lblKayıtSayısı.Text = "Kayıt Sayısı=";
             // 
-            // label39
+            // lblSeçilenKaydınBulunduğuÜstKlasör
             // 
-            label39.AutoSize = true;
-            label39.BackColor = Color.Transparent;
-            label39.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label39.ForeColor = Color.Black;
-            label39.Location = new Point(32, 313);
-            label39.Name = "label39";
-            label39.Size = new Size(268, 21);
-            label39.TabIndex = 19;
-            label39.Text = "Seçilen Kaydın Bulunduğu Üst Klasör:";
+            lblSeçilenKaydınBulunduğuÜstKlasör.AutoSize = true;
+            lblSeçilenKaydınBulunduğuÜstKlasör.BackColor = Color.Transparent;
+            lblSeçilenKaydınBulunduğuÜstKlasör.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblSeçilenKaydınBulunduğuÜstKlasör.ForeColor = Color.Black;
+            lblSeçilenKaydınBulunduğuÜstKlasör.Location = new Point(32, 313);
+            lblSeçilenKaydınBulunduğuÜstKlasör.Name = "lblSeçilenKaydınBulunduğuÜstKlasör";
+            lblSeçilenKaydınBulunduğuÜstKlasör.Size = new Size(268, 21);
+            lblSeçilenKaydınBulunduğuÜstKlasör.TabIndex = 19;
+            lblSeçilenKaydınBulunduğuÜstKlasör.Text = "Seçilen Kaydın Bulunduğu Üst Klasör:";
             // 
             // txtDataUpperFileName
             // 
@@ -1602,19 +1602,19 @@
             // 
             pnlAddFoldersToArchive.Controls.Add(btnAddFolderToArchive);
             pnlAddFoldersToArchive.Controls.Add(txtChosenUpperFolder);
-            pnlAddFoldersToArchive.Controls.Add(label23);
-            pnlAddFoldersToArchive.Controls.Add(label41);
+            pnlAddFoldersToArchive.Controls.Add(lblArşiveEklemekİçinSeçilenÜstKlasör);
+            pnlAddFoldersToArchive.Controls.Add(lblVeya);
             pnlAddFoldersToArchive.Controls.Add(btnUpperArchiveFoldersToDB);
-            pnlAddFoldersToArchive.Controls.Add(label28);
-            pnlAddFoldersToArchive.Controls.Add(label32);
-            pnlAddFoldersToArchive.Controls.Add(label35);
+            pnlAddFoldersToArchive.Controls.Add(lblÜSTklasörleribarındıran);
+            pnlAddFoldersToArchive.Controls.Add(lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz);
+            pnlAddFoldersToArchive.Controls.Add(lblÖncedenArşiveeklemeküzerehazırladığınız);
             pnlAddFoldersToArchive.Controls.Add(pictureBoxAddFolderToArchive);
             pnlAddFoldersToArchive.Controls.Add(lblAddFolderToArchive);
-            pnlAddFoldersToArchive.Controls.Add(label27);
+            pnlAddFoldersToArchive.Controls.Add(lblEmpty_label27);
             pnlAddFoldersToArchive.Controls.Add(btnChooseUpperFolder);
-            pnlAddFoldersToArchive.Controls.Add(label20);
-            pnlAddFoldersToArchive.Controls.Add(label11);
-            pnlAddFoldersToArchive.Controls.Add(label10);
+            pnlAddFoldersToArchive.Controls.Add(lblmüşterilerinkayıtdosyalarınıbulunduran);
+            pnlAddFoldersToArchive.Controls.Add(lblÜSTKLASÖRÜNÜZÜSeçiniz);
+            pnlAddFoldersToArchive.Controls.Add(lblHazırlamışolduğunuz);
             pnlAddFoldersToArchive.Location = new Point(13, 17);
             pnlAddFoldersToArchive.Margin = new Padding(2, 1, 2, 1);
             pnlAddFoldersToArchive.Name = "pnlAddFoldersToArchive";
@@ -1646,25 +1646,25 @@
             txtChosenUpperFolder.Size = new Size(380, 25);
             txtChosenUpperFolder.TabIndex = 17;
             // 
-            // label23
+            // lblArşiveEklemekİçinSeçilenÜstKlasör
             // 
-            label23.AutoSize = true;
-            label23.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label23.Location = new Point(569, 150);
-            label23.Name = "label23";
-            label23.Size = new Size(298, 22);
-            label23.TabIndex = 15;
-            label23.Text = "Arşive Eklemek İçin Seçilen Üst Klasör";
+            lblArşiveEklemekİçinSeçilenÜstKlasör.AutoSize = true;
+            lblArşiveEklemekİçinSeçilenÜstKlasör.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            lblArşiveEklemekİçinSeçilenÜstKlasör.Location = new Point(569, 150);
+            lblArşiveEklemekİçinSeçilenÜstKlasör.Name = "lblArşiveEklemekİçinSeçilenÜstKlasör";
+            lblArşiveEklemekİçinSeçilenÜstKlasör.Size = new Size(298, 22);
+            lblArşiveEklemekİçinSeçilenÜstKlasör.TabIndex = 15;
+            lblArşiveEklemekİçinSeçilenÜstKlasör.Text = "Arşive Eklemek İçin Seçilen Üst Klasör";
             // 
-            // label41
+            // lblVeya
             // 
-            label41.AutoSize = true;
-            label41.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label41.Location = new Point(39, 184);
-            label41.Name = "label41";
-            label41.Size = new Size(61, 26);
-            label41.TabIndex = 26;
-            label41.Text = "Veya,";
+            lblVeya.AutoSize = true;
+            lblVeya.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblVeya.Location = new Point(39, 184);
+            lblVeya.Name = "lblVeya";
+            lblVeya.Size = new Size(61, 26);
+            lblVeya.TabIndex = 26;
+            lblVeya.Text = "Veya,";
             // 
             // btnUpperArchiveFoldersToDB
             // 
@@ -1679,38 +1679,38 @@
             btnUpperArchiveFoldersToDB.UseVisualStyleBackColor = true;
             btnUpperArchiveFoldersToDB.Click += btnUpperArchiveFoldersToDB_Click;
             // 
-            // label28
+            // lblÜSTklasörleribarındıran
             // 
-            label28.AutoSize = true;
-            label28.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
-            label28.ForeColor = Color.Black;
-            label28.Location = new Point(9, 297);
-            label28.Name = "label28";
-            label28.Size = new Size(199, 21);
-            label28.TabIndex = 24;
-            label28.Text = "ÜST klasörleri barındıran";
+            lblÜSTklasörleribarındıran.AutoSize = true;
+            lblÜSTklasörleribarındıran.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            lblÜSTklasörleribarındıran.ForeColor = Color.Black;
+            lblÜSTklasörleribarındıran.Location = new Point(9, 297);
+            lblÜSTklasörleribarındıran.Name = "lblÜSTklasörleribarındıran";
+            lblÜSTklasörleribarındıran.Size = new Size(199, 21);
+            lblÜSTklasörleribarındıran.TabIndex = 24;
+            lblÜSTklasörleribarındıran.Text = "ÜST klasörleri barındıran";
             // 
-            // label32
+            // lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz
             // 
-            label32.AutoSize = true;
-            label32.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label32.ForeColor = Color.Black;
-            label32.Location = new Point(11, 333);
-            label32.Name = "label32";
-            label32.Size = new Size(323, 21);
-            label32.TabIndex = 23;
-            label32.Text = "Genel ÜST ARŞİV KLASÖRÜNÜZÜ Seçiniz:";
+            lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz.AutoSize = true;
+            lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz.ForeColor = Color.Black;
+            lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz.Location = new Point(11, 333);
+            lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz.Name = "lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz";
+            lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz.Size = new Size(323, 21);
+            lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz.TabIndex = 23;
+            lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz.Text = "Genel ÜST ARŞİV KLASÖRÜNÜZÜ Seçiniz:";
             // 
-            // label35
+            // lblÖncedenArşiveeklemeküzerehazırladığınız
             // 
-            label35.AutoSize = true;
-            label35.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label35.ForeColor = Color.Black;
-            label35.Location = new Point(11, 262);
-            label35.Name = "label35";
-            label35.Size = new Size(357, 21);
-            label35.TabIndex = 22;
-            label35.Text = "Önceden Arşive eklemek üzere hazırladığınız,";
+            lblÖncedenArşiveeklemeküzerehazırladığınız.AutoSize = true;
+            lblÖncedenArşiveeklemeküzerehazırladığınız.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblÖncedenArşiveeklemeküzerehazırladığınız.ForeColor = Color.Black;
+            lblÖncedenArşiveeklemeküzerehazırladığınız.Location = new Point(11, 262);
+            lblÖncedenArşiveeklemeküzerehazırladığınız.Name = "lblÖncedenArşiveeklemeküzerehazırladığınız";
+            lblÖncedenArşiveeklemeküzerehazırladığınız.Size = new Size(357, 21);
+            lblÖncedenArşiveeklemeküzerehazırladığınız.TabIndex = 22;
+            lblÖncedenArşiveeklemeküzerehazırladığınız.Text = "Önceden Arşive eklemek üzere hazırladığınız,";
             // 
             // pictureBoxAddFolderToArchive
             // 
@@ -1737,16 +1737,16 @@
             lblAddFolderToArchive.TabIndex = 20;
             lblAddFolderToArchive.Text = "Arşive Ekle";
             // 
-            // label27
+            // lblEmpty_label27
             // 
-            label27.AutoSize = true;
-            label27.Font = new Font("Segoe UI", 72F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label27.ForeColor = Color.GhostWhite;
-            label27.Location = new Point(634, 54);
-            label27.Name = "label27";
-            label27.Size = new Size(151, 128);
-            label27.TabIndex = 18;
-            label27.Text = "➪";
+            lblEmpty_label27.AutoSize = true;
+            lblEmpty_label27.Font = new Font("Segoe UI", 72F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblEmpty_label27.ForeColor = Color.GhostWhite;
+            lblEmpty_label27.Location = new Point(634, 54);
+            lblEmpty_label27.Name = "lblEmpty_label27";
+            lblEmpty_label27.Size = new Size(151, 128);
+            lblEmpty_label27.TabIndex = 18;
+            lblEmpty_label27.Text = "➪";
             // 
             // btnChooseUpperFolder
             // 
@@ -1761,50 +1761,50 @@
             btnChooseUpperFolder.UseVisualStyleBackColor = true;
             btnChooseUpperFolder.Click += btnChooseUpperFolder_Click;
             // 
-            // label20
+            // lblmüşterilerinkayıtdosyalarınıbulunduran
             // 
-            label20.AutoSize = true;
-            label20.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label20.ForeColor = Color.Black;
-            label20.Location = new Point(7, 71);
-            label20.Name = "label20";
-            label20.Size = new Size(332, 21);
-            label20.TabIndex = 3;
-            label20.Text = "müşterilerin kayıt dosyalarını bulunduran,";
+            lblmüşterilerinkayıtdosyalarınıbulunduran.AutoSize = true;
+            lblmüşterilerinkayıtdosyalarınıbulunduran.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblmüşterilerinkayıtdosyalarınıbulunduran.ForeColor = Color.Black;
+            lblmüşterilerinkayıtdosyalarınıbulunduran.Location = new Point(7, 71);
+            lblmüşterilerinkayıtdosyalarınıbulunduran.Name = "lblmüşterilerinkayıtdosyalarınıbulunduran";
+            lblmüşterilerinkayıtdosyalarınıbulunduran.Size = new Size(332, 21);
+            lblmüşterilerinkayıtdosyalarınıbulunduran.TabIndex = 3;
+            lblmüşterilerinkayıtdosyalarınıbulunduran.Text = "müşterilerin kayıt dosyalarını bulunduran,";
             // 
-            // label11
+            // lblÜSTKLASÖRÜNÜZÜSeçiniz
             // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label11.ForeColor = Color.Black;
-            label11.Location = new Point(9, 107);
-            label11.Name = "label11";
-            label11.Size = new Size(225, 21);
-            label11.TabIndex = 2;
-            label11.Text = "ÜST KLASÖRÜNÜZÜ Seçiniz:";
+            lblÜSTKLASÖRÜNÜZÜSeçiniz.AutoSize = true;
+            lblÜSTKLASÖRÜNÜZÜSeçiniz.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblÜSTKLASÖRÜNÜZÜSeçiniz.ForeColor = Color.Black;
+            lblÜSTKLASÖRÜNÜZÜSeçiniz.Location = new Point(9, 107);
+            lblÜSTKLASÖRÜNÜZÜSeçiniz.Name = "lblÜSTKLASÖRÜNÜZÜSeçiniz";
+            lblÜSTKLASÖRÜNÜZÜSeçiniz.Size = new Size(225, 21);
+            lblÜSTKLASÖRÜNÜZÜSeçiniz.TabIndex = 2;
+            lblÜSTKLASÖRÜNÜZÜSeçiniz.Text = "ÜST KLASÖRÜNÜZÜ Seçiniz:";
             // 
-            // label10
+            // lblHazırlamışolduğunuz
             // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label10.ForeColor = Color.Black;
-            label10.Location = new Point(9, 36);
-            label10.Name = "label10";
-            label10.Size = new Size(182, 21);
-            label10.TabIndex = 1;
-            label10.Text = "Hazırlamış olduğunuz,";
+            lblHazırlamışolduğunuz.AutoSize = true;
+            lblHazırlamışolduğunuz.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblHazırlamışolduğunuz.ForeColor = Color.Black;
+            lblHazırlamışolduğunuz.Location = new Point(9, 36);
+            lblHazırlamışolduğunuz.Name = "lblHazırlamışolduğunuz";
+            lblHazırlamışolduğunuz.Size = new Size(182, 21);
+            lblHazırlamışolduğunuz.TabIndex = 1;
+            lblHazırlamışolduğunuz.Text = "Hazırlamış olduğunuz,";
             // 
             // pnlAddSpareToArchive
             // 
             pnlAddSpareToArchive.Controls.Add(pictureBoxLoadingSpareToArchive);
-            pnlAddSpareToArchive.Controls.Add(label34);
+            pnlAddSpareToArchive.Controls.Add(lblEmpty_label34);
             pnlAddSpareToArchive.Controls.Add(lblSpareToArchive);
             pnlAddSpareToArchive.Controls.Add(btnSpareToArchive);
             pnlAddSpareToArchive.Controls.Add(txtLocationOfSpareFolder);
-            pnlAddSpareToArchive.Controls.Add(label36);
+            pnlAddSpareToArchive.Controls.Add(lblSeçilenYedekDosyası);
             pnlAddSpareToArchive.Controls.Add(btnChooseSpareFolder);
-            pnlAddSpareToArchive.Controls.Add(label37);
-            pnlAddSpareToArchive.Controls.Add(label38);
+            pnlAddSpareToArchive.Controls.Add(lblDosyayıSeçiniz);
+            pnlAddSpareToArchive.Controls.Add(lblDahaöncedenyedeklediğiniz);
             pnlAddSpareToArchive.Location = new Point(37, 1);
             pnlAddSpareToArchive.Margin = new Padding(2, 1, 2, 1);
             pnlAddSpareToArchive.Name = "pnlAddSpareToArchive";
@@ -1824,16 +1824,16 @@
             pictureBoxLoadingSpareToArchive.TabIndex = 29;
             pictureBoxLoadingSpareToArchive.TabStop = false;
             // 
-            // label34
+            // lblEmpty_label34
             // 
-            label34.AutoSize = true;
-            label34.Font = new Font("Segoe UI", 72F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label34.ForeColor = Color.GhostWhite;
-            label34.Location = new Point(493, 142);
-            label34.Name = "label34";
-            label34.Size = new Size(151, 128);
-            label34.TabIndex = 28;
-            label34.Text = "➪";
+            lblEmpty_label34.AutoSize = true;
+            lblEmpty_label34.Font = new Font("Segoe UI", 72F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblEmpty_label34.ForeColor = Color.GhostWhite;
+            lblEmpty_label34.Location = new Point(493, 142);
+            lblEmpty_label34.Name = "lblEmpty_label34";
+            lblEmpty_label34.Size = new Size(151, 128);
+            lblEmpty_label34.TabIndex = 28;
+            lblEmpty_label34.Text = "➪";
             // 
             // lblSpareToArchive
             // 
@@ -1870,15 +1870,15 @@
             txtLocationOfSpareFolder.Size = new Size(415, 25);
             txtLocationOfSpareFolder.TabIndex = 25;
             // 
-            // label36
+            // lblSeçilenYedekDosyası
             // 
-            label36.AutoSize = true;
-            label36.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label36.Location = new Point(172, 280);
-            label36.Name = "label36";
-            label36.Size = new Size(215, 26);
-            label36.TabIndex = 23;
-            label36.Text = "Seçilen Yedek Dosyası:";
+            lblSeçilenYedekDosyası.AutoSize = true;
+            lblSeçilenYedekDosyası.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSeçilenYedekDosyası.Location = new Point(172, 280);
+            lblSeçilenYedekDosyası.Name = "lblSeçilenYedekDosyası";
+            lblSeçilenYedekDosyası.Size = new Size(215, 26);
+            lblSeçilenYedekDosyası.TabIndex = 23;
+            lblSeçilenYedekDosyası.Text = "Seçilen Yedek Dosyası:";
             // 
             // btnChooseSpareFolder
             // 
@@ -1893,39 +1893,39 @@
             btnChooseSpareFolder.UseVisualStyleBackColor = true;
             btnChooseSpareFolder.Click += btnChooseSpareFolder_Click;
             // 
-            // label37
+            // lblDosyayıSeçiniz
             // 
-            label37.AutoSize = true;
-            label37.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label37.ForeColor = Color.Black;
-            label37.Location = new Point(197, 123);
-            label37.Name = "label37";
-            label37.Size = new Size(152, 25);
-            label37.TabIndex = 22;
-            label37.Text = "Dosyayı Seçiniz:";
+            lblDosyayıSeçiniz.AutoSize = true;
+            lblDosyayıSeçiniz.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDosyayıSeçiniz.ForeColor = Color.Black;
+            lblDosyayıSeçiniz.Location = new Point(197, 123);
+            lblDosyayıSeçiniz.Name = "lblDosyayıSeçiniz";
+            lblDosyayıSeçiniz.Size = new Size(152, 25);
+            lblDosyayıSeçiniz.TabIndex = 22;
+            lblDosyayıSeçiniz.Text = "Dosyayı Seçiniz:";
             // 
-            // label38
+            // lblDahaöncedenyedeklediğiniz
             // 
-            label38.AutoSize = true;
-            label38.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label38.ForeColor = Color.Black;
-            label38.Location = new Point(137, 88);
-            label38.Name = "label38";
-            label38.Size = new Size(272, 25);
-            label38.TabIndex = 21;
-            label38.Text = "Daha önceden yedeklediğiniz";
+            lblDahaöncedenyedeklediğiniz.AutoSize = true;
+            lblDahaöncedenyedeklediğiniz.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDahaöncedenyedeklediğiniz.ForeColor = Color.Black;
+            lblDahaöncedenyedeklediğiniz.Location = new Point(137, 88);
+            lblDahaöncedenyedeklediğiniz.Name = "lblDahaöncedenyedeklediğiniz";
+            lblDahaöncedenyedeklediğiniz.Size = new Size(272, 25);
+            lblDahaöncedenyedeklediğiniz.TabIndex = 21;
+            lblDahaöncedenyedeklediğiniz.Text = "Daha önceden yedeklediğiniz";
             // 
             // pnlMakeSpare
             // 
             pnlMakeSpare.Controls.Add(pictureBoxLoadingDbToFolder);
-            pnlMakeSpare.Controls.Add(label33);
+            pnlMakeSpare.Controls.Add(lblEmpty_label33);
             pnlMakeSpare.Controls.Add(lblDbToFolder);
             pnlMakeSpare.Controls.Add(btnDBtoFolder);
             pnlMakeSpare.Controls.Add(txtLocationForArchive);
-            pnlMakeSpare.Controls.Add(label31);
+            pnlMakeSpare.Controls.Add(lblSeçilenKonum3);
             pnlMakeSpare.Controls.Add(btnLocationForArchive);
-            pnlMakeSpare.Controls.Add(label30);
-            pnlMakeSpare.Controls.Add(label29);
+            pnlMakeSpare.Controls.Add(lblDosyaKonumuSeçiniz);
+            pnlMakeSpare.Controls.Add(lblVeriTabanındakiarşiviyedeklemekiçin);
             pnlMakeSpare.Location = new Point(24, 12);
             pnlMakeSpare.Margin = new Padding(2, 1, 2, 1);
             pnlMakeSpare.Name = "pnlMakeSpare";
@@ -1945,16 +1945,16 @@
             pictureBoxLoadingDbToFolder.TabIndex = 22;
             pictureBoxLoadingDbToFolder.TabStop = false;
             // 
-            // label33
+            // lblEmpty_label33
             // 
-            label33.AutoSize = true;
-            label33.Font = new Font("Segoe UI", 72F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label33.ForeColor = Color.GhostWhite;
-            label33.Location = new Point(482, 113);
-            label33.Name = "label33";
-            label33.Size = new Size(151, 128);
-            label33.TabIndex = 20;
-            label33.Text = "➪";
+            lblEmpty_label33.AutoSize = true;
+            lblEmpty_label33.Font = new Font("Segoe UI", 72F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblEmpty_label33.ForeColor = Color.GhostWhite;
+            lblEmpty_label33.Location = new Point(482, 113);
+            lblEmpty_label33.Name = "lblEmpty_label33";
+            lblEmpty_label33.Size = new Size(151, 128);
+            lblEmpty_label33.TabIndex = 20;
+            lblEmpty_label33.Text = "➪";
             // 
             // lblDbToFolder
             // 
@@ -1991,15 +1991,15 @@
             txtLocationForArchive.Size = new Size(447, 25);
             txtLocationForArchive.TabIndex = 17;
             // 
-            // label31
+            // lblSeçilenKonum3
             // 
-            label31.AutoSize = true;
-            label31.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label31.Location = new Point(187, 251);
-            label31.Name = "label31";
-            label31.Size = new Size(154, 26);
-            label31.TabIndex = 15;
-            label31.Text = "Seçilen Konum:";
+            lblSeçilenKonum3.AutoSize = true;
+            lblSeçilenKonum3.Font = new Font("Palatino Linotype", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSeçilenKonum3.Location = new Point(187, 251);
+            lblSeçilenKonum3.Name = "lblSeçilenKonum3";
+            lblSeçilenKonum3.Size = new Size(154, 26);
+            lblSeçilenKonum3.TabIndex = 15;
+            lblSeçilenKonum3.Text = "Seçilen Konum:";
             // 
             // btnLocationForArchive
             // 
@@ -2014,27 +2014,27 @@
             btnLocationForArchive.UseVisualStyleBackColor = true;
             btnLocationForArchive.Click += btnLocationForArchive_Click;
             // 
-            // label30
+            // lblDosyaKonumuSeçiniz
             // 
-            label30.AutoSize = true;
-            label30.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label30.ForeColor = Color.Black;
-            label30.Location = new Point(150, 91);
-            label30.Name = "label30";
-            label30.Size = new Size(219, 25);
-            label30.TabIndex = 4;
-            label30.Text = "Dosya Konumu Seçiniz:";
+            lblDosyaKonumuSeçiniz.AutoSize = true;
+            lblDosyaKonumuSeçiniz.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDosyaKonumuSeçiniz.ForeColor = Color.Black;
+            lblDosyaKonumuSeçiniz.Location = new Point(150, 91);
+            lblDosyaKonumuSeçiniz.Name = "lblDosyaKonumuSeçiniz";
+            lblDosyaKonumuSeçiniz.Size = new Size(219, 25);
+            lblDosyaKonumuSeçiniz.TabIndex = 4;
+            lblDosyaKonumuSeçiniz.Text = "Dosya Konumu Seçiniz:";
             // 
-            // label29
+            // lblVeriTabanındakiarşiviyedeklemekiçin
             // 
-            label29.AutoSize = true;
-            label29.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label29.ForeColor = Color.Black;
-            label29.Location = new Point(90, 56);
-            label29.Name = "label29";
-            label29.Size = new Size(358, 25);
-            label29.TabIndex = 3;
-            label29.Text = "Veri Tabanındaki arşivi yedeklemek için";
+            lblVeriTabanındakiarşiviyedeklemekiçin.AutoSize = true;
+            lblVeriTabanındakiarşiviyedeklemekiçin.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblVeriTabanındakiarşiviyedeklemekiçin.ForeColor = Color.Black;
+            lblVeriTabanındakiarşiviyedeklemekiçin.Location = new Point(90, 56);
+            lblVeriTabanındakiarşiviyedeklemekiçin.Name = "lblVeriTabanındakiarşiviyedeklemekiçin";
+            lblVeriTabanındakiarşiviyedeklemekiçin.Size = new Size(358, 25);
+            lblVeriTabanındakiarşiviyedeklemekiçin.TabIndex = 3;
+            lblVeriTabanındakiarşiviyedeklemekiçin.Text = "Veri Tabanındaki arşivi yedeklemek için";
             // 
             // lblExplanation
             // 
@@ -2128,17 +2128,17 @@
             btnAddFoldersToArchive.UseVisualStyleBackColor = false;
             btnAddFoldersToArchive.Click += btnAddFoldersToArchive_Click;
             // 
-            // label50
+            // lblVeriTabanı
             // 
-            label50.AutoSize = true;
-            label50.BackColor = Color.Transparent;
-            label50.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label50.ForeColor = SystemColors.ButtonFace;
-            label50.Location = new Point(24, 559);
-            label50.Name = "label50";
-            label50.Size = new Size(96, 22);
-            label50.TabIndex = 20;
-            label50.Text = "Veri Tabanı";
+            lblVeriTabanı.AutoSize = true;
+            lblVeriTabanı.BackColor = Color.Transparent;
+            lblVeriTabanı.Font = new Font("Palatino Linotype", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblVeriTabanı.ForeColor = SystemColors.ButtonFace;
+            lblVeriTabanı.Location = new Point(24, 559);
+            lblVeriTabanı.Name = "lblVeriTabanı";
+            lblVeriTabanı.Size = new Size(96, 22);
+            lblVeriTabanı.TabIndex = 20;
+            lblVeriTabanı.Text = "Veri Tabanı";
             // 
             // btnDB
             // 
@@ -2161,16 +2161,16 @@
             BackgroundImage = Extensions.Resources.ArkaFon;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1732, 752);
-            Controls.Add(label50);
+            Controls.Add(lblVeriTabanı);
             Controls.Add(btnDB);
-            Controls.Add(label1);
-            Controls.Add(label9);
-            Controls.Add(label21);
+            Controls.Add(lblArşiv);
+            Controls.Add(lblMakbuzKes);
+            Controls.Add(lblKlasörAra);
             Controls.Add(button1);
             Controls.Add(btnCreateReceipt);
             Controls.Add(btnFindFolder);
             Controls.Add(btnMyComputer);
-            Controls.Add(label22);
+            Controls.Add(lblBilgisayarım);
             Controls.Add(pnlBorder);
             DoubleBuffered = true;
             Name = "Form1";
@@ -2220,16 +2220,16 @@
         private Button btnSave;
         private Panel pnlReceiptInputs;
         private Label lblName;
-        private Label label5;
-        private Label label3;
-        private Label label6;
-        private Label label4;
-        private Label label7;
-        private Label label2;
+        private Label lblAdet;
+        private Label lblKalan;
+        private Label lblTutar;
+        private Label lblEbat;
+        private Label lblTeslimTarihi;
+        private Label lblAlınan;
         private TextBox txtDeliveryDate;
         private TextBox txtName;
         private RichTextBox txtBoxNotes;
-        private Label label8;
+        private Label lblNot;
         private TextBox txtRemainingAmount;
         private TextBox txtReceivedAmount;
         private TextBox txtTotalAmount;
@@ -2238,43 +2238,43 @@
         private Button btnChooseFileLocation;
         private Button btnSaveAndPrint;
         private Label lblSaveAndPrint;
-        private Label label9;
-        private Label label12;
+        private Label lblMakbuzKes;
+        private Label lblYazdır;
         private Label lblSave;
-        private Label label13;
+        private Label lblSeçilenKonum;
         private ErrorProvider errorProvider1;
         private TextBox textBoxFileLocation;
-        private Label label14;
+        private Label lblKlasöreGit;
         private Button btnGoTheFolder;
         private Label lblReceiptCaption;
         private Label lblReceiptName;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private PrintPreviewDialog printPreviewDialog1;
         private Button btnTrash;
-        private Label label15;
+        private Label lblFormuTemizle;
         private Panel pnlFindFolder;
-        private Label label16;
+        private Label lblKlasörAdıGir;
         private ComboBox cmbBoxDriver;
         private TextBox txtFileNameInput;
-        private Label label17;
-        private Label label18;
+        private Label lblSürücüSeç;
+        private Label lblEmpty_label18;
         private Button btnSearchFile;
         private Label lblSearchFile;
         private Button btnMyComputer;
-        private Label label22;
-        private Label label21;
-        private Label label19;
+        private Label lblBilgisayarım;
+        private Label lblKlasörAra;
+        private Label lblBulunanKlasörler;
         private ListBox listBoxFiles;
-        private Label label25;
-        private Label label24;
+        private Label lblMakbuzAdı;
+        private Label lblKlasör;
         private Label lblFileLocation;
-        private Label label26;
+        private Label lblMakbuzaGit;
         private Button btnGoReceipt;
         private PictureBox pictureBoxLoading;
         private TabControl tabControlMenu;
         private TabPage tabMenu;
         private TabPage tabPage2;
-        private Label label1;
+        private Label lblArşiv;
         private Button button1;
         private Button btnSearchPhoto;
         private Panel pnlBorder;
@@ -2300,67 +2300,67 @@
         private Label lblChooseDriver;
         private Label lblGoRecord;
         private Button btnGoRecord;
-        private Label label10;
-        private Label label20;
-        private Label label11;
+        private Label lblHazırlamışolduğunuz;
+        private Label lblmüşterilerinkayıtdosyalarınıbulunduran;
+        private Label lblÜSTKLASÖRÜNÜZÜSeçiniz;
         private TextBox txtChosenUpperFolder;
-        private Label label23;
+        private Label lblArşiveEklemekİçinSeçilenÜstKlasör;
         private Button btnChooseUpperFolder;
-        private Label label27;
+        private Label lblEmpty_label27;
         private Label lblAddFolderToArchive;
         private Button btnAddFolderToArchive;
-        private Label label30;
-        private Label label29;
+        private Label lblDosyaKonumuSeçiniz;
+        private Label lblVeriTabanındakiarşiviyedeklemekiçin;
         private TextBox txtLocationForArchive;
-        private Label label31;
+        private Label lblSeçilenKonum3;
         private Button btnLocationForArchive;
-        private Label label33;
+        private Label lblEmpty_label33;
         private Label lblDbToFolder;
         private Button btnDBtoFolder;
-        private Label label34;
+        private Label lblEmpty_label34;
         private Label lblSpareToArchive;
         private Button btnSpareToArchive;
         private TextBox txtLocationOfSpareFolder;
-        private Label label36;
+        private Label lblSeçilenYedekDosyası;
         private Button btnChooseSpareFolder;
-        private Label label37;
-        private Label label38;
+        private Label lblDosyayıSeçiniz;
+        private Label lblDahaöncedenyedeklediğiniz;
         private TextBox txtDataUpperFileName;
-        private Label label39;
+        private Label lblSeçilenKaydınBulunduğuÜstKlasör;
         private ListBox listBoxArchive;
         private PictureBox pictureBoxLoadingArchive;
         private Button btnSearchArchive;
         private Label lblSearchArchive;
         private Label lblTotalRecord;
-        private Label label40;
+        private Label lblKayıtSayısı;
         private Panel panel1;
         private PictureBox pictureBoxAddFolderToArchive;
         private PictureBox pictureBoxLoadingDbToFolder;
         private PictureBox pictureBoxLoadingSpareToArchive;
-        private Label label41;
+        private Label lblVeya;
         private Button btnUpperArchiveFoldersToDB;
-        private Label label28;
-        private Label label32;
-        private Label label35;
-        private Label label43;
+        private Label lblÜSTklasörleribarındıran;
+        private Label lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz;
+        private Label lblÖncedenArşiveeklemeküzerehazırladığınız;
+        private Label lblKaydıSil;
         private Button btnDeleteRecord;
-        private Label label42;
+        private Label lblKaydıGüncelle;
         private Button btnUpdateRecord;
-        private Label label45;
-        private Label label44;
-        private Label label46;
+        private Label lblGit;
+        private Label lblEmpty_label44;
+        private Label lblKaydınKlasörünüAçmakİçin;
         private Panel panel2;
-        private Label label49;
-        private Label label48;
-        private Label label47;
-        private Label label50;
+        private Label lbl3;
+        private Label lbl2;
+        private Label lbl1;
+        private Label lblVeriTabanı;
         private Button btnDB;
         private Panel pnlDBprocess;
-        private Label label51;
+        private Label lblVeriTabanınıOluştur;
         private Button btnCreateDB;
-        private Label label54;
-        private Label label53;
-        private Label label52;
+        private Label lblVeriTabanınıSil;
+        private Label lblYedektenVeriTabanınıOluştur;
+        private Label lblVeriTabanınıYedekle;
         private Button btnRemoveDB;
         private Button btnUploadDB;
         private Button btnDownloadDB;
@@ -2369,12 +2369,12 @@
         private RichTextBox richTextBox3;
         private RichTextBox richTextBox1;
         private TextBox txtDownloadDBLocation;
-        private Label label55;
+        private Label lblSeçilenKonum2;
         private Button btnDownloadDBLocation;
         private TextBox txtUploadDBLocation;
-        private Label label56;
+        private Label lblSeçilenYedek;
         private Button btnUploadDBLocation;
-        private Label label57;
+        private Label lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ;
         private TextBox txtNumQty;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace PhotoEmin.Model
+namespace PhotoEmin.Model
 {
     public class RecordStatus
     {
@@ -8,5 +8,7 @@
         public List<string> errorFullNames { get; set; } = new List<string>();
         public List<string> noImageRecords { get; set; } = new List<string>();
         public List<string> faultyImageRecords { get; set; } = new List<string>();
+        public List<string> wrongFormatRecords { get; set; } = new List<string>();
+        public List<string> notImages { get; set; } = new List<string>();
     }
 }
