@@ -43,7 +43,7 @@ namespace PhotoEmin.Services
             }
             catch (NpgsqlException ex)
             {
-                Console.WriteLine($"Bağlantı hatası: {ex.Message}");
+                LogService.LogError(ex, "Veritabanı bağlantı kontrolü sırasında hata.");
                 return false;
             }
         }
@@ -255,8 +255,9 @@ namespace PhotoEmin.Services
                                     $"{errorFullName}({folderName}): resim dosyası bulunamadı!");
                             }
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
+                            LogService.LogError(ex, $"Dosya okuma hatası ({errorFullName} - {folderName})");
                             recordStatus.faultyImageRecords.Add($"{errorFullName}({folderName})");
                         }
 
@@ -284,6 +285,7 @@ namespace PhotoEmin.Services
                 }
                 catch (Exception ex)
                 {
+                    LogService.LogError(ex, "Fotoğraf ekleme döngüsünde hata");
                     recordStatus.errorFullNames.Add($"{errorFullName}({folderName}): {ex.Message}");
                 }
             }
@@ -396,6 +398,7 @@ namespace PhotoEmin.Services
                 }
                 catch (Exception ex)
                 {
+                    LogService.LogError(ex, "Toplu ekleme işleminde hata");
                     recordStatus.errorFullNames.Add($"{errorFullName}: {ex.Message}");
                 }
             }

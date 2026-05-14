@@ -1062,6 +1062,7 @@ namespace PhotoEmin
             }
             catch (Exception ex)
             {
+                LogService.LogError(ex, "DB'den Klasöre Aktarma Hatası");
                 SetLoading(false, false, false, true);
                 MessageBox.Show($"Hata oluştu: {ex.Message}");
             }
@@ -1133,6 +1134,7 @@ namespace PhotoEmin
                             }
                             catch (Exception ex)
                             {
+                                LogService.LogError(ex, "Kayıt Güncelleme Hatası");
                                 MessageBox.Show($"Kayıt güncellenirken hata oluştu! {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
@@ -1171,6 +1173,7 @@ namespace PhotoEmin
                         }
                         catch (Exception ex)
                         {
+                            LogService.LogError(ex, "Kayıt Silme Hatası");
                             MessageBox.Show($"Kayıt silme işleminde hata oluştu! {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
@@ -1205,9 +1208,10 @@ namespace PhotoEmin
                     MessageBox.Show("Veri tabanı başarıyla oluşturuldu", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //MessageBox.Show($"Veri tabanı oluşturulurken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogService.LogError(ex, "Veritabanı Oluşturma Hatası");
+                MessageBox.Show($"Veri tabanı oluşturulurken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 MessageBox.Show("Veri tabanı oluşturulurken bir hata oluştu", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -1233,6 +1237,7 @@ namespace PhotoEmin
                     }
                     catch (Exception ex)
                     {
+                        LogService.LogError(ex, "Veritabanı Silme Hatası");
                         MessageBox.Show($"Veri tabanı kaldırılırken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
@@ -1259,6 +1264,7 @@ namespace PhotoEmin
             }
             catch (Exception ex)
             {
+                LogService.LogError(ex, "Yedek Dosyası Oluşturma Hatası");
                 MessageBox.Show($"Yedek dosyası oluşturulurken hata meydana geldi: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -1326,6 +1332,7 @@ namespace PhotoEmin
             }
             catch (Exception ex)
             {
+                LogService.LogError(ex, "Veritabanı Geri Yükleme Hatası");
                 MessageBox.Show($"Veritabanı geri yükleme işleminde bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
