@@ -448,9 +448,9 @@ threadInput.Start();
 ### Faz 4 — Mimari Refactoring (Uzun Vadeli)
 13. ✅ `DatabaseService` sınıfı ayır (Tamamlandı)
 14. ✅ `ReceiptService` sınıfı ayır (Tamamlandı)
-15. ⬜ Panel geçişlerini `TabControl` veya yardımcı metotla basitleştir
-16. ⬜ Responsive layout için `Anchor`/`Dock` kullan
+15. ✅ Panel geçişlerini yardımcı metotla basitleştir (Tamamlandı)
+16. ✅ Responsive layout için `Anchor`/`Dock` kullan (Tamamlandı)
 17. ⬜ Basit dosya loglama ekle
 
 > [!IMPORTANT]
-> Faz 1, 2 ve 3 tamamlanmış, Faz 4'ün büyük kısmı (Servis ayrıştırmaları) başarılı bir şekilde tamamlanmıştır. Kalan adımlar UI refactoring (Responsive) ve Loglamadır.
+> Faz 1, 2, 3 ve 4 (UI Refactoring dahil) büyük ölçüde tamamlanmıştır. Geriye sadece Loglama (Hata Yönetimi) adımı kalmıştır.

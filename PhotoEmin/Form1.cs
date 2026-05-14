@@ -83,8 +83,56 @@ namespace PhotoEmin
                 //flowLayoutPanelArchive.Visible = false;
                 pnlBorder.Visible = false;
             };
+
+            ConfigureResponsiveLayout();
         }
 
+        private void ShowMainPanel(Control? activePanel)
+        {
+            pnlBorder.Visible = true;
+            pnlReceipt.Visible = (activePanel == pnlReceipt);
+            pnlFindFolder.Visible = (activePanel == pnlFindFolder);
+            flowLayoutPanelArchive.Visible = (activePanel == flowLayoutPanelArchive);
+            pnlDBprocess.Visible = (activePanel == pnlDBprocess);
+        }
+
+        private void ShowArchivePanel(Control? activePanel, string explanationText)
+        {
+            ShowMainPanel(flowLayoutPanelArchive);
+            pnlArchiveContents.Visible = true;
+            pnlSearchPhoto.Visible = (activePanel == pnlSearchPhoto);
+            pnlAddFoldersToArchive.Visible = (activePanel == pnlAddFoldersToArchive);
+            pnlAddSpareToArchive.Visible = (activePanel == pnlAddSpareToArchive);
+            pnlMakeSpare.Visible = (activePanel == pnlMakeSpare);
+
+            lblExplanation.Visible = true;
+            lblEmpty.Visible = true;
+            lblExplanation.Text = explanationText;
+        }
+
+        private void ConfigureResponsiveLayout()
+        {
+            this.MinimumSize = new Size(1366, 768); // Minimum laptop boyutu
+
+            // Border (ana panel çerçevesi) form ile birlikte tüm yönlere genişlesin
+            pnlBorder.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            // İç paneller her zaman ebeveynini tam kaplasın
+            pnlReceipt.Dock = DockStyle.Fill;
+            pnlFindFolder.Dock = DockStyle.Fill;
+            flowLayoutPanelArchive.Dock = DockStyle.Fill;
+            pnlDBprocess.Dock = DockStyle.Fill;
+
+            // Arşiv paneli içerisindeki alt paneller
+            pnlArchiveContents.Dock = DockStyle.Fill;
+            pnlSearchPhoto.Dock = DockStyle.Fill;
+            pnlAddFoldersToArchive.Dock = DockStyle.Fill;
+            pnlAddSpareToArchive.Dock = DockStyle.Fill;
+            pnlMakeSpare.Dock = DockStyle.Fill;
+
+            // DataGridView'ların da formla birlikte genişlemesini sağla
+            dataGridRecords.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        }
 
         private void btnChooseFileLocation_Click(object sender, EventArgs e)
         {
@@ -106,23 +154,15 @@ namespace PhotoEmin
 
         private void btnCreateReceipt_Click(object sender, EventArgs e)
         {
-            pnlBorder.Visible = true;
-            pnlReceipt.Visible = true;
-            pnlFindFolder.Visible = false;
-            flowLayoutPanelArchive.Visible = false;
-            pnlDBprocess.Visible = false;
+            ShowMainPanel(pnlReceipt);
         }
 
         private void flowLayoutPanelArchive_Click(object sender, EventArgs e)
         {
-            pnlBorder.Visible = true;
-            flowLayoutPanelArchive.Visible = true;
-            pnlFindFolder.Visible = false;
-            pnlReceipt.Visible = false;
+            ShowMainPanel(flowLayoutPanelArchive);
             pnlArchiveContents.Visible = false;
             lblExplanation.Visible = false;
             lblEmpty.Visible = false;
-            pnlDBprocess.Visible = false;
         }
 
         private void btnGoTheFolder_Click(object sender, EventArgs e)
@@ -350,11 +390,7 @@ namespace PhotoEmin
 
         private void btnFindFolder_Click(object sender, EventArgs e)
         {
-            pnlBorder.Visible = true;
-            pnlReceipt.Visible = false;
-            pnlFindFolder.Visible = true;
-            flowLayoutPanelArchive.Visible = false;
-            pnlDBprocess.Visible = false;
+            ShowMainPanel(pnlFindFolder);
 
             //pnlReceipt.SendToBack();
             //pnlFindFolder.BringToFront();
@@ -727,16 +763,8 @@ namespace PhotoEmin
         private void btnSearchPhoto_Click(object sender, EventArgs e)
         {
             lblEmpty.Text = btnSearchPhoto.Text + " :";
-            lblExplanation.Visible = true;
-            lblEmpty.Visible = true;
-            lblExplanation.Text = ArchiveExplanations.SearchPhoto;
-            pnlArchiveContents.Visible = true;
-            pnlSearchPhoto.Visible = true;
-            pnlAddFoldersToArchive.Visible = false;
-            pnlAddSpareToArchive.Visible = false;
-            pnlMakeSpare.Visible = false;
+            ShowArchivePanel(pnlSearchPhoto, ArchiveExplanations.SearchPhoto);
             listBoxArchive.Items.Clear();
-            pnlDBprocess.Visible = false;
             PopulateDriveComboBox();
         }
 
@@ -744,45 +772,21 @@ namespace PhotoEmin
         {
             lblEmpty.Text = btnAddFoldersToArchive.Text + " :";
             txtChosenUpperFolder.Text = "";
-            lblExplanation.Visible = true;
-            lblEmpty.Visible = true;
-            lblExplanation.Text = ArchiveExplanations.AddFoldersToArchive;
-            pnlArchiveContents.Visible = true;
-            pnlSearchPhoto.Visible = false;
-            pnlAddFoldersToArchive.Visible = true;
-            pnlAddSpareToArchive.Visible = false;
-            pnlMakeSpare.Visible = false;
-            pnlDBprocess.Visible = false;
+            ShowArchivePanel(pnlAddFoldersToArchive, ArchiveExplanations.AddFoldersToArchive);
         }
 
         private void btnMakeSpare_Click(object sender, EventArgs e)
         {
             lblEmpty.Text = btnMakeSpare.Text + " :";
             txtLocationForArchive.Text = "";
-            lblExplanation.Visible = true;
-            lblEmpty.Visible = true;
-            lblExplanation.Text = ArchiveExplanations.MakeSpare;
-            pnlArchiveContents.Visible = true;
-            pnlSearchPhoto.Visible = false;
-            pnlAddFoldersToArchive.Visible = false;
-            pnlAddSpareToArchive.Visible = false;
-            pnlMakeSpare.Visible = true;
-            pnlDBprocess.Visible = false;
+            ShowArchivePanel(pnlMakeSpare, ArchiveExplanations.MakeSpare);
         }
 
         private void btnAddSpareToArchive_Click(object sender, EventArgs e)
         {
             lblEmpty.Text = btnAddSpareToArchive.Text + " :";
             txtLocationOfSpareFolder.Text = "";
-            lblExplanation.Visible = true;
-            lblEmpty.Visible = true;
-            lblExplanation.Text = ArchiveExplanations.AddSpareToArchive;
-            pnlArchiveContents.Visible = true;
-            pnlSearchPhoto.Visible = false;
-            pnlAddFoldersToArchive.Visible = false;
-            pnlAddSpareToArchive.Visible = true;
-            pnlMakeSpare.Visible = false;
-            pnlDBprocess.Visible = false;
+            ShowArchivePanel(pnlAddSpareToArchive, ArchiveExplanations.AddSpareToArchive);
         }
 
         private void btnChooseUpperFolder_Click(object sender, EventArgs e)
@@ -1176,14 +1180,11 @@ namespace PhotoEmin
 
         private async void btnDB_Click(object sender, EventArgs e)
         {
-            pnlBorder.Visible = false;
-            pnlReceipt.Visible = false;
-            pnlFindFolder.Visible = false;
-            flowLayoutPanelArchive.Visible = false;
+            ShowMainPanel(null); // Ana panelleri gizle (şifre sormadan önce)
+            
             if (PasswordDialog.Authenticate(this, pswDBprocess, "Veri tabanı işlemleri için \nlütfen yönetici şifresini giriniz:"))
             {
-                pnlBorder.Visible = true;
-                pnlDBprocess.Visible = true;
+                ShowMainPanel(pnlDBprocess);
             }
 
         }
