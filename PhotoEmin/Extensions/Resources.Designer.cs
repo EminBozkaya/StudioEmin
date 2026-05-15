@@ -223,6 +223,16 @@ namespace PhotoEmin.Extensions {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap btnLanguage {
+            get {
+                object obj = ResourceManager.GetObject("btnLanguage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btnHardDrive {
             get {
                 object obj = ResourceManager.GetObject("btnHardDrive", resourceCulture);

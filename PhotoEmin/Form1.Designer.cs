@@ -191,6 +191,8 @@ namespace PhotoEmin
             btnAddFoldersToArchive = new Button();
             lblVeriTabanı = new Label();
             btnDB = new Button();
+            btnLanguage = new Button();
+            ctxLanguageMenu = new ContextMenuStrip(components);
             ((System.ComponentModel.ISupportInitialize)dataGridRecords).BeginInit();
             pnlReceipt.SuspendLayout();
             pnlReceiptInputs.SuspendLayout();
@@ -2153,14 +2155,35 @@ namespace PhotoEmin
             btnDB.TabIndex = 19;
             btnDB.UseVisualStyleBackColor = false;
             btnDB.Click += btnDB_Click;
-            // 
+            //
+            // btnLanguage
+            //
+            btnLanguage.BackColor = Color.Transparent;
+            btnLanguage.FlatAppearance.BorderSize = 0;
+            btnLanguage.FlatStyle = FlatStyle.Flat;
+            btnLanguage.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnLanguage.ForeColor = Color.White;
+            btnLanguage.Location = new Point(35, 610);
+            btnLanguage.Name = "btnLanguage";
+            btnLanguage.Size = new Size(70, 70);
+            btnLanguage.TabIndex = 22;
+            btnLanguage.UseVisualStyleBackColor = false;
+            btnLanguage.Click += btnLanguage_Click;
+            btnLanguage.Paint += btnLanguage_Paint;
+            //
+            // ctxLanguageMenu
+            //
+            ctxLanguageMenu.Name = "ctxLanguageMenu";
+            ctxLanguageMenu.Size = new Size(150, 25);
+            //
             // Form1
-            // 
+            //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Extensions.Resources.ArkaFon;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1732, 752);
+            Controls.Add(btnLanguage);
             Controls.Add(lblVeriTabanı);
             Controls.Add(btnDB);
             Controls.Add(lblArşiv);
@@ -2355,6 +2378,8 @@ namespace PhotoEmin
         private Label lbl1;
         private Label lblVeriTabanı;
         private Button btnDB;
+        private Button btnLanguage;
+        private ContextMenuStrip ctxLanguageMenu;
         private Panel pnlDBprocess;
         private Label lblVeriTabanınıOluştur;
         private Button btnCreateDB;

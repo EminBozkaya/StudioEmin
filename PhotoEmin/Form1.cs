@@ -11,55 +11,45 @@ namespace PhotoEmin
 {
     public partial class Form1 : Form
     {
-        // Şifreler appsettings.json'dan okunur
         private static string pswDBprocess => AppConfig.PasswordDBProcess;
         private static string pswDelete => AppConfig.PasswordDelete;
         private static string pswUpdate => AppConfig.PasswordUpdate;
 
-        // Servis katmanları
         private readonly DatabaseService _dbService = new();
         private readonly ReceiptService _receiptService = new();
 
         private bool isUpperArchiveBtn = false;
         private Receipt newReceipt = new();
+        private Bitmap? _globeIcon;
+        private string _currentLangCode = "TR";
+
         public Form1()
         {
+            LanguageManager.Initialize();
             InitializeComponent();
+
             this.Load += (s, e) =>
             {
-
-                // Formun genişlik ve yüksekliğini belirleyin (örneğin, 800x600)
                 this.Width = 1720;
                 this.Height = 975;
                 textBoxFileLocation.Multiline = false;
                 textBoxFileLocation.ScrollBars = ScrollBars.Vertical;
 
-                //pnlReceipt.Visible = false;
-                //pnlFindFolder.Visible = false;
-                //flowLayoutPanelArchive.Visible = false;
-                pictureBoxLoading.Visible = false; // Başlangıçta görünmez yapın
+                pictureBoxLoading.Visible = false;
                 pictureBoxLoadingArchive.Visible = false;
                 pictureBoxAddFolderToArchive.Visible = false;
                 pictureBoxLoadingDbToFolder.Visible = false;
                 pictureBoxLoadingSpareToArchive.Visible = false;
                 pnlBorder.Visible = false;
 
+                ApplyLanguage();
+                PopulateLanguageMenu();
 
-                ////kullanılacak olan kod:
-                //ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive");
-                //ManagementObject _disk = searcher.Get().Cast<ManagementObject>().First();
-                //Debug.WriteLine("Disk Seri Numarası: " + _disk["SerialNumber"]);
-
-                ////Terminal Kodu:
-                ////wmic diskdrive where index = 0 get serialnumber
-
-                //Auto backup:
                 try
                 {
                     if (_dbService.CheckDatabaseExists())
                     {
-                        ////Oto back-up şimdilik iptal
-                        //BackupManager.RunBackup();
+                        // auto backup is disabled
                     }
                     else
                     {
@@ -69,33 +59,183 @@ namespace PhotoEmin
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             };
 
-            // Form üzerinde herhangi bir yere tıklandığında
             this.Click += (s, e) =>
             {
-                //pnlReceipt.Visible = false;
-                //pnlFindFolder.Visible = false;
-                //flowLayoutPanelArchive.Visible = false;
                 pnlBorder.Visible = false;
             };
         }
 
+        private void ApplyLanguage()
+        {
+            var L = LanguageManager.GetString;
+
+            this.Text = L("app_title");
+
+            lblBilgisayarım.Text = L("nav_myComputer");
+            lblKlasörAra.Text = L("nav_findFolder");
+            lblMakbuzKes.Text = L("nav_createReceipt");
+            lblArşiv.Text = L("nav_archive");
+            lblVeriTabanı.Text = L("nav_database");
+
+            lblName.Text = L("receipt_name");
+            lblEbat.Text = L("receipt_dimensions");
+            lblAdet.Text = L("receipt_quantity");
+            lblTutar.Text = L("receipt_total");
+            lblAlınan.Text = L("receipt_received");
+            lblKalan.Text = L("receipt_remaining");
+            lblTeslimTarihi.Text = L("receipt_deliveryDate");
+            lblNot.Text = L("receipt_notes");
+            lblAdSoyadkısmındaaltçizgi_KULLANMAYINIZ.Text = L("receipt_nameWarning");
+            lblSeçilenKonum.Text = L("receipt_selectedLocation");
+            lblReceiptCaption.Text = L("receipt_createdReceipt");
+            lblKlasör.Text = L("receipt_folder");
+            lblMakbuzAdı.Text = L("receipt_receiptName");
+            lblKlasöreGit.Text = L("receipt_goToFolder");
+            lblMakbuzaGit.Text = L("receipt_goToReceipt");
+            lblSave.Text = L("receipt_save");
+            lblSaveAndPrint.Text = L("receipt_saveAndPrint");
+            lblYazdır.Text = L("receipt_print");
+            lblFormuTemizle.Text = L("receipt_clearForm");
+
+            lblSürücüSeç.Text = L("find_selectDrive");
+            lblKlasörAdıGir.Text = L("find_enterFolderName");
+            lblSearchFile.Text = L("find_search");
+            lblBulunanKlasörler.Text = L("find_foundFolders");
+
+            lblMainArchiveCaption.Text = L("archive_title");
+            btnSearchPhoto.Text = L("archive_searchRecord");
+            btnAddFoldersToArchive.Text = L("archive_addFolders");
+            btnMakeSpare.Text = L("archive_backup");
+            btnAddSpareToArchive.Text = L("archive_loadBackup");
+
+            lblFullName.Text = L("search_enterName");
+            lblFound.Text = L("search_foundRecords");
+            lblFoundPhoto.Text = L("search_representativePhoto");
+            lblKayıtSayısı.Text = L("search_recordCount");
+            lblSeçilenKaydınBulunduğuÜstKlasör.Text = L("search_parentFolder");
+            lblKaydıGüncelle.Text = L("search_updateRecord");
+            lblKaydıSil.Text = L("search_deleteRecord");
+            lblKaydınKlasörünüAçmakİçin.Text = L("search_openFolderTitle");
+            lblChooseDriver.Text = L("search_selectDriveFirst");
+            lblSearchArchive.Text = L("search_searchParentFolder");
+            lblGoRecord.Text = L("search_goToRecordFolder");
+            lblGit.Text = L("search_go");
+
+            lblHazırlamışolduğunuz.Text = L("addFolder_prepared");
+            lblmüşterilerinkayıtdosyalarınıbulunduran.Text = L("addFolder_containing");
+            lblÜSTKLASÖRÜNÜZÜSeçiniz.Text = L("addFolder_selectParent");
+            lblArşiveEklemekİçinSeçilenÜstKlasör.Text = L("addFolder_selectedParent");
+            lblAddFolderToArchive.Text = L("addFolder_addToArchive");
+            lblVeya.Text = L("addFolder_or");
+            lblÖncedenArşiveeklemeküzerehazırladığınız.Text = L("addFolder_previouslyPrepared");
+            lblÜSTklasörleribarındıran.Text = L("addFolder_containingParent");
+            lblGenelÜSTARŞİVKLASÖRÜNÜZÜSeçiniz.Text = L("addFolder_selectGeneralParent");
+
+            lblVeriTabanındakiarşiviyedeklemekiçin.Text = L("spare_backupArchiveLabel");
+            lblDosyaKonumuSeçiniz.Text = L("spare_selectLocation");
+            lblSeçilenKonum3.Text = L("spare_selectedLocation");
+            lblDbToFolder.Text = L("spare_backupToFile");
+
+            lblDahaöncedenyedeklediğiniz.Text = L("restore_previouslyBacked");
+            lblDosyayıSeçiniz.Text = L("restore_selectFile");
+            lblSeçilenYedekDosyası.Text = L("restore_selectedFile");
+            lblSpareToArchive.Text = L("restore_loadToArchive");
+
+            lblVeriTabanınıOluştur.Text = L("db_create");
+            lblVeriTabanınıYedekle.Text = L("db_backup");
+            lblYedektenVeriTabanınıOluştur.Text = L("db_restoreFromBackup");
+            lblVeriTabanınıSil.Text = L("db_delete");
+            lblSeçilenKonum2.Text = L("db_selectedLocation");
+            lblSeçilenYedek.Text = L("db_selectedBackup");
+            richTextBox2.Text = L("db_info_create");
+            richTextBox1.Text = L("db_info_backup");
+            richTextBox3.Text = L("db_info_restore");
+            richTextBox4.Text = L("db_info_delete");
+        }
+
+        private void PopulateLanguageMenu()
+        {
+            _globeIcon = Extensions.Resources.btnLanguage;
+            _currentLangCode = LanguageManager.CurrentLanguage.ToUpper(new System.Globalization.CultureInfo("en-US"));
+
+            ctxLanguageMenu.Items.Clear();
+            var languages = LanguageManager.GetAvailableLanguages();
+
+            foreach (var lang in languages)
+            {
+                var item = new ToolStripMenuItem(lang.Name)
+                {
+                    Tag = lang,
+                    Checked = lang.Code == LanguageManager.CurrentLanguage
+                };
+                item.Click += LanguageMenuItem_Click;
+                ctxLanguageMenu.Items.Add(item);
+            }
+
+            btnLanguage.Invalidate();
+        }
+
+        private void btnLanguage_Click(object sender, EventArgs e)
+        {
+            ctxLanguageMenu.Show(btnLanguage, new Point(0, -ctxLanguageMenu.PreferredSize.Height));
+        }
+
+        private void btnLanguage_Paint(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
+            if (_globeIcon != null)
+                g.DrawImage(_globeIcon, 2, 2, 66, 66);
+
+            using var font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            var text = _currentLangCode;
+            var textSize = g.MeasureString(text, font);
+            float tx = (btnLanguage.Width - textSize.Width) / 2f;
+            float ty = (btnLanguage.Height - textSize.Height) / 2f;
+
+            using var bgBrush = new SolidBrush(Color.FromArgb(180, 0, 0, 0));
+            float pad = 3;
+            var bgRect = new RectangleF(tx - pad, ty - pad, textSize.Width + pad * 2, textSize.Height + pad * 2);
+            using var path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddRectangle(bgRect);
+            g.FillPath(bgBrush, path);
+
+            using var brush = new SolidBrush(Color.White);
+            g.DrawString(text, font, brush, tx, ty);
+        }
+
+        private void LanguageMenuItem_Click(object? sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem menuItem) return;
+            if (menuItem.Tag is not LanguageInfo selected) return;
+            if (selected.Code == LanguageManager.CurrentLanguage) return;
+
+            var result = MessageBox.Show(
+                LanguageManager.GetString("lang_restartMessage"),
+                LanguageManager.GetString("lang_restartTitle"),
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                LanguageManager.SetLanguage(selected.Code);
+                Application.Restart();
+            }
+        }
 
         private void btnChooseFileLocation_Click(object sender, EventArgs e)
         {
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
             {
                 DialogResult result = folderDialog.ShowDialog();
-
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
-                {
                     textBoxFileLocation.Text = folderDialog.SelectedPath;
-                }
             }
         }
 
@@ -132,20 +272,23 @@ namespace PhotoEmin
             {
                 try
                 {
-                    // Dosya yolunu ilişkilendirilmiş uygulamayla aç
-                    //Process.Start(folderPath);
                     Process.Start(new ProcessStartInfo { FileName = folderPath, UseShellExecute = true });
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        string.Format(LanguageManager.GetString("msg_errorOccurred"), ex.Message),
+                        LanguageManager.GetString("msg_error"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Henüz bir kayıt işlemi gerçekleşmedi!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    LanguageManager.GetString("msg_noRecordYet"),
+                    LanguageManager.GetString("msg_warning"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
         }
 
         private void btnGoTheReceipt_Click(object sender, EventArgs e)
@@ -155,35 +298,33 @@ namespace PhotoEmin
             {
                 try
                 {
-                    // Dosya yolunu ilişkilendirilmiş uygulamayla aç
-                    //Process.Start(folderPath);
                     Process.Start(new ProcessStartInfo { FileName = folderPath, UseShellExecute = true });
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        string.Format(LanguageManager.GetString("msg_errorOccurred"), ex.Message),
+                        LanguageManager.GetString("msg_error"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Henüz bir kayıt işlemi gerçekleşmedi!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    LanguageManager.GetString("msg_noRecordYet"),
+                    LanguageManager.GetString("msg_warning"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
         }
 
         private void ClearTextBoxes(Control container)
         {
-            // Belirtilen konteyner içindeki tüm TextBox ve RichTextBox kontrollerini temizle
             foreach (Control control in container.Controls)
             {
                 if (control is TextBox || control is RichTextBox)
-                {
                     ((TextBoxBase)control).Clear();
-                }
                 else if (control.HasChildren)
-                {
-                    ClearTextBoxes(control); // Eğer kontrol içinde alt kontrol varsa, bu metodu tekrar çağır
-                }
+                    ClearTextBoxes(control);
             }
         }
 
@@ -198,14 +339,11 @@ namespace PhotoEmin
 
         private void TextBoxesAmount_TextChanged(object sender, EventArgs e)
         {
-            setVisibleAfterSaveProcess(true);//kayıt işleminden sonra butonları göster
+            setVisibleAfterSaveProcess(true);
 
-            // Hangi TextBox'ın değiştiğini kontrol et
             TextBox changedTextBox = (TextBox)sender;
-
             string text = changedTextBox.Text.Replace(",", ".");
 
-            // Girilen değeri kontrol et ve decimal'e çevir
             if (String.IsNullOrEmpty(text)) text = "0";
             if (decimal.TryParse(text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out decimal value))
             {
@@ -225,8 +363,7 @@ namespace PhotoEmin
             }
             else
             {
-                // Girilen değerler decimal'e çevrilemiyorsa veya herhangi bir hata varsa, işlemi gerçekleştirme
-                txtRemainingAmount.Text = "Geçersiz";
+                txtRemainingAmount.Text = LanguageManager.GetString("receipt_invalidAmount");
             }
         }
 
@@ -250,30 +387,20 @@ namespace PhotoEmin
             _receiptService.RenderReceiptPage(newReceipt, e);
         }
 
-
-
         void PrintProcess()
         {
             CreateReceipt();
             if (!String.IsNullOrEmpty(newReceipt.Name))
             {
-                ////ön izleme ekranı ile:
-                //printDocument1.DocumentName = "Makbuz";
-                //printPreviewDialog1.Document = printDocument1;
-                //if (printPreviewDialog1.Visible)
-                //{
-                //    printPreviewDialog1.Close();
-                //}
-                //printPreviewDialog1.ShowDialog();
-
-
-                //Direkt yazdırma:
                 printDocument1.DocumentName = "Makbuz";
                 printDocument1.Print();
             }
             else
             {
-                MessageBox.Show("Lütfen Ad Soyad girin", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    LanguageManager.GetString("msg_enterName"),
+                    LanguageManager.GetString("msg_warning"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -289,7 +416,10 @@ namespace PhotoEmin
         {
             if (String.IsNullOrEmpty(textBoxFileLocation.Text))
             {
-                MessageBox.Show("Lütfen kayıt için konum seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    LanguageManager.GetString("msg_selectSaveLocation"),
+                    LanguageManager.GetString("msg_warning"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
@@ -308,26 +438,37 @@ namespace PhotoEmin
                     lblFileLocation.Text = folderName!;
                     if (!isSaveAndPrint)
                     {
-                        MessageBox.Show("Klasör ve dosya başarıyla oluşturuldu.", "İşlem Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(
+                            LanguageManager.GetString("msg_folderFileCreated"),
+                            LanguageManager.GetString("msg_success"),
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (dupCount > 0)
                     {
-                        MessageBox.Show($"Daha önce aynı isimli kayıt olduğu için, yeni kaydınız \"{folderName}\" olarak oluşturuldu.", "Bilgilendirme!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(
+                            string.Format(LanguageManager.GetString("msg_duplicateFolder"), folderName),
+                            LanguageManager.GetString("msg_notification"),
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                     setVisibleAfterSaveProcess(false);
-
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        string.Format(LanguageManager.GetString("msg_errorOccurred"), ex.Message),
+                        LanguageManager.GetString("msg_error"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
             }
             else
             {
-                MessageBox.Show("Lütfen Ad Soyad girin", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    LanguageManager.GetString("msg_enterName"),
+                    LanguageManager.GetString("msg_warning"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
         }
@@ -343,9 +484,7 @@ namespace PhotoEmin
         private void btnSaveAndPrint_Click(object sender, EventArgs e)
         {
             if (SaveProcess(true))
-            {
                 PrintProcess();
-            }
         }
 
         private void btnFindFolder_Click(object sender, EventArgs e)
@@ -356,29 +495,21 @@ namespace PhotoEmin
             flowLayoutPanelArchive.Visible = false;
             pnlDBprocess.Visible = false;
 
-            //pnlReceipt.SendToBack();
-            //pnlFindFolder.BringToFront();
-
             PopulateDriveComboBox();
         }
 
         private void PopulateDriveComboBox()
         {
-            // ComboBox'ı temizle
             cmbBoxDriver.Items.Clear();
             comboBoxDriversForRecord.Items.Clear();
 
-            // Bilgisayardaki sürücüleri al
             DriveInfo[] drives = DriveInfo.GetDrives();
-
-            // Sürücüleri ComboBox'a ekle
             foreach (DriveInfo drive in drives)
             {
                 cmbBoxDriver.Items.Add(drive.Name);
                 comboBoxDriversForRecord.Items.Add(drive.Name);
             }
 
-            // ComboBox'da bir öğe seçili hale getirebilirsiniz, örneğin:
             if (cmbBoxDriver.Items.Count > 0)
             {
                 cmbBoxDriver.SelectedIndex = 0;
@@ -393,7 +524,6 @@ namespace PhotoEmin
 
         private void Search(bool searchUpperFolderArchive = false)
         {
-            // Dosya adını ve sürücüyü al
             string klasorAdi = "";
             string? secilenSurucu = "";
             if (!searchUpperFolderArchive)
@@ -407,7 +537,6 @@ namespace PhotoEmin
                 secilenSurucu = comboBoxDriversForRecord.SelectedItem as string;
             }
 
-            // Geçerli bir dosya adı ve sürücü var mı kontrol et
             if (!string.IsNullOrEmpty(klasorAdi) && !string.IsNullOrEmpty(secilenSurucu))
             {
                 try
@@ -417,35 +546,34 @@ namespace PhotoEmin
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        string.Format(LanguageManager.GetString("msg_errorOccurred"), ex.Message),
+                        LanguageManager.GetString("msg_error"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Lütfen klasör adını ve sürücüyü seçin.", "Eksik Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    LanguageManager.GetString("msg_selectFolderAndDrive"),
+                    LanguageManager.GetString("msg_missingInfo"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void DisplayData(string secilenSurucu, string klasorAdi, bool searchUpperFolderArchive)
         {
-            // Loading göstergesini göster
             SetLoading(true, searchUpperFolderArchive);
-
-            // Diğer işlemler burada gerçekleştirilir
             ListFolderNames(secilenSurucu, klasorAdi, searchUpperFolderArchive);
-
-            // Loading göstergesini gizle
             SetLoading(false, searchUpperFolderArchive);
         }
 
         private void SetLoading(bool displayLoader, bool searchUpperFolderArchive, bool addFolderToArchive = false, bool addDbToFolder = false, bool addSpareToArchive = false)
         {
-            // this.Invoke ile UI thread üzerinde işlemler yapılır
             this.Invoke((MethodInvoker)delegate
             {
                 if (displayLoader)
                 {
-                    // Loading göstergesini göster ve cursor'ı "wait" durumuna getir
                     this.Cursor = Cursors.WaitCursor;
                     if (searchUpperFolderArchive)
                     {
@@ -456,19 +584,19 @@ namespace PhotoEmin
                     else if (addFolderToArchive)
                     {
                         btnAddFolderToArchive.Visible = false;
-                        lblAddFolderToArchive.Text = "Lütfen bekleyiniz..";
+                        lblAddFolderToArchive.Text = LanguageManager.GetString("loading_pleaseWait");
                         pictureBoxAddFolderToArchive.Visible = true;
                     }
                     else if (addDbToFolder)
                     {
                         btnDBtoFolder.Visible = false;
-                        lblDbToFolder.Text = "Lütfen bekleyiniz..";
+                        lblDbToFolder.Text = LanguageManager.GetString("loading_pleaseWait");
                         pictureBoxLoadingDbToFolder.Visible = true;
                     }
                     else if (addSpareToArchive)
                     {
                         btnSpareToArchive.Visible = false;
-                        lblSpareToArchive.Text = "Lütfen bekleyiniz..";
+                        lblSpareToArchive.Text = LanguageManager.GetString("loading_pleaseWait");
                         pictureBoxLoadingSpareToArchive.Visible = true;
                     }
                     else
@@ -480,7 +608,6 @@ namespace PhotoEmin
                 }
                 else
                 {
-                    // Loading göstergesini gizle ve cursor'ı varsayılan duruma getir
                     this.Cursor = Cursors.Default;
 
                     if (searchUpperFolderArchive)
@@ -492,19 +619,19 @@ namespace PhotoEmin
                     else if (addFolderToArchive)
                     {
                         btnAddFolderToArchive.Visible = true;
-                        lblAddFolderToArchive.Text = "Arşive Ekle";
+                        lblAddFolderToArchive.Text = LanguageManager.GetString("loading_addToArchive");
                         pictureBoxAddFolderToArchive.Visible = false;
                     }
                     else if (addDbToFolder)
                     {
                         btnDBtoFolder.Visible = true;
-                        lblDbToFolder.Text = "Arşivi Dosyaya Yedekle";
+                        lblDbToFolder.Text = LanguageManager.GetString("loading_backupToFile");
                         pictureBoxLoadingDbToFolder.Visible = false;
                     }
                     else if (addSpareToArchive)
                     {
                         btnSpareToArchive.Visible = true;
-                        lblSpareToArchive.Text = "Yedek Dosyayı Arşive Ekle";
+                        lblSpareToArchive.Text = LanguageManager.GetString("loading_loadBackupToArchive");
                         pictureBoxLoadingSpareToArchive.Visible = false;
                     }
                     else
@@ -527,94 +654,60 @@ namespace PhotoEmin
                 this.Invoke((MethodInvoker)delegate
                 {
                     if (!searchUpperFolderArchive)
-                    {
                         listBoxFiles.Items.Clear();
-                    }
                     else
-                    {
                         listBoxArchive.Items.Clear();
-                    }
                 });
-                // Dizin içindeki klasörleri kontrol et
-                DirectoryInfo di = new DirectoryInfo(dizinYolu);
 
+                DirectoryInfo di = new DirectoryInfo(dizinYolu);
                 List<DirectoryInfo> erisilebilenKlasorler = [];
                 List<DirectoryInfo> filtrelenmisKlasorler = [];
+
                 if (!searchUpperFolderArchive)
                 {
                     CheckDirectories(di, erisilebilenKlasorler);
-
                     filtrelenmisKlasorler = erisilebilenKlasorler
-                    .Where(info => (info.Attributes & FileAttributes.Directory) == FileAttributes.Directory && info.Name.Contains(arananKlasorAdi, StringComparison.OrdinalIgnoreCase))
-                    .ToList();
+                        .Where(info => (info.Attributes & FileAttributes.Directory) == FileAttributes.Directory && info.Name.Contains(arananKlasorAdi, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
 
                     foreach (var klasorDosya in filtrelenmisKlasorler)
                     {
-                        // Klasör isimlerini alıyoruz
                         string klasorAdi = klasorDosya.FullName;
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            listBoxFiles.Items.Add(klasorAdi);
-                        });
-
-                        // Yatay kaydırma çubuğunu güncelle
+                        this.Invoke((MethodInvoker)delegate { listBoxFiles.Items.Add(klasorAdi); });
                     }
 
                     if (listBoxFiles.Items.Count == 0)
-                    {
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            listBoxFiles.Items.Add("Bulunamadı");
-                        });
+                        this.Invoke((MethodInvoker)delegate { listBoxFiles.Items.Add(LanguageManager.GetString("find_notFound")); });
 
-                    }
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        listBoxFiles.SelectedIndex = 0; // İlk öğeyi seç
-                    });
+                    this.Invoke((MethodInvoker)delegate { listBoxFiles.SelectedIndex = 0; });
                 }
-
                 else
                 {
                     CheckDirectory(di, erisilebilenKlasorler, txtDataUpperFileName.Text);
-
                     filtrelenmisKlasorler = erisilebilenKlasorler;
-                    //filtrelenmisKlasorler = erisilebilenKlasorler.Where(info => (info.Attributes & FileAttributes.Directory) == FileAttributes.Directory && info.Name.Equals(arananKlasorAdi, StringComparison.Ordinal)).ToList();
 
                     foreach (var klasorDosya in filtrelenmisKlasorler)
                     {
-                        // Klasör isimlerini alıyoruz
                         string klasorAdi = klasorDosya.FullName;
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            listBoxArchive.Items.Add(klasorAdi);
-                        });
-
-                        // Yatay kaydırma çubuğunu güncelle
+                        this.Invoke((MethodInvoker)delegate { listBoxArchive.Items.Add(klasorAdi); });
                     }
 
                     if (listBoxArchive.Items.Count == 0)
-                    {
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            listBoxArchive.Items.Add("Bulunamadı");
-                        });
+                        this.Invoke((MethodInvoker)delegate { listBoxArchive.Items.Add(LanguageManager.GetString("find_notFound")); });
 
-                    }
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        listBoxArchive.SelectedIndex = 0; // İlk öğeyi seç
-                    });
+                    this.Invoke((MethodInvoker)delegate { listBoxArchive.SelectedIndex = 0; });
                 }
-
             }
             catch (UnauthorizedAccessException)
             {
-                MessageBox.Show("Bu dizine erişme izniniz yok.", "Erişim İzni Hatası", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    LanguageManager.GetString("msg_noAccessPermission"),
+                    LanguageManager.GetString("msg_error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Hata oluştu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ex.Message, LanguageManager.GetString("msg_error"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -623,16 +716,10 @@ namespace PhotoEmin
             accessibleDirectories.Add(currentDirectory);
             try
             {
-                // UnauthorizedAccessException hatası alınmazsa, alt klasörleri ile birlikte kontrol et
                 foreach (var subDirectory in currentDirectory.GetDirectories())
-                {
                     CheckDirectories(subDirectory, accessibleDirectories);
-                }
             }
-            catch (UnauthorizedAccessException)
-            {
-
-            }
+            catch (UnauthorizedAccessException) { }
         }
 
         static void CheckDirectory(DirectoryInfo rootDirectory, List<DirectoryInfo> accessibleDirectories, string targetDirectoryName)
@@ -643,53 +730,42 @@ namespace PhotoEmin
             while (queue.Count > 0)
             {
                 DirectoryInfo currentDirectory = queue.Dequeue();
-
                 try
                 {
-                    // Mevcut klasörün alt klasörlerini al
                     DirectoryInfo[] subDirectories = currentDirectory.GetDirectories();
-
-                    // Mevcut klasör altındaki klasörleri döngüye al
                     foreach (var subDirectory in subDirectories)
                     {
-                        // Alt klasörün adı hedef klasör adı ile eşleşiyorsa
                         if (subDirectory.Name.Equals(targetDirectoryName, StringComparison.OrdinalIgnoreCase))
                         {
-                            // Eğer koşul sağlanıyorsa, klasörü listBox'a ekle
                             accessibleDirectories.Add(subDirectory);
-                            return; // Bulunduğunda arama işleminden çık
+                            return;
                         }
-
-                        // Alt klasörü arama kuyruğuna ekle
                         queue.Enqueue(subDirectory);
                     }
                 }
-                catch (UnauthorizedAccessException)
-                {
-                    // Eğer erişim izni yoksa devam et
-                }
+                catch (UnauthorizedAccessException) { }
             }
         }
 
         private void ListBoxFiles_DoubleClick(object sender, EventArgs e)
         {
-            // ListBox'ta çift tıklanan öğenin adını al
             string? secilenKlasor = listBoxFiles.SelectedItem as string;
+            string notFoundText = LanguageManager.GetString("find_notFound");
 
-            // Geçerli bir öğe seçildiyse ve "Bulunamadı" öğesi değilse işlem yap
-            if (!string.IsNullOrEmpty(secilenKlasor) && secilenKlasor != "Bulunamadı")
+            if (!string.IsNullOrEmpty(secilenKlasor) && secilenKlasor != notFoundText)
             {
-                // Klasör yolunu oluştur ve aç
                 string? secilenSurucu = cmbBoxDriver.SelectedItem as string;
                 string? klasorYolu = Path.Combine(secilenSurucu!, secilenKlasor);
-
                 try
                 {
                     Process.Start("explorer.exe", klasorYolu);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        string.Format(LanguageManager.GetString("msg_errorOccurred"), ex.Message),
+                        LanguageManager.GetString("msg_error"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -698,26 +774,22 @@ namespace PhotoEmin
         {
             try
             {
-                // Bilgisayarım'ı açmak için explorer.exe'yi başlat
                 Process.Start("explorer.exe", "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    string.Format(LanguageManager.GetString("msg_errorOccurred"), ex.Message),
+                    LanguageManager.GetString("msg_error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void txtFileNameInput_KeyDown(object sender, KeyEventArgs e)
         {
-            // Eğer Enter tuşuna basıldıysa
             if (e.KeyCode == Keys.Enter)
-            {
-                // Başka bir butonun Click olayını tetikle
                 btnSearchFile.PerformClick();
-            }
         }
-
-
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
@@ -790,7 +862,6 @@ namespace PhotoEmin
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
             {
                 DialogResult result = folderDialog.ShowDialog();
-
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
                 {
                     txtChosenUpperFolder.Text = folderDialog.SelectedPath;
@@ -804,11 +875,8 @@ namespace PhotoEmin
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
             {
                 DialogResult result = folderDialog.ShowDialog();
-
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
-                {
                     txtLocationOfSpareFolder.Text = folderDialog.SelectedPath;
-                }
             }
         }
 
@@ -818,13 +886,13 @@ namespace PhotoEmin
 
             if (!Directory.Exists(folderPath))
             {
-                MessageBox.Show("Belirtilen klasör bulunamadı!");
+                MessageBox.Show(LanguageManager.GetString("msg_folderNotFound"));
                 return;
             }
             string[] subDirectories = Directory.GetDirectories(folderPath);
             if (subDirectories.Length == 0)
             {
-                MessageBox.Show("Belirtilen üst klasörde kaydedilecek alt klasör bulunamadı!");
+                MessageBox.Show(LanguageManager.GetString("msg_noSubFoldersFound"));
                 return;
             }
             SetLoading(true, false, true);
@@ -839,23 +907,6 @@ namespace PhotoEmin
             {
                 foreach (string subDirectory in subDirectories)
                 {
-                    ////Check record count:(max 20 for demo)
-                    //using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionString))
-                    //{
-                    //    connection.Open();
-                    //    string checkCount = "SELECT COUNT(*) FROM customers";
-
-                    //    using (NpgsqlCommand checkCommand = new NpgsqlCommand(checkCount, connection))
-                    //    {
-                    //        long totalExistingRecordsCount = (long)checkCommand.ExecuteScalar()!;
-                    //        if (totalExistingRecordsCount > 19)
-                    //        {
-                    //            MessageBox.Show($"Demo programında maksimum 20 adet kayıt yapılabilmektedir!", "Üzgünüm", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //            break;
-                    //        }
-                    //    }
-                    //}
-
                     DirectoryInfo subDirInfo = new DirectoryInfo(subDirectory);
                     string subDirInfoName = subDirInfo.Name;
                     string subFolderPath = Path.Combine(folderPath, subDirInfoName);
@@ -874,10 +925,18 @@ namespace PhotoEmin
             }
 
             SetLoading(false, false, true);
-            MessageBox.Show($"Toplam kayıt sayısı: {recordStatus.totalInserts}\nBaşarılı kayıt sayısı: {recordStatus.successfulInserts}\nTekrar ettiği için veri tabanına eklenMEYEN kayıt sayısı: {recordStatus.duplicateRecords!.Count} {string.Join(", ", recordStatus.duplicateRecords)}\nHata alındığı için veri tabanına ekleNEMEYEN kayıt sayısı: {recordStatus.errorFullNames.Count} {string.Join(", ", recordStatus.errorFullNames)}\n--------\nBAŞARILI KAYITLARDA İLAVE NOTLAR:\nUygun resmi olmayan kayıt sayısı: {recordStatus.noImageRecords.Count} {string.Join(", ", recordStatus.noImageRecords)}\nResmi bozuk veya işlenemeyen kayıt sayısı: {recordStatus.faultyImageRecords.Count} {string.Join(", ", recordStatus.faultyImageRecords)}");
+
+            var L = LanguageManager.GetString;
+            MessageBox.Show(
+                string.Format(L("msg_archiveResult_total"), recordStatus.totalInserts) + "\n" +
+                string.Format(L("msg_archiveResult_success"), recordStatus.successfulInserts) + "\n" +
+                string.Format(L("msg_archiveResult_duplicate"), recordStatus.duplicateRecords!.Count, string.Join(", ", recordStatus.duplicateRecords)) + "\n" +
+                string.Format(L("msg_archiveResult_error"), recordStatus.errorFullNames.Count, string.Join(", ", recordStatus.errorFullNames)) + "\n" +
+                "--------\n" +
+                L("msg_archiveResult_successNotes") + "\n" +
+                string.Format(L("msg_archiveResult_noImage"), recordStatus.noImageRecords.Count, string.Join(", ", recordStatus.noImageRecords)) + "\n" +
+                string.Format(L("msg_archiveResult_faultyImage"), recordStatus.faultyImageRecords.Count, string.Join(", ", recordStatus.faultyImageRecords)));
         }
-
-
 
         private System.Windows.Forms.Timer _searchTimer;
 
@@ -887,7 +946,7 @@ namespace PhotoEmin
             {
                 _searchTimer = new System.Windows.Forms.Timer();
                 _searchTimer.Interval = 400;
-                _searchTimer.Tick += (s, ev) => 
+                _searchTimer.Tick += (s, ev) =>
                 {
                     _searchTimer.Stop();
                     PerformSearch();
@@ -906,10 +965,9 @@ namespace PhotoEmin
             try
             {
                 DataTable dataTable = _dbService.SearchCustomers(searchText);
-
                 dataGridRecords.DataSource = dataTable;
                 dataGridRecords.Columns["id"].Visible = false;
-                dataGridRecords.Columns["Ad Soyad"].HeaderText = "Ad Soyad:";
+                dataGridRecords.Columns["Ad Soyad"].HeaderText = LanguageManager.GetString("search_dataGridHeaderFullName");
                 lblTotalRecord.Text = dataGridRecords.RowCount.ToString();
                 if (dataGridRecords.RowCount == 0)
                 {
@@ -921,9 +979,15 @@ namespace PhotoEmin
             catch (Exception ex)
             {
                 if (ex.Message.Contains("3D000"))
-                    MessageBox.Show($"Veri tabanı oluşturulmamış, Lütfen 'Veri Tabanı' işlemi menüsünde, veri tabanı oluşturunuz ve kayıtlarınızı ekleyiniz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        LanguageManager.GetString("msg_dbNotCreated"),
+                        LanguageManager.GetString("msg_error"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
-                    MessageBox.Show($"Kayıt ararken hata oluştu! {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        string.Format(LanguageManager.GetString("msg_searchError"), ex.Message),
+                        LanguageManager.GetString("msg_error"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -972,23 +1036,19 @@ namespace PhotoEmin
         {
             if (dataGridRecords.CurrentRow != null && dataGridRecords.CurrentRow.Cells["Ad Soyad"] != null && dataGridRecords.CurrentRow.Cells["Ad Soyad"].Value != null)
             {
-                // txtDataUpperFileName ve comboBoxDriversForRecord boş olmamalıdır
                 if (string.IsNullOrEmpty(txtDataUpperFileName.Text) || comboBoxDriversForRecord.SelectedItem == null)
                 {
-                    MessageBox.Show("Lütfen klasör adını ve sürücüyü seçin.");
+                    MessageBox.Show(LanguageManager.GetString("msg_selectFolderAndDrive"));
                     return;
                 }
-                // ListBox'taki öğenin adını al
                 string? selectedUpperFolder = listBoxArchive.SelectedItem as string;
+                string notFoundText = LanguageManager.GetString("find_notFound");
 
-                // Geçerli bir öğe seçildiyse ve "Bulunamadı" öğesi değilse işlem yap
-                if (!string.IsNullOrEmpty(selectedUpperFolder) && selectedUpperFolder != "Bulunamadı")
+                if (!string.IsNullOrEmpty(selectedUpperFolder) && selectedUpperFolder != notFoundText)
                 {
-                    // Klasör yolunu oluştur ve aç
                     string selectedFullName = dataGridRecords.CurrentRow.Cells["Ad Soyad"].Value.ToString()!;
                     string? completePath = Path.Combine(selectedUpperFolder, selectedFullName!);
 
-                    // Klasörün varlığını kontrol et
                     if (Directory.Exists(completePath))
                     {
                         try
@@ -997,18 +1057,21 @@ namespace PhotoEmin
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Klasör açılamadı: " + ex.Message);
+                            MessageBox.Show(string.Format(LanguageManager.GetString("msg_folderCannotOpen"), ex.Message));
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Belirtilen klasör bulunamadı: " + completePath);
+                        MessageBox.Show(string.Format(LanguageManager.GetString("msg_folderNotFoundPath"), completePath));
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Lütfen Ad Soyad tablosundan bir kayıt seçin!", "Eksik Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    LanguageManager.GetString("msg_selectNameFromTable"),
+                    LanguageManager.GetString("msg_missingInfo"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1022,11 +1085,8 @@ namespace PhotoEmin
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
             {
                 DialogResult result = folderDialog.ShowDialog();
-
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
-                {
                     txtLocationForArchive.Text = folderDialog.SelectedPath;
-                }
             }
         }
 
@@ -1036,7 +1096,7 @@ namespace PhotoEmin
 
             if (!Directory.Exists(folderPath))
             {
-                MessageBox.Show("Belirtilen klasör bulunamadı!");
+                MessageBox.Show(LanguageManager.GetString("msg_folderNotFound"));
                 return;
             }
 
@@ -1054,24 +1114,23 @@ namespace PhotoEmin
                 }
 
                 SetLoading(false, false, false, true);
-                MessageBox.Show("Veritabanındaki veriler başarıyla klasöre kaydedildi!");
+                MessageBox.Show(LanguageManager.GetString("msg_dbSavedToFolder"));
             }
             catch (Exception ex)
             {
-                LogService.LogError(ex, "DB'den Klasöre Aktarma Hatası");
+                LogService.LogError(ex, LanguageManager.GetString("log_dbToFolderError"));
                 SetLoading(false, false, false, true);
-                MessageBox.Show($"Hata oluştu: {ex.Message}");
+                MessageBox.Show(string.Format(LanguageManager.GetString("msg_errorOccurred"), ex.Message));
             }
         }
 
-        
         private async void btnSpareToArchive_Click(object sender, EventArgs e)
         {
             string folderPath = txtLocationOfSpareFolder.Text;
 
             if (!Directory.Exists(folderPath))
             {
-                MessageBox.Show("Belirtilen klasör bulunamadı!");
+                MessageBox.Show(LanguageManager.GetString("msg_folderNotFound"));
                 return;
             }
             SetLoading(true, false, false, false, true);
@@ -1080,16 +1139,22 @@ namespace PhotoEmin
             var result = _dbService.ImportSpareToArchive(folderPath);
 
             SetLoading(false, false, false, false, true);
-            MessageBox.Show($"Toplam kayıt sayısı: {result.totalInserts}\nBaşarılı kayıt sayısı: {result.successfulInserts}\nTekrar eden kayıt sayısı: {result.duplicateRecords.Count} {string.Join(", ", result.duplicateRecords)}\nİsmi uygun olmayan kayıt sayısı: {result.wrongFormatRecords.Count} {string.Join(", ", result.wrongFormatRecords)}\nResim olmayan kayıt sayısı: {result.notImages.Count} {string.Join(", ", result.notImages)}\nVeritabanına kayıt esnasında hata alınan kayıt sayısı: {result.errorFullNames.Count} {string.Join(", ", result.errorFullNames)}");
+
+            var L = LanguageManager.GetString;
+            MessageBox.Show(
+                string.Format(L("msg_spareResult_total"), result.totalInserts) + "\n" +
+                string.Format(L("msg_spareResult_success"), result.successfulInserts) + "\n" +
+                string.Format(L("msg_spareResult_duplicate"), result.duplicateRecords.Count, string.Join(", ", result.duplicateRecords)) + "\n" +
+                string.Format(L("msg_spareResult_wrongFormat"), result.wrongFormatRecords.Count, string.Join(", ", result.wrongFormatRecords)) + "\n" +
+                string.Format(L("msg_spareResult_notImage"), result.notImages.Count, string.Join(", ", result.notImages)) + "\n" +
+                string.Format(L("msg_spareResult_dbError"), result.errorFullNames.Count, string.Join(", ", result.errorFullNames)));
         }
 
-        
         private void btnUpperArchiveFoldersToDB_Click(object sender, EventArgs e)
         {
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
             {
                 DialogResult result = folderDialog.ShowDialog();
-
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
                 {
                     txtChosenUpperFolder.Text = folderDialog.SelectedPath;
@@ -1109,11 +1174,17 @@ namespace PhotoEmin
                     string selectedFullName = fullNameObject != null ? fullNameObject.ToString()! : string.Empty;
                     if (string.IsNullOrEmpty(selectedFullName))
                     {
-                        MessageBox.Show("Lütfen Ad Soyad girin", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(
+                            LanguageManager.GetString("msg_enterName"),
+                            LanguageManager.GetString("msg_warning"),
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     selectedFullName = selectedFullName.Trim();
-                    DialogResult result = MessageBox.Show("Kaydı güncellemek istediğinize emin misiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show(
+                        LanguageManager.GetString("msg_confirmUpdate"),
+                        LanguageManager.GetString("msg_warning"),
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (result == DialogResult.Yes)
                     {
@@ -1121,38 +1192,38 @@ namespace PhotoEmin
                         {
                             try
                             {
-
                                 _dbService.UpdateCustomerName(selectedRowId, selectedFullName);
-
-
-                                MessageBox.Show("Kayıt başarıyla güncellendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show(
+                                    LanguageManager.GetString("msg_recordUpdated"),
+                                    LanguageManager.GetString("msg_success"),
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 PerformSearch();
                             }
                             catch (Exception ex)
                             {
-                                LogService.LogError(ex, "Kayıt Güncelleme Hatası");
-                                MessageBox.Show($"Kayıt güncellenirken hata oluştu! {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                LogService.LogError(ex, LanguageManager.GetString("log_recordUpdateError"));
+                                MessageBox.Show(
+                                    string.Format(LanguageManager.GetString("msg_updateError"), ex.Message),
+                                    LanguageManager.GetString("msg_error"),
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
-
                     }
                 }
             }
-
-
-
-
         }
 
         private async void btnDeleteRecord_Click(object sender, EventArgs e)
         {
             int selectedRowId;
-
             if (dataGridRecords.CurrentRow != null && dataGridRecords.CurrentRow.Cells["id"].Value != null)
             {
                 if (int.TryParse(dataGridRecords.CurrentRow.Cells["id"].Value.ToString(), out selectedRowId))
                 {
-                    DialogResult result = MessageBox.Show("Kaydı silmek istediğinize emin misiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show(
+                        LanguageManager.GetString("msg_confirmDelete"),
+                        LanguageManager.GetString("msg_warning"),
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (result == DialogResult.Yes)
                     {
@@ -1162,15 +1233,19 @@ namespace PhotoEmin
                                 return;
 
                             _dbService.DeleteCustomer(selectedRowId);
-
-
-                            MessageBox.Show("Kayıt başarıyla silindi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show(
+                                LanguageManager.GetString("msg_recordDeleted"),
+                                LanguageManager.GetString("msg_success"),
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
                             PerformSearch();
                         }
                         catch (Exception ex)
                         {
-                            LogService.LogError(ex, "Kayıt Silme Hatası");
-                            MessageBox.Show($"Kayıt silme işleminde hata oluştu! {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            LogService.LogError(ex, LanguageManager.GetString("log_recordDeleteError"));
+                            MessageBox.Show(
+                                string.Format(LanguageManager.GetString("msg_deleteError"), ex.Message),
+                                LanguageManager.GetString("msg_error"),
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
@@ -1183,35 +1258,45 @@ namespace PhotoEmin
             pnlReceipt.Visible = false;
             pnlFindFolder.Visible = false;
             flowLayoutPanelArchive.Visible = false;
-            if (PasswordDialog.Authenticate(this, pswDBprocess, "Veri tabanı işlemleri için \nlütfen yönetici şifresini giriniz:"))
+            if (PasswordDialog.Authenticate(this, pswDBprocess, LanguageManager.GetString("pwd_dbOperations")))
             {
                 pnlBorder.Visible = true;
                 pnlDBprocess.Visible = true;
             }
-
         }
 
         private void btnCreateDB_Click(object sender, EventArgs e)
         {
             try
             {
-                // Check if the database exists
                 if (_dbService.CheckDatabaseExists())
                 {
-                    MessageBox.Show("Veri tabanı zaten mevcut", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(
+                        LanguageManager.GetString("msg_dbAlreadyExists"),
+                        LanguageManager.GetString("msg_warning"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
                     _dbService.CreateDatabase();
                     _dbService.CreateTable();
-                    MessageBox.Show("Veri tabanı başarıyla oluşturuldu", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(
+                        LanguageManager.GetString("msg_dbCreated"),
+                        LanguageManager.GetString("msg_info"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                LogService.LogError(ex, "Veritabanı Oluşturma Hatası");
-                MessageBox.Show($"Veri tabanı oluşturulurken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                MessageBox.Show("Veri tabanı oluşturulurken bir hata oluştu", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogService.LogError(ex, LanguageManager.GetString("log_dbCreateError"));
+                MessageBox.Show(
+                    string.Format(LanguageManager.GetString("msg_dbCreateError"), ex.Message),
+                    LanguageManager.GetString("msg_error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    LanguageManager.GetString("msg_dbCreateErrorGeneric"),
+                    LanguageManager.GetString("msg_error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1219,7 +1304,11 @@ namespace PhotoEmin
         {
             if (_dbService.CheckDatabaseExists())
             {
-                DialogResult result = MessageBox.Show("Veri tabanınızı !!!Geri Getiremeyecek Şekilde!!! silmek istediğinize emin misiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show(
+                    LanguageManager.GetString("msg_confirmDeleteDB"),
+                    LanguageManager.GetString("msg_warning"),
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
                 if (result == DialogResult.Yes)
                 {
                     try
@@ -1227,23 +1316,36 @@ namespace PhotoEmin
                         if (!PasswordDialog.Authenticate(this, pswDelete))
                             return;
 
-                        DialogResult resultLast = MessageBox.Show("Veri tabanınız tamamen kaldırılacak, onaylıyor musunuz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        DialogResult resultLast = MessageBox.Show(
+                            LanguageManager.GetString("msg_confirmDeleteDBFinal"),
+                            LanguageManager.GetString("msg_warning"),
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
                         if (resultLast != DialogResult.Yes)
                             return;
 
                         _dbService.RemoveDatabase();
-                        MessageBox.Show("Veri tabanı başarıyla kaldırıldı", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(
+                            LanguageManager.GetString("msg_dbRemoved"),
+                            LanguageManager.GetString("msg_info"),
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        LogService.LogError(ex, "Veritabanı Silme Hatası");
-                        MessageBox.Show($"Veri tabanı kaldırılırken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        LogService.LogError(ex, LanguageManager.GetString("log_dbDeleteError"));
+                        MessageBox.Show(
+                            string.Format(LanguageManager.GetString("msg_dbRemoveError"), ex.Message),
+                            LanguageManager.GetString("msg_error"),
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Veri tabanı sistemde mevcut değil", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    LanguageManager.GetString("msg_dbNotExists"),
+                    LanguageManager.GetString("msg_warning"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1252,24 +1354,29 @@ namespace PhotoEmin
             try
             {
                 string localDatabasePath = txtDownloadDBLocation.Text;
-
                 if (string.IsNullOrEmpty(localDatabasePath))
                 {
-                    MessageBox.Show($"Lütfen yedekleme dosyasını oluşturacağınız bir konum seçin!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(
+                        LanguageManager.GetString("msg_selectBackupLocation"),
+                        LanguageManager.GetString("msg_warning"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 BackupService.RunBackup(localDatabasePath);
-                MessageBox.Show("Yedek alma işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    LanguageManager.GetString("msg_backupCompleted"),
+                    LanguageManager.GetString("msg_info"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                LogService.LogError(ex, "Yedek Dosyası Oluşturma Hatası");
-                MessageBox.Show($"Yedek dosyası oluşturulurken hata meydana geldi: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                LogService.LogError(ex, LanguageManager.GetString("log_backupCreateError"));
+                MessageBox.Show(
+                    string.Format(LanguageManager.GetString("msg_backupError"), ex.Message),
+                    LanguageManager.GetString("msg_error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
 
         private void btnDownloadDBLocation_Click(object sender, EventArgs e)
         {
@@ -1277,9 +1384,7 @@ namespace PhotoEmin
             {
                 DialogResult result = dialog.ShowDialog();
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
-                {
                     txtDownloadDBLocation.Text = dialog.SelectedPath;
-                }
             }
         }
 
@@ -1289,24 +1394,26 @@ namespace PhotoEmin
             openFileDialog.Filter = "PostgreSQL Backup Files (*.tar)|*.tar";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
-
             if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
                 txtUploadDBLocation.Text = openFileDialog.FileName;
-            }
         }
 
         private async void btnUploadDB_Click(object sender, EventArgs e)
         {
             try
             {
-
                 if (string.IsNullOrWhiteSpace(txtUploadDBLocation.Text))
                 {
-                    MessageBox.Show("Lütfen geri yüklemek için bir dosya seçin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(
+                        LanguageManager.GetString("msg_selectRestoreFile"),
+                        LanguageManager.GetString("msg_warning"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                DialogResult result = MessageBox.Show("Seçtiğiniz yedek dosyası yüklenirken mevcut veri tabanınız silinmiş olacak, devam etmek istediğinize emin misiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show(
+                    LanguageManager.GetString("msg_confirmRestore"),
+                    LanguageManager.GetString("msg_warning"),
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
@@ -1324,21 +1431,21 @@ namespace PhotoEmin
                         }
                         await Task.Delay(2000);
                         BackupService.RunRestore(txtUploadDBLocation.Text);
-                        MessageBox.Show("Veritabanı geri yükleme işlemi tamamlandı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(
+                            LanguageManager.GetString("msg_restoreCompleted"),
+                            LanguageManager.GetString("msg_info"),
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-
             }
             catch (Exception ex)
             {
-                LogService.LogError(ex, "Veritabanı Geri Yükleme Hatası");
-                MessageBox.Show($"Veritabanı geri yükleme işleminde bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                LogService.LogError(ex, LanguageManager.GetString("log_dbRestoreError"));
+                MessageBox.Show(
+                    string.Format(LanguageManager.GetString("msg_restoreError"), ex.Message),
+                    LanguageManager.GetString("msg_error"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-
     }
 }
-

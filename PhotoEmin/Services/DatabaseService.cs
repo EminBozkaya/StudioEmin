@@ -43,7 +43,7 @@ namespace PhotoEmin.Services
             }
             catch (NpgsqlException ex)
             {
-                LogService.LogError(ex, "Veritabanı bağlantı kontrolü sırasında hata.");
+                LogService.LogError(ex, LanguageManager.GetString("log_dbConnectionError"));
                 return false;
             }
         }
@@ -257,7 +257,7 @@ namespace PhotoEmin.Services
                         }
                         catch (Exception ex)
                         {
-                            LogService.LogError(ex, $"Dosya okuma hatası ({errorFullName} - {folderName})");
+                            LogService.LogError(ex, string.Format(LanguageManager.GetString("log_fileReadError"), errorFullName, folderName));
                             recordStatus.faultyImageRecords.Add($"{errorFullName}({folderName})");
                         }
 
@@ -285,7 +285,7 @@ namespace PhotoEmin.Services
                 }
                 catch (Exception ex)
                 {
-                    LogService.LogError(ex, "Fotoğraf ekleme döngüsünde hata");
+                    LogService.LogError(ex, LanguageManager.GetString("log_photoInsertLoopError"));
                     recordStatus.errorFullNames.Add($"{errorFullName}({folderName}): {ex.Message}");
                 }
             }
@@ -398,7 +398,7 @@ namespace PhotoEmin.Services
                 }
                 catch (Exception ex)
                 {
-                    LogService.LogError(ex, "Toplu ekleme işleminde hata");
+                    LogService.LogError(ex, LanguageManager.GetString("log_bulkInsertError"));
                     recordStatus.errorFullNames.Add($"{errorFullName}: {ex.Message}");
                 }
             }

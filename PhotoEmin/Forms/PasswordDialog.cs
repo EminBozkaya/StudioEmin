@@ -1,3 +1,5 @@
+using PhotoEmin.Helpers;
+
 namespace PhotoEmin.Forms
 {
     public class PasswordDialog : Form
@@ -19,7 +21,7 @@ namespace PhotoEmin.Forms
         {
             Label label = new()
             {
-                Text = "Lütfen şifreyi giriniz:",
+                Text = LanguageManager.GetString("pwd_enterPassword"),
                 Location = new Point(10, 20),
                 AutoSize = true
             };
@@ -33,7 +35,7 @@ namespace PhotoEmin.Forms
 
             Button confirmButton = new()
             {
-                Text = "Onayla",
+                Text = LanguageManager.GetString("pwd_confirm"),
                 DialogResult = DialogResult.OK,
                 Location = new Point(10, 80),
                 Size = new Size(75, 23)
@@ -41,7 +43,7 @@ namespace PhotoEmin.Forms
 
             Button cancelButton = new()
             {
-                Text = "İptal",
+                Text = LanguageManager.GetString("pwd_cancel"),
                 DialogResult = DialogResult.Cancel,
                 Location = new Point(90, 80),
                 Size = new Size(75, 23)
@@ -59,22 +61,25 @@ namespace PhotoEmin.Forms
             Controls.AddRange([label, _textBox, confirmButton, cancelButton]);
         }
 
-        /// <summary>
-        /// Kullanıcıdan şifre ister ve doğrular. Doğruysa true, iptal edilirse false döner.
-        /// </summary>
-        public static bool Authenticate(Form parent, string requiredPassword, string title = "Şifre Girişi")
+        public static bool Authenticate(Form parent, string requiredPassword, string title = "")
         {
+            if (string.IsNullOrEmpty(title))
+                title = LanguageManager.GetString("pwd_title");
+
             while (true)
             {
                 using var dialog = new PasswordDialog(title);
                 if (dialog.ShowDialog(parent) != DialogResult.OK)
-                    return false; // Kullanıcı iptal etti
+                    return false;
 
                 if (dialog._textBox.Text == requiredPassword)
-                    return true; // Şifre doğru
+                    return true;
 
-                MessageBox.Show("Yanlış şifre girdiniz. Lütfen tekrar deneyin.",
-                    "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    LanguageManager.GetString("pwd_wrong"),
+                    LanguageManager.GetString("msg_error"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
     }
