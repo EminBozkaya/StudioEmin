@@ -39,7 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="14.13.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.1" />
     <PackageReference Include="Npgsql" Version="8.0.1" />
     <PackageReference Include="System.Management" Version="8.0.0" />
   </ItemGroup>

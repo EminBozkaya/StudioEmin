@@ -21,8 +21,27 @@ namespace PhotoEmin.Helpers
 
         public static string ConnectionString => Get("ConnectionStrings", "Default");
         public static string MainConnectionString => Get("ConnectionStrings", "Main");
+        public static string SqliteConnectionString => Get("ConnectionStrings", "Sqlite");
         public static string PasswordDBProcess => Get("Passwords", "DBProcess");
         public static string PasswordDelete => Get("Passwords", "Delete");
         public static string PasswordUpdate => Get("Passwords", "Update");
+
+        public static string DatabaseProvider
+        {
+            get
+            {
+                try
+                {
+                    return _config!.RootElement
+                        .GetProperty("DatabaseProvider")
+                        .GetProperty("Type")
+                        .GetString() ?? "PostgreSQL";
+                }
+                catch
+                {
+                    return "PostgreSQL";
+                }
+            }
+        }
     }
 }

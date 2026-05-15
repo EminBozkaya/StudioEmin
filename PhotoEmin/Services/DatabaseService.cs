@@ -11,12 +11,12 @@ namespace PhotoEmin.Services
     /// Veritabanı (PostgreSQL) ile ilgili tüm CRUD ve yönetim işlemlerini
     /// Form1'den bağımsız olarak yürüten servis sınıfı.
     /// </summary>
-    public class DatabaseService
+    public class PostgreSqlDatabaseService : IDatabaseService
     {
         private readonly string _connectionString;
         private readonly string _mainConnectionString;
 
-        public DatabaseService()
+        public PostgreSqlDatabaseService()
         {
             _connectionString = AppConfig.ConnectionString;
             _mainConnectionString = AppConfig.MainConnectionString;
@@ -79,8 +79,11 @@ namespace PhotoEmin.Services
                 conn.Open();
                 using var cmd = new NpgsqlCommand(
                     "CREATE TABLE customers (id BIGSERIAL PRIMARY KEY, fullname TEXT NOT NULL, " +
-                    "foldername TEXT, photodata BYTEA, createdate TIMESTAMP WITH TIME ZONE, " +
-                    "insertdate TIMESTAMP WITH TIME ZONE);", conn);
+                    "foldername TEXT, createdate TIMESTAMP WITH TIME ZONE, " +
+                    "insertdate TIMESTAMP WITH TIME ZONE, " +
+                    "updatedate TIMESTAMP WITH TIME ZONE);" +
+                    "CREATE TABLE customer_photos (customer_id BIGINT PRIMARY KEY REFERENCES customers(id) ON DELETE CASCADE, " +
+                    "photodata BYTEA NOT NULL);", conn);
                 cmd.ExecuteNonQuery();
             }
             catch (NpgsqlException ex)
@@ -152,7 +155,8 @@ namespace PhotoEmin.Services
             using var connection = new NpgsqlConnection(_connectionString);
             connection.Open();
 
-            string sql = "SELECT foldername, photodata FROM customers WHERE id = @id";
+            string sql = "SELECT c.foldername, cp.photodata FROM customers c " +
+                         "LEFT JOIN customer_photos cp ON c.id = cp.customer_id WHERE c.id = @id";
 
             using var command = new NpgsqlCommand(sql, connection);
             command.Parameters.AddWithValue("@id", id);
@@ -177,10 +181,11 @@ namespace PhotoEmin.Services
             using var connection = new NpgsqlConnection(_connectionString);
             connection.Open();
 
-            string sql = "UPDATE customers SET fullname = @fullname WHERE id = @id";
+            string sql = "UPDATE customers SET fullname = @fullname, updatedate = @updatedate WHERE id = @id";
 
             using var command = new NpgsqlCommand(sql, connection);
             command.Parameters.AddWithValue("@fullname", newFullName);
+            command.Parameters.AddWithValue("@updatedate", NpgsqlDbType.TimestampTz, DateTime.Now);
             command.Parameters.AddWithValue("@id", id);
             command.ExecuteNonQuery();
         }
@@ -241,13 +246,13 @@ namespace PhotoEmin.Services
                     {
                         string? imagePath = ImageService.FindFirstImage(subDir);
                         byte[]? photoData = null;
-                        DateTime? creationDate = DateTime.UtcNow;
+                        DateTime? creationDate = DateTime.Now;
                         try
                         {
                             if (imagePath != null)
                             {
                                 photoData = ImageService.ResizeImage(imagePath, 118, 118);
-                                creationDate = File.GetCreationTimeUtc(imagePath);
+                                creationDate = File.GetCreationTime(imagePath);
                             }
                             else
                             {
@@ -262,20 +267,27 @@ namespace PhotoEmin.Services
                         }
 
                         string insertQuery =
-                            "INSERT INTO customers (fullname, foldername, photodata, createdate, insertdate) " +
-                            "VALUES (@fullname, @foldername, @photodata, @createdate, @insertdate)";
+                            "INSERT INTO customers (fullname, foldername, createdate, insertdate) " +
+                            "VALUES (@fullname, @foldername, @createdate, @insertdate) RETURNING id";
 
                         using var command = new NpgsqlCommand(insertQuery, connection);
                         command.Parameters.AddWithValue("@fullname", NpgsqlDbType.Text, fullName);
                         command.Parameters.AddWithValue("@foldername", NpgsqlDbType.Text, folderName);
-                        command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@createdate", NpgsqlDbType.TimestampTz, creationDate);
-                        command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.TimestampTz, DateTime.UtcNow);
+                        command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.TimestampTz, DateTime.Now);
 
-                        int rowsAffected = command.ExecuteNonQuery();
-                        if (rowsAffected > 0)
+                        var newId = command.ExecuteScalar();
+                        if (newId != null)
                         {
                             recordStatus.successfulInserts++;
+                            if (photoData != null)
+                            {
+                                using var photoCmd = new NpgsqlCommand(
+                                    "INSERT INTO customer_photos (customer_id, photodata) VALUES (@cid, @photodata)", connection);
+                                photoCmd.Parameters.AddWithValue("@cid", (long)newId);
+                                photoCmd.Parameters.AddWithValue("@photodata", photoData);
+                                photoCmd.ExecuteNonQuery();
+                            }
                         }
                     }
                     else
@@ -314,7 +326,7 @@ namespace PhotoEmin.Services
                 string folderName = "";
                 string[] nameParts;
                 byte[]? photoData = null;
-                DateTime creationDate = DateTime.UtcNow;
+                DateTime creationDate = DateTime.Now;
                 string errorFullName = "";
 
                 if (Directory.Exists(fileOrFolder))
@@ -331,7 +343,7 @@ namespace PhotoEmin.Services
                     errorFullName = string.Join("_", nameParts);
                     fullName = nameParts[0];
                     folderName = nameParts[1];
-                    creationDate = Directory.GetCreationTimeUtc(fileOrFolder).Date;
+                    creationDate = Directory.GetCreationTime(fileOrFolder).Date;
                 }
                 else if (File.Exists(fileOrFolder))
                 {
@@ -347,7 +359,7 @@ namespace PhotoEmin.Services
                     errorFullName = string.Join("_", nameParts);
                     fullName = nameParts[0];
                     folderName = nameParts[1];
-                    creationDate = File.GetCreationTimeUtc(fileOrFolder);
+                    creationDate = File.GetCreationTime(fileOrFolder);
 
                     string fileExtension = Path.GetExtension(fileOrFolder);
                     if (ImageService.IsImageFile(fileExtension))
@@ -375,20 +387,27 @@ namespace PhotoEmin.Services
                     if (existingRecordsCount == 0)
                     {
                         string insertQuery =
-                            "INSERT INTO customers (fullname, foldername, photodata, createdate, insertdate) " +
-                            "VALUES (@fullname, @foldername, @photodata, @createdate, @insertdate)";
+                            "INSERT INTO customers (fullname, foldername, createdate, insertdate) " +
+                            "VALUES (@fullname, @foldername, @createdate, @insertdate) RETURNING id";
 
                         using var command = new NpgsqlCommand(insertQuery, connection);
                         command.Parameters.AddWithValue("@fullname", NpgsqlDbType.Text, fullName);
                         command.Parameters.AddWithValue("@foldername", NpgsqlDbType.Text, folderName);
-                        command.Parameters.AddWithValue("@photodata", photoData ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@createdate", NpgsqlDbType.TimestampTz, creationDate);
-                        command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.TimestampTz, DateTime.UtcNow);
+                        command.Parameters.AddWithValue("@insertdate", NpgsqlDbType.TimestampTz, DateTime.Now);
 
-                        int rowsAffected = command.ExecuteNonQuery();
-                        if (rowsAffected > 0)
+                        var newId = command.ExecuteScalar();
+                        if (newId != null)
                         {
                             recordStatus.successfulInserts++;
+                            if (photoData != null)
+                            {
+                                using var photoCmd = new NpgsqlCommand(
+                                    "INSERT INTO customer_photos (customer_id, photodata) VALUES (@cid, @photodata)", connection);
+                                photoCmd.Parameters.AddWithValue("@cid", (long)newId);
+                                photoCmd.Parameters.AddWithValue("@photodata", photoData);
+                                photoCmd.ExecuteNonQuery();
+                            }
                         }
                     }
                     else
@@ -424,7 +443,8 @@ namespace PhotoEmin.Services
             using var connection = new NpgsqlConnection(_connectionString);
             connection.Open();
 
-            string sql = "SELECT fullname, foldername, photodata, createdate FROM customers";
+            string sql = "SELECT c.fullname, c.foldername, cp.photodata, c.createdate " +
+                         "FROM customers c LEFT JOIN customer_photos cp ON c.id = cp.customer_id";
 
             using var command = new NpgsqlCommand(sql, connection);
             using var reader = command.ExecuteReader();
@@ -438,7 +458,7 @@ namespace PhotoEmin.Services
                     : null;
                 DateTime createDate = !reader.IsDBNull(reader.GetOrdinal("createdate"))
                     ? reader.GetDateTime(reader.GetOrdinal("createdate"))
-                    : DateTime.UtcNow;
+                    : DateTime.Now;
 
                 results.Add((fullName, folderName, photoData, createDate));
             }

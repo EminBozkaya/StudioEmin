@@ -15,7 +15,8 @@ namespace PhotoEmin
         private static string pswDelete => AppConfig.PasswordDelete;
         private static string pswUpdate => AppConfig.PasswordUpdate;
 
-        private readonly DatabaseService _dbService = new();
+        private readonly IDatabaseService _dbService = DatabaseServiceFactory.CreateDatabaseService();
+        private readonly IBackupService _backupService = DatabaseServiceFactory.CreateBackupService();
         private readonly ReceiptService _receiptService = new();
 
         private bool isUpperArchiveBtn = false;
@@ -251,6 +252,7 @@ namespace PhotoEmin
             pnlFindFolder.Visible = false;
             flowLayoutPanelArchive.Visible = false;
             pnlDBprocess.Visible = false;
+            ClearSearchPanel();
         }
 
         private void flowLayoutPanelArchive_Click(object sender, EventArgs e)
@@ -263,6 +265,7 @@ namespace PhotoEmin
             lblExplanation.Visible = false;
             lblEmpty.Visible = false;
             pnlDBprocess.Visible = false;
+            ClearSearchPanel();
         }
 
         private void btnGoTheFolder_Click(object sender, EventArgs e)
@@ -494,6 +497,7 @@ namespace PhotoEmin
             pnlFindFolder.Visible = true;
             flowLayoutPanelArchive.Visible = false;
             pnlDBprocess.Visible = false;
+            ClearSearchPanel();
 
             PopulateDriveComboBox();
         }
@@ -825,6 +829,7 @@ namespace PhotoEmin
             pnlAddSpareToArchive.Visible = false;
             pnlMakeSpare.Visible = false;
             pnlDBprocess.Visible = false;
+            ClearSearchPanel();
         }
 
         private void btnMakeSpare_Click(object sender, EventArgs e)
@@ -840,6 +845,7 @@ namespace PhotoEmin
             pnlAddSpareToArchive.Visible = false;
             pnlMakeSpare.Visible = true;
             pnlDBprocess.Visible = false;
+            ClearSearchPanel();
         }
 
         private void btnAddSpareToArchive_Click(object sender, EventArgs e)
@@ -855,6 +861,7 @@ namespace PhotoEmin
             pnlAddSpareToArchive.Visible = true;
             pnlMakeSpare.Visible = false;
             pnlDBprocess.Visible = false;
+            ClearSearchPanel();
         }
 
         private void btnChooseUpperFolder_Click(object sender, EventArgs e)
@@ -956,6 +963,18 @@ namespace PhotoEmin
             _searchTimer.Start();
         }
 
+        private void ClearSearchPanel()
+        {
+            txtFullName.Text = "";
+            _searchTimer?.Stop();
+            txtDataUpperFileName.Text = "";
+            dataGridRecords.DataSource = null;
+            lblTotalRecord.Text = "0";
+            listBoxArchive.Items.Clear();
+            pictureBoxChosenPhoto.Image?.Dispose();
+            pictureBoxChosenPhoto.Image = null;
+        }
+
         private void PerformSearch()
         {
             txtDataUpperFileName.Text = "";
@@ -978,7 +997,7 @@ namespace PhotoEmin
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("3D000"))
+                if (ex.Message.Contains("3D000") || ex.Message.Contains("no such table") || ex.Message.Contains("unable to open"))
                     MessageBox.Show(
                         LanguageManager.GetString("msg_dbNotCreated"),
                         LanguageManager.GetString("msg_error"),
@@ -1258,6 +1277,7 @@ namespace PhotoEmin
             pnlReceipt.Visible = false;
             pnlFindFolder.Visible = false;
             flowLayoutPanelArchive.Visible = false;
+            ClearSearchPanel();
             if (PasswordDialog.Authenticate(this, pswDBprocess, LanguageManager.GetString("pwd_dbOperations")))
             {
                 pnlBorder.Visible = true;
@@ -1362,7 +1382,7 @@ namespace PhotoEmin
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                BackupService.RunBackup(localDatabasePath);
+                _backupService.RunBackup(localDatabasePath);
                 MessageBox.Show(
                     LanguageManager.GetString("msg_backupCompleted"),
                     LanguageManager.GetString("msg_info"),
@@ -1391,7 +1411,9 @@ namespace PhotoEmin
         private void btnUploadDBLocation_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "PostgreSQL Backup Files (*.tar)|*.tar";
+            openFileDialog.Filter = AppConfig.DatabaseProvider.ToUpperInvariant() == "SQLITE"
+                ? "SQLite Backup (*.db)|*.db"
+                : "PostgreSQL Backup Files (*.tar)|*.tar";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -1430,7 +1452,7 @@ namespace PhotoEmin
                             _dbService.CreateDatabase();
                         }
                         await Task.Delay(2000);
-                        BackupService.RunRestore(txtUploadDBLocation.Text);
+                        _backupService.RunRestore(txtUploadDBLocation.Text);
                         MessageBox.Show(
                             LanguageManager.GetString("msg_restoreCompleted"),
                             LanguageManager.GetString("msg_info"),

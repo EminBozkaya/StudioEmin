@@ -1,23 +1,31 @@
-using System.Drawing.Imaging;
+using ImageMagick;
 
 namespace PhotoEmin.Services
 {
     public static class ImageService
     {
-        private static readonly string[] SupportedExtensions = [".jpg", ".jpeg", ".png", ".bmp", ".gif"];
+        private static readonly string[] SupportedExtensions =
+        [
+            // Yaygın formatlar
+            ".jpg", ".jpeg", ".png", ".bmp", ".gif", ".jfif",
+            // Modern formatlar
+            ".webp", ".avif", ".heic", ".heif",
+            // Profesyonel / tarayıcı
+            ".tiff", ".tif",
+            // RAW formatları (Canon, Nikon, Sony, genel)
+            ".raw", ".cr2", ".cr3", ".nef", ".arw", ".dng"
+        ];
 
         public static bool IsImageFile(string extension)
             => SupportedExtensions.Contains(extension.ToLowerInvariant());
 
         public static string? FindFirstImage(string directory)
         {
-            // Önce "a.jpg" / "a.jpeg" ara
             foreach (var name in new[] { "a.jpg", "a.jpeg" })
             {
                 var path = Path.Combine(directory, name);
                 if (File.Exists(path)) return path;
             }
-            // Sonra herhangi bir desteklenen resim dosyası
             foreach (var ext in SupportedExtensions)
             {
                 var files = Directory.GetFiles(directory, $"*{ext}");
@@ -28,24 +36,21 @@ namespace PhotoEmin.Services
 
         public static byte[] ResizeImage(string imagePath, int targetWidth, int targetHeight)
         {
-            using Image image = Image.FromFile(imagePath);
+            using var image = new MagickImage(imagePath);
 
-            if (image.Width <= targetWidth && image.Height <= targetHeight)
+            if (image.Width <= (uint)targetWidth && image.Height <= (uint)targetHeight)
             {
-                using MemoryStream ms = new();
-                image.Save(ms, image.RawFormat);
-                return ms.ToArray();
+                image.Format = MagickFormat.Jpeg;
+                return image.ToByteArray();
             }
 
-            using Bitmap resizedImage = new(targetWidth, targetHeight);
-            using (Graphics graphics = Graphics.FromImage(resizedImage))
+            var geometry = new MagickGeometry((uint)targetWidth, (uint)targetHeight)
             {
-                graphics.DrawImage(image, 0, 0, targetWidth, targetHeight);
-            }
-
-            using MemoryStream msResized = new();
-            resizedImage.Save(msResized, image.RawFormat);
-            return msResized.ToArray();
+                IgnoreAspectRatio = true
+            };
+            image.Resize(geometry);
+            image.Format = MagickFormat.Jpeg;
+            return image.ToByteArray();
         }
 
         public static void SavePhotoDataAsJpeg(byte[]? photoData, string filePath, DateTime createDate)
@@ -54,9 +59,9 @@ namespace PhotoEmin.Services
             {
                 if (photoData != null && photoData.Length > 0)
                 {
-                    using MemoryStream ms = new(photoData);
-                    using Image image = Image.FromStream(ms);
-                    image.Save(filePath, ImageFormat.Jpeg);
+                    using var image = new MagickImage(photoData);
+                    image.Format = MagickFormat.Jpeg;
+                    image.Write(filePath);
                     File.SetCreationTime(filePath, createDate);
                 }
                 else

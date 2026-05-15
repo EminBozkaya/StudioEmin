@@ -3,9 +3,9 @@ using PhotoEmin.Helpers;
 
 namespace PhotoEmin.Services
 {
-    public static class BackupService
+    public class PostgreSqlBackupService : IBackupService
     {
-        public static void RunBackup(string filePath = "", string? backUpName = null)
+        public void RunBackup(string filePath = "", string? backUpName = null)
         {
             if (string.IsNullOrEmpty(filePath))
             {
@@ -26,7 +26,7 @@ namespace PhotoEmin.Services
             RunPgTool(pgDumpPath, commandText);
         }
 
-        public static void RunRestore(string tarFilePath)
+        public void RunRestore(string tarFilePath)
         {
             string pgRestorePath = Path.Combine(FindPgBinPath(), "pg_restore.exe");
             string commandText = $"-U postgres -h localhost -p 5432 -d dbphoto \"{tarFilePath}\"";
@@ -34,7 +34,7 @@ namespace PhotoEmin.Services
             RunPgTool(pgRestorePath, commandText);
         }
 
-        private static void RunPgTool(string toolPath, string arguments)
+        private void RunPgTool(string toolPath, string arguments)
         {
             ProcessStartInfo startInfo = new()
             {
@@ -54,7 +54,7 @@ namespace PhotoEmin.Services
             process.WaitForExit();
         }
 
-        private static string FindPgBinPath()
+        private string FindPgBinPath()
         {
             string postgreSQLPath = @"C:\Program Files\PostgreSQL";
             string[] versions = Directory.GetDirectories(postgreSQLPath);
